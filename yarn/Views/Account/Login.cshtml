@@ -1,0 +1,92 @@
+﻿@using yarn.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Sign In";
+}
+
+
+<div class="landingPage-image">
+    <div class="container position-relative">
+
+        <div class="row">
+
+            <div class="col">
+
+                <!-- logo -->
+                <a class="navbar-brand mr-5 mt-4" href="">
+                    <img class="img-fluid" style="width: 5.5rem;" alt="yarn" src="../Images/logo0.5.svg">
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="row justify-content-center">
+
+            <div class="col-4">
+
+                <div class="p-3" style="background-color:rgba(28, 29, 35, 0.9); border-radius: 1rem;">
+
+                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <h2 class="pt-3 pb-2" style="padding-left: 15px;">@ViewBag.Title</h2>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Email, new { @class = "col" })
+                            <div class="col">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Password, new { @class = "col" })
+                            <div class="col">
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col" style="padding-left: 15px;">
+                                <div class="checkbox">
+                                    @Html.CheckBoxFor(m => m.RememberMe)
+                                    @Html.LabelFor(m => m.RememberMe)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col py-2">
+                                <input type="submit" value="Login" class="btn btn-primary-landingPage col-12" />
+                            </div>
+                        </div>
+                        @* Enable this once you have account confirmation enabled for password reset functionality
+                            <p>
+                                @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                            </p>*@
+                    }
+
+                    <hr />
+
+                    @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+
+                    <hr />
+
+                    <p style="padding-left: 15px;">
+                        Not a member?
+                        @Html.ActionLink(" Sign Up.", "Register")
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        </div>
+    </div>
+
+
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }

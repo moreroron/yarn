@@ -1,0 +1,171 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+
+<body class="py-5" style="font-family:Rubik; color:#8e8f9e">
+
+    <!-- ------------------------------------ -->
+    <!-- NAVBAR -->
+    <!-- ------------------------------------ -->
+
+    <div class="container-fluid bg-secondary fixed-top">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg bg-secondary navbar-dark pt-3 pb-3">
+
+                <!-- LOGO -->
+
+                <a class="navbar-brand mr-5" href="@Url.Action("Index", "Home" )">
+                    <img class="img-fluid" alt="yarn" src="~/Images/logo0.5.svg">
+                </a>
+
+                <!-- MENU COLLAPSE (for small devices) -->
+
+                <button class="navbar-toggler" data-toggle="collapse" data-target="#menuShrink">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="menuShrink">
+
+                    <ul class="navbar-nav">
+
+                        <!-- BROWSE -->
+
+                        <li class="nav-item mr-2">
+                            <button type="button" class="btn btn-primary" href="@Url.Action("Index", "Home"
+                                )">
+                                Browse
+                            </button>
+                        </li>
+
+                        <!-- SEARCH -->
+
+                        <li class="nav-item">
+                            <div class="input-group">
+                                <input type="search" class="form-control" style="padding-right: 5rem;"
+                                       placeholder="Search films or series" aria-label="search"
+                                       aria-describedby="basic-addon1">
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="basic-addon1" style="color:#52525b">
+                                        <i class="fas fa-search">
+                                        </i>
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                    <!-- PROFILE -->
+
+                    @using Microsoft.AspNet.Identity
+                    @if (Request.IsAuthenticated)
+                    {
+                        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new
+                        {
+                            id = "logoutForm",
+                            @class =
+                        "dropdown ml-auto"
+                        }))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="dropdown ml-auto">
+                                <button type="button" class="btn btn-secondary pl-0 py-0" style="color: #8e8f9e;"
+                                        id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                        data-offset="10,20">
+                                    <img class="" style="width: 2.5rem;" src="~/Images/profileIcons/animal-5.svg"
+                                         alt="Generic placeholder image">
+                                    <i class="fas fa-caret-down pl-1"></i>
+                                </button>
+                                <div class="dropdown-menu bg-grey mt-2" aria-labelledby="dropdownMenuOffset">
+                                    @Html.ActionLink("Profile", "Index", "Manage", routeValues: null, htmlAttributes: new {
+                                    title = "Manage", @class = "dropdown-item text-grey" })
+                                    @*@User.Identity.Name*@
+                                    @*@User.Identity.GetUserId()*@
+                                    <a class="dropdown-item text-grey" href="#">My Favorites</a>
+
+                                    <!-- Admins Extra Tools -->
+                                    @{ if (User.IsInRole("Admin"))
+                                        {
+                                            <div class="dropdown-divider"></div>
+                                            <h6 class="dropdown-header" style="color: #6c719c;">Management</h6>
+                                            <span class="mr-2"><i class="fas fa-wrench"></i></span>
+                                            @Html.ActionLink("Manage Users", "Index", "ApplicationUsers", routeValues:null, htmlAttributes: new { title = "Manage Users", @class = "dropdown-item text-grey" })
+                                            @*<a class="dropdown-item text-grey" href="#"> <span class="mr-2"><i class="fas fa-wrench"></i></span>Configuration</a>*@
+                                            <a class="dropdown-item text-grey" href="#"> <span class="mr-2"><i class="fas fa-wrench"></i></span>Manage Users</a>
+                                        }
+                                    }
+
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item text-grey"
+                                       href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+
+                                </div>
+                            </div>
+                        }
+                    }
+
+                    else
+                    {
+                        <ul class="nav navbar-nav ml-auto">
+                            <li>
+                                @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id =
+                            "loginLink" })
+                            </li>
+                        </ul>
+                    }
+
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <!-- ------------------------------------ -->
+    <!-- BODY -->
+    <!-- ------------------------------------ -->
+
+<div class="container-fluid bg-primary" style="margin-top: 4rem; margin-bottom: 4rem;">
+
+    @RenderBody()
+
+</div>
+
+    <!-- ------------------------------------ -->
+    <!-- FOOTER -->
+    <!-- ------------------------------------ -->
+
+    <div class="bg-secondary">
+        <div class="container py-4">
+            <div class="row">
+                <div class="col-1 pt-2">
+                    <img class="img-fluid" alt="yarn" src="~/Images/logo0.5.svg"
+                         style="opacity: 0.4;">
+                </div>
+
+                <div class="col">
+                    <p class="align-middle">
+                        yarn is a platform for streaming content
+                        <b>
+                            <i>lighting-fast</i>
+                        </b>
+                        <br>&copy; yarn @DateTime.Now.Year
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

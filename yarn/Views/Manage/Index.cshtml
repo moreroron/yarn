@@ -1,0 +1,210 @@
+﻿@model yarn.Models.IndexViewModel
+@{
+    ViewBag.Title = "Manage";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div>
+    <h4>Change your account settings</h4>
+    <hr />
+    
+    
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Changing Avatar</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    
+                    <!-- images -->
+                    <div class="control">
+                        <label class="radio">
+                            <input type="radio" name="answer">
+                            <img src="~/Images/profileIcons/animal-1.svg" />
+                        </label>
+
+                        <label class="radio">
+                            <input type="radio" name="answer">
+                            <img src="~/Images/profileIcons/animal-2.svg" />
+                        </label>
+
+                        <label class="radio">
+                            <input type="radio" name="answer">
+                            <img src="~/Images/profileIcons/animal-3.svg" />
+                        </label>
+
+                        <label class="radio">
+                            <input type="radio" name="answer">
+                            <img src="~/Images/profileIcons/animal-4.svg" />
+                        </label>
+
+                        <label class="radio">
+                            <input type="radio" name="answer">
+                            <img src="~/Images/profileIcons/animal-5.svg" />
+                        </label>
+                        
+                        </div>
+                    
+
+                    </div>
+
+                    
+                    @using (Html.BeginForm("modalSaveChanges", "Manage", FormMethod.Post,
+                        new {enctype = "multipart/form-data"}))
+                    {
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    }
+                
+            </div>
+        </div>
+    </div>
+    
+
+    <dl class="dl-horizontal">
+        <dt>Password:</dt>
+        <dd>
+            [
+            @if (Model.HasPassword)
+            {
+                @Html.ActionLink("Change your password", "ChangePassword")
+            }
+            else
+            {
+                @Html.ActionLink("Create", "SetPassword")
+                }
+
+            ]
+        </dd>
+
+        
+
+        @*<dt>External Logins:</dt>
+            <dd>
+                @Model.Logins.Count [
+                @Html.ActionLink("Manage", "ManageLogins") ]
+            </dd>*@
+        @*
+            Phone Numbers can used as a second factor of verification in a two-factor authentication system.
+
+             See <a href="https://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
+                for details on setting up this ASP.NET application to support two-factor authentication using SMS.
+
+             Uncomment the following block after you have set up two-factor authentication
+        *@
+        @*
+            <dt>Phone Number:</dt>
+            <dd>
+                @(Model.PhoneNumber ?? "None")
+                @if (Model.PhoneNumber != null)
+                {
+                    <br />
+                    <text>[&nbsp;&nbsp;@Html.ActionLink("Change", "AddPhoneNumber")&nbsp;&nbsp;]</text>
+                    using (Html.BeginForm("RemovePhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <text>[<input type="submit" value="Remove" class="btn-link" />]</text>
+                    }
+                }
+                else
+                {
+                    <text>[&nbsp;&nbsp;@Html.ActionLink("Add", "AddPhoneNumber")
+                }
+            </dd>
+        *@
+        @*<dt>Two-Factor Authentication:</dt>
+            <dd>
+                <p>
+                    There are no two-factor authentication providers configured. See <a href="https://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
+                    for details on setting up this ASP.NET application to support two-factor authentication.
+                </p>*@
+        @*@if (Model.TwoFactor)
+            {
+                using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <text>Enabled
+                    <input type="submit" value="Disable" class="btn btn-link" />
+                    </text>
+                }
+            }
+            else
+            {
+                using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <text>Disabled
+                    <input type="submit" value="Enable" class="btn btn-link" />
+                    </text>
+                }
+            }*@
+        @*</dd>*@
+    </dl>
+
+    <div class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Change your avatar</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <!-- images -->
+                    <div class="control">
+                        <label class="radio">
+                            <input type="radio" name="answer">
+                            <img src="~/Images/profileIcons/animal-1.svg" />
+                        </label>
+
+                        <label class="radio">
+                            <input type="radio" name="answer">
+                            <img src="~/Images/profileIcons/animal-2.svg" />
+                        </label>
+
+                        <label class="radio">
+                            <input type="radio" name="answer">
+                            <img src="~/Images/profileIcons/animal-3.svg" />
+                        </label>
+
+                        <label class="radio">
+                            <input type="radio" name="answer">
+                            <img src="~/Images/profileIcons/animal-4.svg" />
+                        </label>
+
+                        <label class="radio">
+                            <input type="radio" name="answer">
+                            <img src="~/Images/profileIcons/animal-5.svg" />
+                        </label>
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

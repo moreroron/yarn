@@ -1,0 +1,18 @@
+﻿@{
+    var controller = HttpContext.Current.Request.RequestContext.RouteData.Values["Controller"].ToString();
+
+    if (controller == "Account")
+    {
+        Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+    }
+    else
+    { Layout = "~/Views/Shared/_Layout.cshtml"; }
+        //{
+        //    if (User.IsInRole("Admin")) { Layout = "~/Views/Shared/_LayoutAccountAdmin.cshtml"; }
+        //    else { Layout = "~/Views/Shared/_Layout.cshtml"; }
+        //}
+}
+
+
+
+

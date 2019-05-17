@@ -1,0 +1,80 @@
+﻿@model yarn.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+
+<div class="landingPage-image">
+    <div class="container position-relative">
+
+        <div class="row">
+
+            <div class="col">
+
+                <!-- logo -->
+                <a class="navbar-brand mr-5 mt-4" href="">
+                    <img class="img-fluid" style="width: 5.5rem;" alt="yarn" src="../Images/logo0.5.svg">
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="row justify-content-center">
+
+            <div class="col-4">
+
+                <div class="p-3" style="background-color:rgba(28, 29, 35, 0.9); border-radius: 1rem;">
+
+                    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <h2 class="pt-3 pb-2" style="padding-left: 15px;">@ViewBag.Title</h2>
+                        @Html.ValidationSummary("", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Email, new { @class = "col" })
+                            <div class="col">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Password, new { @class = "col" })
+                            <div class="col">
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col" })
+                            <div class="col">
+                                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="px-3" style="font-size: 0.8rem;">
+                            <p>
+                                By clicking "Create an account" below, you agree to out Trems of Services and Privacy Statement
+                            </p>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col">
+                                <input type="submit" class="btn btn-primary-landingPage col-12" value="Create an account" />
+                            </div>
+                        </div>
+                    }
+
+                    <hr />
+
+                    <p style="padding-left: 15px;">
+                        Already a member?
+                        @Html.ActionLink(" Log In.", "Login")
+                    </p>
+
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+                    @section Scripts {
+                        @Scripts.Render("~/bundles/jqueryval")
+                    }
