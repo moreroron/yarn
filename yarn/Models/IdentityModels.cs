@@ -28,12 +28,23 @@ namespace yarn.Models
         {
         }
 
+        // renameing identity tables
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<ApplicationUser>().ToTable("Users");
+            modelBuilder.Entity<IdentityRole>().ToTable("Roles");
+            modelBuilder.Entity<IdentityUserClaim>().ToTable("UserClaims");
+            modelBuilder.Entity<IdentityUserLogin>().ToTable("UserLogins");
+            modelBuilder.Entity<IdentityUserRole>().ToTable("UserRoles");
+        }
+
 
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
 
-        //public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     }
 }

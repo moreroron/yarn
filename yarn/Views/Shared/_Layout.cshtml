@@ -87,9 +87,15 @@
                                 </button>
                                 <div class="dropdown-menu bg-grey mt-2" aria-labelledby="dropdownMenuOffset">
                                     @Html.ActionLink("Profile", "Index", "Manage", routeValues: null, htmlAttributes: new {
-                                    title = "Manage", @class = "dropdown-item text-grey" })
+                                   title = "Manage", @class = "dropdown-item text-grey" })
                                     @*@User.Identity.Name*@
-                                    @*@User.Identity.GetUserId()*@
+                                    @*@{ 
+                                        var currentUserId = User.Identity.GetUserId();
+                                        var manager = new UserManager<currentUserId>(new UserStore<currentUserId>(new MyDbContext()));
+
+                                            }*@
+                                    
+                                    
                                     <a class="dropdown-item text-grey" href="#">My Favorites</a>
 
                                     <!-- Admins Extra Tools -->
@@ -97,10 +103,17 @@
                                         {
                                             <div class="dropdown-divider"></div>
                                             <h6 class="dropdown-header" style="color: #6c719c;">Management</h6>
-                                            <span class="mr-2"><i class="fas fa-wrench"></i></span>
-                                            @Html.ActionLink("Manage Users", "Index", "ApplicationUsers", routeValues:null, htmlAttributes: new { title = "Manage Users", @class = "dropdown-item text-grey" })
-                                            @*<a class="dropdown-item text-grey" href="#"> <span class="mr-2"><i class="fas fa-wrench"></i></span>Configuration</a>*@
-                                            <a class="dropdown-item text-grey" href="#"> <span class="mr-2"><i class="fas fa-wrench"></i></span>Manage Users</a>
+
+                                            <span class="dropdown-item text-grey">
+                                                <i class="fas fa-wrench mr-2"></i>
+                                                @Html.ActionLink("Manage Users", "Index", "ApplicationUsers", routeValues: null, htmlAttributes: new { title = "Manage Users", style = "color:inherit", @class = "" })
+                                            </span>
+
+                                            <span class="dropdown-item text-grey">
+                                                <i class="fas fa-wrench mr-2"></i>
+                                                @Html.ActionLink("Manage Movies", "Index", "MovieModels", routeValues: null, htmlAttributes: new { title = "Configurations", style = "color:inherit", @class = "" })
+                                            </span>
+
                                         }
                                     }
 
@@ -133,10 +146,10 @@
     <!-- ------------------------------------ -->
 
 <div class="container-fluid bg-primary" style="margin-top: 4rem; margin-bottom: 4rem;">
-
-    @RenderBody()
-
-</div>
+    <div class="container text-primary">
+        @RenderBody()
+        </div>
+    </div>
 
     <!-- ------------------------------------ -->
     <!-- FOOTER -->
