@@ -5422,9 +5422,8 @@ a.badge-dark:focus, a.badge-dark.focus {
     }
 
 .alert-primary {
-    color: #004085;
-    background-color: #cce5ff;
-    border-color: #b8daff;
+    color: #8d8e9d!important;
+    background-color: #1c1d23!important;
 }
 
     .alert-primary hr {

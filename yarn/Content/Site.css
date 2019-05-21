@@ -74,3 +74,17 @@
         border: 3px solid #2e5ca9;
         transition: all 0.2s ease;
     }
+
+.alert-costume {
+    color: #8d8e9d;
+    background-color: #1c1d23;
+}
+
+.text-link {
+    color: #8d8e9d;
+    transition: all 0.2s ease;
+}
+
+.text-link:hover {
+        color: #fff;
+    }
