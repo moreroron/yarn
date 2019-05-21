@@ -7,18 +7,18 @@ using System.Web;
 
 namespace yarn.Models
 {
-    public class MovieModels
+    public class Movie
     {
-        [Key]
         public int MovieID { get; set; }
         public string Name { get; set; }
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
         public int Rate { get; set; }
-        //public LinkedList<ReviewModels> Reviews { get; set; }
-    }
 
-    public class MovieDbContext : DbContext
-    {
-        public DbSet<MovieModels> Movies { get; set; }
+        // navigation properties
+        public int ReviewID { get; set; }
+        public int UserID { get; set; }
+        
+        public virtual List<Review> Reviews { get; set; }
+        public virtual List<ApplicationUser> Users { get; set; }
     }
 }

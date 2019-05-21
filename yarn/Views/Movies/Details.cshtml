@@ -1,4 +1,4 @@
-﻿@model yarn.Models.MovieModels
+﻿@model yarn.Models.Movie
 
 @{
     ViewBag.Title = "Details";
@@ -8,7 +8,7 @@
 <h2>Details</h2>
 
 <div>
-    <h4>MovieModels</h4>
+    <h4>Movie</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -33,6 +33,22 @@
 
         <dd>
             @Html.DisplayFor(model => model.Rate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReviewID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReviewID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserID)
         </dd>
 
     </dl>

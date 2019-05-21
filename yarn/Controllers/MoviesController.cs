@@ -10,108 +10,108 @@ using yarn.Models;
 
 namespace yarn.Controllers
 {
-    public class MovieModelsController : Controller
+    public class MoviesController : Controller
     {
-        private MovieDbContext db = new MovieDbContext();
-        
+        private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: MovieModels
+        // GET: Movies
         public ActionResult Index()
         {
             return View(db.Movies.ToList());
         }
 
-        // GET: MovieModels/Details/5
+        // GET: Movies/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MovieModels movieModels = db.Movies.Find(id);
-            if (movieModels == null)
+            Movie movie = db.Movies.Find(id);
+            if (movie == null)
             {
                 return HttpNotFound();
             }
-            return View(movieModels);
+            return View(movie);
         }
 
-        // GET: MovieModels/Create
+        // GET: Movies/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: MovieModels/Create
+        // POST: Movies/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MovieID,Name,Date,Rate")] MovieModels movieModels)
+        public ActionResult Create([Bind(Include = "MovieID,Name,Date,Rate,ReviewID,UserID")] Movie movie)
         {
             if (ModelState.IsValid)
             {
-                db.Movies.Add(movieModels);
+                
+                db.Movies.Add(movie);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(movieModels);
+            return View(movie);
         }
 
-        // GET: MovieModels/Edit/5
+        // GET: Movies/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MovieModels movieModels = db.Movies.Find(id);
-            if (movieModels == null)
+            Movie movie = db.Movies.Find(id);
+            if (movie == null)
             {
                 return HttpNotFound();
             }
-            return View(movieModels);
+            return View(movie);
         }
 
-        // POST: MovieModels/Edit/5
+        // POST: Movies/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MovieID,Name,Date,Rate")] MovieModels movieModels)
+        public ActionResult Edit([Bind(Include = "MovieID,Name,Date,Rate,ReviewID,UserID")] Movie movie)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(movieModels).State = EntityState.Modified;
+                db.Entry(movie).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(movieModels);
+            return View(movie);
         }
 
-        // GET: MovieModels/Delete/5
+        // GET: Movies/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MovieModels movieModels = db.Movies.Find(id);
-            if (movieModels == null)
+            Movie movie = db.Movies.Find(id);
+            if (movie == null)
             {
                 return HttpNotFound();
             }
-            return View(movieModels);
+            return View(movie);
         }
 
-        // POST: MovieModels/Delete/5
+        // POST: Movies/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            MovieModels movieModels = db.Movies.Find(id);
-            db.Movies.Remove(movieModels);
+            Movie movie = db.Movies.Find(id);
+            db.Movies.Remove(movie);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

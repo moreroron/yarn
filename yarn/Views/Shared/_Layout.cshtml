@@ -81,8 +81,16 @@
                                 <button type="button" class="btn btn-secondary pl-0 py-0" style="color: #8e8f9e;"
                                         id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                         data-offset="10,20">
+
+                                    @{ 
+
+                                        //var currentUserId = User.Identity.GetUserId();
+                                        //var currentUserAvatar = new yarn.Models.ApplicationUser().Id.Equals(currentUserId);
+
+                                    }
                                     <img class="" style="width: 2.5rem;" src="~/Images/profileIcons/animal-5.svg"
                                          alt="Generic placeholder image">
+
                                     <i class="fas fa-caret-down pl-1"></i>
                                 </button>
                                 <div class="dropdown-menu bg-grey mt-2" aria-labelledby="dropdownMenuOffset">
@@ -111,7 +119,7 @@
 
                                             <span class="dropdown-item text-grey">
                                                 <i class="fas fa-wrench mr-2"></i>
-                                                @Html.ActionLink("Manage Movies", "Index", "MovieModels", routeValues: null, htmlAttributes: new { title = "Configurations", style = "color:inherit", @class = "" })
+                                                @Html.ActionLink("Manage Movies", "Index", "Movies", routeValues: null, htmlAttributes: new { title = "Manage Movies", style = "color:inherit", @class = "" })
                                             </span>
 
                                         }
