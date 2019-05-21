@@ -1,5 +1,8 @@
 ﻿@model yarn.Models.IndexViewModel
 @{
+    /**/
+
+
     ViewBag.Title = "Manage";
 }
 
@@ -9,8 +12,15 @@
 <div>
     <h4>Change your account settings</h4>
     <hr />
-    
-    
+
+    <!-- profile picture -->
+    @{
+
+//var currentUserId = User.Identity.GetUserId();
+//var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new IdentityDbContext()));
+
+    }
+
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
         Launch demo modal
@@ -27,7 +37,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    
+
                     <!-- images -->
                     <div class="control">
                         <label class="radio">
@@ -54,27 +64,27 @@
                             <input type="radio" name="answer">
                             <img style="width: 2.5rem;" src="~/Images/profileIcons/animal-5.svg" />
                         </label>
-                        
-                        </div>
-                    
 
                     </div>
 
-                    
-                    @using (Html.BeginForm("modalSaveChanges", "Manage", FormMethod.Post,
-                        new {enctype = "multipart/form-data"}))
-                    {
-                        <div class="modal-footer">
 
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save changes</button>
-                        </div>
-                    }
-                
+                </div>
+
+
+                @using (Html.BeginForm("modalSaveChanges", "Manage", FormMethod.Post,
+                            new { enctype = "multipart/form-data" }))
+                {
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                }
+
             </div>
         </div>
     </div>
-    
+
 
     <dl class="dl-horizontal">
         <dt>Password:</dt>
@@ -87,12 +97,12 @@
             else
             {
                 @Html.ActionLink("Create", "SetPassword")
-                }
+            }
 
             ]
         </dd>
 
-        
+
 
         @*<dt>External Logins:</dt>
             <dd>

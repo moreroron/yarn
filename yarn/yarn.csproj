@@ -189,12 +189,16 @@
     <Compile Include="Migrations\201905191355579_AspNetIdentity_RenameTables.Designer.cs">
       <DependentUpon>201905191355579_AspNetIdentity_RenameTables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905201411507_changeUserIDname.cs" />
+    <Compile Include="Migrations\201905201411507_changeUserIDname.Designer.cs">
+      <DependentUpon>201905201411507_changeUserIDname.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MovieModels.cs" />
-    <Compile Include="Models\ReviewModels.cs" />
+    <Compile Include="Models\Review.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -338,6 +342,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905191355579_AspNetIdentity_RenameTables.resx">
       <DependentUpon>201905191355579_AspNetIdentity_RenameTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905201411507_changeUserIDname.resx">
+      <DependentUpon>201905201411507_changeUserIDname.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
