@@ -46,7 +46,7 @@ namespace yarn.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MovieID,Name,Date,Rate,ReviewID,UserID")] Movie movie)
+        public ActionResult Create([Bind(Include = "MovieID,Name,Date,Rate,ReviewID,UserID,MovieURL,PosterURL")] Movie movie)
         {
             if (ModelState.IsValid)
             {

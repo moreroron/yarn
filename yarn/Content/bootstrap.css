@@ -1742,16 +1742,16 @@ pre {
     .table td {
         padding: 0.75rem;
         vertical-align: top;
-        border-top: 1px solid #dee2e6;
+        border-top: 1px solid #373843;
     }
 
     .table thead th {
         vertical-align: bottom;
-        border-bottom: 2px solid #dee2e6;
+        border-bottom: 2px solid #373843;
     }
 
     .table tbody + tbody {
-        border-top: 2px solid #dee2e6;
+        border-top: 2px solid #373843;
     }
 
 .table-sm th,
@@ -1760,12 +1760,12 @@ pre {
 }
 
 .table-bordered {
-    border: 1px solid #dee2e6;
+    border: 1px solid #373843;
 }
 
     .table-bordered th,
     .table-bordered td {
-        border: 1px solid #dee2e6;
+        border: 1px solid #373843;
     }
 
     .table-bordered thead th,
@@ -1799,7 +1799,7 @@ pre {
     .table-primary td,
     .table-primary thead th,
     .table-primary tbody + tbody {
-        border-color: #7abaff;
+        border-color: #373843;
     }
 
 .table-hover .table-primary:hover {
@@ -1989,7 +1989,7 @@ pre {
 .table .thead-light th {
     color: #495057;
     background-color: #e9ecef;
-    border-color: #dee2e6;
+    border-color: #373843;
 }
 
 .table-dark {
@@ -6915,23 +6915,23 @@ button.bg-dark:focus {
 }
 
 .border {
-    border: 1px solid #dee2e6 !important;
+    border: 1px solid #373843 !important;
 }
 
 .border-top {
-    border-top: 1px solid #dee2e6 !important;
+    border-top: 1px solid #373843 !important;
 }
 
 .border-right {
-    border-right: 1px solid #dee2e6 !important;
+    border-right: 1px solid #373843 !important;
 }
 
 .border-bottom {
-    border-bottom: 1px solid #dee2e6 !important;
+    border-bottom: 1px solid #373843 !important;
 }
 
 .border-left {
-    border-left: 1px solid #dee2e6 !important;
+    border-left: 1px solid #373843 !important;
 }
 
 .border-0 {
@@ -6955,7 +6955,7 @@ button.bg-dark:focus {
 }
 
 .border-primary {
-    border-color: #007bff !important;
+    border-color: #373843 !important;
 }
 
 .border-secondary {
@@ -10902,7 +10902,7 @@ a.text-dark:hover, a.text-dark:focus {
 
     .table-bordered th,
     .table-bordered td {
-        border: 1px solid #dee2e6 !important;
+        border: 1px solid #373843 !important;
     }
 
     .table-dark {
@@ -10913,12 +10913,12 @@ a.text-dark:hover, a.text-dark:focus {
         .table-dark td,
         .table-dark thead th,
         .table-dark tbody + tbody {
-            border-color: #dee2e6;
+            border-color: #373843;
         }
 
     .table .thead-dark th {
         color: inherit;
-        border-color: #dee2e6;
+        border-color: #373843;
     }
 }
 

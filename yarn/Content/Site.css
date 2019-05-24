@@ -57,11 +57,11 @@
         border: 3px solid #3c4489;
     }
 
-        .btn-primary-landingPage:hover {
-            background-color: #505794;
-            border: 3px solid #505794;
-            transition: all 0.2s ease;
-        }
+    .btn-primary-landingPage:hover {
+        background-color: #505794;
+        border: 3px solid #505794;
+        transition: all 0.2s ease;
+    }
 
     .btn-facebook-landingPage {
         color: #fff;

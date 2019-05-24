@@ -202,6 +202,10 @@
     <Compile Include="Migrations\201905211523104_mergeDBcontexts.Designer.cs">
       <DependentUpon>201905211523104_mergeDBcontexts.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905231522403_addPosterURLMovieURL.cs" />
+    <Compile Include="Migrations\201905231522403_addPosterURLMovieURL.Designer.cs">
+      <DependentUpon>201905231522403_addPosterURLMovieURL.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -288,7 +292,9 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -366,6 +372,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905211523104_mergeDBcontexts.resx">
       <DependentUpon>201905211523104_mergeDBcontexts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905231522403_addPosterURLMovieURL.resx">
+      <DependentUpon>201905231522403_addPosterURLMovieURL.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

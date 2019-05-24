@@ -13,6 +13,8 @@ namespace yarn.Models
         public string Name { get; set; }
         public DateTime Date { get; set; }
         public int Rate { get; set; }
+        public string PosterURL { get; set; }
+        public string MovieURL { get; set; }
 
         // navigation properties
         public int ReviewID { get; set; }

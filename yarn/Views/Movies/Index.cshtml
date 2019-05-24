@@ -6,13 +6,21 @@
     
 }
 
-<h2>Index</h2>
+<div class="row justify-content-between">
+    <div class="col">
+        <h4>Stream Movies</h4>
+    </div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+    <div class="col text-right">
+        <div class="btn btn-primary text-right">@Html.ActionLink("Create New", "Create")</div>
+    </div>
+</div>
+
+<table class="table border-primary">
     <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PosterURL)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
@@ -22,39 +30,30 @@
         <th>
             @Html.DisplayNameFor(model => model.Rate)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ReviewID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserID)
-        </th>
         <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReviewID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserID)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.MovieID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.MovieID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.MovieID })
-            </td>
-        </tr>
+    <tr>
+        <td>
+            <img src="@Html.DisplayFor(modelItem => item.PosterURL)" style="width: 10rem;" />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Rate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.MovieID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.MovieID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.MovieID })
+        </td>
+    </tr>
     }
 
 </table>
