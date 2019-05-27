@@ -1,0 +1,50 @@
+@model IEnumerable<yarn_rider.Models.User>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-between">
+    <div class="col">
+        <h4>Stream Movies</h4>
+    </div>
+
+</div>
+
+<table class="table border-primary">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Avatar)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmailID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Reviews)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <img src="@Html.DisplayFor(modelItem => item.Avatar)" style="width: 10rem;"/>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmailID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Reviews.Count)
+            </td>
+        </tr>
+    }
+
+</table>

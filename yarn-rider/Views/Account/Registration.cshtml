@@ -1,0 +1,180 @@
+@model yarn_rider.Models.User
+
+@{
+    ViewBag.Title = "Registration";
+}
+
+<div class="landingPage-image">
+    <div class="container position-relative">
+
+        <div class="row">
+
+            <div class="col">
+
+                <!-- logo -->
+                <a class="navbar-brand mr-5 mt-4" href="">
+                    <img class="img-fluid" style="width: 5.5rem;" alt="yarn" src="../Images/logo0.5.svg">
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="row justify-content-center">
+
+            <div class="col-4">
+
+                <div class="p-3" style="background-color:rgba(28, 29, 35, 0.9); border-radius: 1rem;">
+
+                    @if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
+                    {
+                        if (ViewBag.Message != null)
+                        {
+                            <div class="">
+                                <strong>Success! </strong>
+                                <hr />
+                                @ViewBag.Message
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        using (Html.BeginForm())
+                        {
+                            @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+                            {
+                                @Html.AntiForgeryToken()
+                                <h2 class="pt-3 pb-2" style="padding-left: 15px;">@ViewBag.Title</h2>
+                                                                                                
+                                <hr/>
+                                
+                                @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.EmailID, new {@class = "col"})
+                                    <div class="col">
+                                        @Html.EditorFor(model => model.EmailID, new {htmlAttributes = new {@class = "form-control"}})
+                                        @Html.ValidationMessageFor(model => model.EmailID, "", new {@class = "text-danger"})
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.UserName, htmlAttributes: new {@class = "col"})
+                                    <div class="col">
+                                        @Html.EditorFor(model => model.UserName, new {htmlAttributes = new {@class = "form-control"}})
+                                        @Html.ValidationMessageFor(model => model.UserName, "", new {@class = "text-danger"})
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Password, htmlAttributes: new {@class = "col"})
+                                    <div class="col">
+                                        @Html.EditorFor(model => model.Password, new {htmlAttributes = new {@class = "form-control"}})
+                                        @Html.ValidationMessageFor(model => model.Password, "", new {@class = "text-danger"})
+                                        @Html.ValidationMessage("EmailExist", new {@class = "text-danger"})
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new {@class = "col"})
+                                    <div class="col">
+                                        @Html.EditorFor(model => model.ConfirmPassword, new {htmlAttributes = new {@class = "form-control"}})
+                                        @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new {@class = "text-danger"})
+                                    </div>
+                                </div>
+
+                                <div class="px-3" style="font-size: 0.8rem;">
+                                    <p>
+                                        By clicking "Create an account" below, you agree to out Trems of Services and Privacy Statement
+                                    </p>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col">
+                                        <input type="submit" class="btn btn-primary-landingPage col-12" value="Create an account"/>
+                                    </div>
+                                </div>
+                            }
+
+                            <hr/>
+
+                            <p style="padding-left: 15px;">
+                                Already a member?
+                                @Html.ActionLink(" Log In.", "Login")
+                            </p>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*     using (Html.BeginForm()) *@
+@*     { *@
+@*         @Html.AntiForgeryToken() *@
+@*          *@
+@*         <div class="form-horizontal"> *@
+@*             <hr /> *@
+@*             @Html.ValidationSummary(true, "", new { @class = "text-danger" }) *@
+@*              *@
+@*             <div class="form-group"> *@
+@*                 @Html.LabelFor(model => model.EmailID, htmlAttributes: new { @class = "control-label col-md-2" }) *@
+@*                 <div class="col-md-10"> *@
+@*                     @Html.EditorFor(model => model.EmailID, new { htmlAttributes = new { @class = "form-control" } }) *@
+@*                     @Html.ValidationMessageFor(model => model.EmailID, "", new { @class = "text-danger" }) *@
+@*                 </div> *@
+@*             </div> *@
+@*              *@
+@*             <div class="form-group"> *@
+@*                 @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" }) *@
+@*                 <div class="col-md-10"> *@
+@*                     @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } }) *@
+@*                     @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" }) *@
+@*                 </div> *@
+@*             </div> *@
+@*              *@
+@*             <div class="form-group"> *@
+@*                 @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" }) *@
+@*                 <div class="col-md-10"> *@
+@*                     @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } }) *@
+@*                     @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" }) *@
+@*                     @Html.ValidationMessage("EmailExist", new { @class = "text-danger" }) *@
+@*                 </div> *@
+@*             </div> *@
+@*              *@
+@*             <div class="form-group"> *@
+@*                 @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-2" }) *@
+@*                 <div class="col-md-10"> *@
+@*                     @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } }) *@
+@*                     @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" }) *@
+@*                 </div> *@
+@*             </div> *@
+@*              *@
+@*              *@
+@* *@
+@*             <div class="form-group"> *@
+@*                 <div class="col-md-offset-2 col-md-10"> *@
+@*                     <input type="submit" value="Create" class="btn btn-default" /> *@
+@*                 </div> *@
+@*             </div> *@
+@*              *@
+@*         </div> *@
+@*          *@
+@*         if (ViewBag.Message != null) *@
+@*         { *@
+@*             <div class="alert alert-danger"> *@
+@*                 <strong>Error!</strong>@ViewBag.Message *@
+@*             </div> *@
+@*         } *@
+@*     } *@
+@* } *@
+
+@* <div> *@
+@*     @Html.ActionLink("Login", "Login") *@
+@* </div> *@
+
+@section Scripts {
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}

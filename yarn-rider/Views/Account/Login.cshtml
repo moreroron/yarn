@@ -1,0 +1,108 @@
+@model yarn_rider.Models.UserLogin
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<div class="landingPage-image">
+    <div class="container position-relative">
+
+        <div class="row">
+
+            <div class="col">
+
+                <!-- logo -->
+                <a class="navbar-brand mr-5 mt-4" href="">
+                    <img class="img-fluid" style="width: 5.5rem;" alt="yarn" src="../Images/logo0.5.svg">
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="row justify-content-center">
+
+            <div class="col-4">
+
+                <div class="p-3" style="background-color:rgba(28, 29, 35, 0.9); border-radius: 1rem;">
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <h2 class="pt-3 pb-2" style="padding-left: 15px;">@ViewBag.Title</h2>
+
+                        <hr/>
+
+                        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+
+                        <div class="form-group ml-2">
+                            @if (ViewBag.Message != "")
+                            {
+                                <div class="text-danger">@ViewBag.Message</div>
+                            }
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.EmailID, htmlAttributes: new {@class = "col"})
+                            <div class="col">
+                                @Html.EditorFor(model => model.EmailID, new {htmlAttributes = new {@class = "form-control"}})
+                                @Html.ValidationMessageFor(model => model.EmailID, "", new {@class = "text-danger"})
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Password, htmlAttributes: new {@class = "col"})
+                            <div class="col">
+                                @Html.EditorFor(model => model.Password, new {htmlAttributes = new {@class = "form-control"}})
+                                @Html.ValidationMessageFor(model => model.Password, "", new {@class = "text-danger"})
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="col">
+                                <div class="checkbox">
+                                    @Html.CheckBoxFor(model => model.RememberMe, new { @class = "mr-2" })
+                                    @Html.LabelFor(model => model.RememberMe)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col py-2">
+                                <input type="submit" value="Login" class="btn btn-primary-landingPage col-12"/>
+                            </div>
+                        </div>
+
+                        <hr/>
+
+                        // !! facebook integration needed here !!
+                        @* @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl }) *@
+
+                        <hr/>
+
+                        <p style="padding-left: 15px;">
+                            Not a member?
+                            @Html.ActionLink(" Sign Up.", "Registration")
+                        </p>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<div>
+    @Html.ActionLink("Register Now", "Registration", "Account")
+</div>
+
+
+@section Scripts{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}
