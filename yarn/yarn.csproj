@@ -47,6 +47,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -141,12 +149,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.2\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
@@ -179,33 +181,21 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201905080816445_InitialCreate.cs" />
-    <Compile Include="Migrations\201905080816445_InitialCreate.Designer.cs">
-      <DependentUpon>201905080816445_InitialCreate.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Migrations\201905080816445_InitialCreate.Designer.cs" />
     <Compile Include="Migrations\201905170839258_initMigration.cs" />
-    <Compile Include="Migrations\201905170839258_initMigration.Designer.cs">
-      <DependentUpon>201905170839258_initMigration.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Migrations\201905170839258_initMigration.Designer.cs" />
     <Compile Include="Migrations\201905191355579_AspNetIdentity_RenameTables.cs" />
-    <Compile Include="Migrations\201905191355579_AspNetIdentity_RenameTables.Designer.cs">
-      <DependentUpon>201905191355579_AspNetIdentity_RenameTables.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Migrations\201905191355579_AspNetIdentity_RenameTables.Designer.cs" />
+    <Compile Include="Migrations\201905201248035_AddReviewModelDB.cs" />
+    <Compile Include="Migrations\201905201248035_AddReviewModelDB.Designer.cs" />
     <Compile Include="Migrations\201905201411507_changeUserIDname.cs" />
-    <Compile Include="Migrations\201905201411507_changeUserIDname.Designer.cs">
-      <DependentUpon>201905201411507_changeUserIDname.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Migrations\201905201411507_changeUserIDname.Designer.cs" />
     <Compile Include="Migrations\201905211446235_createMovieAndReviewTables.cs" />
-    <Compile Include="Migrations\201905211446235_createMovieAndReviewTables.Designer.cs">
-      <DependentUpon>201905211446235_createMovieAndReviewTables.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Migrations\201905211446235_createMovieAndReviewTables.Designer.cs" />
     <Compile Include="Migrations\201905211523104_mergeDBcontexts.cs" />
-    <Compile Include="Migrations\201905211523104_mergeDBcontexts.Designer.cs">
-      <DependentUpon>201905211523104_mergeDBcontexts.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Migrations\201905211523104_mergeDBcontexts.Designer.cs" />
     <Compile Include="Migrations\201905231522403_addPosterURLMovieURL.cs" />
-    <Compile Include="Migrations\201905231522403_addPosterURLMovieURL.Designer.cs">
-      <DependentUpon>201905231522403_addPosterURLMovieURL.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Migrations\201905231522403_addPosterURLMovieURL.Designer.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -249,6 +239,14 @@
     <Content Include="Images\profileIcons\man-4.svg" />
     <Content Include="Images\profileIcons\man.svg" />
     <Content Include="Images\profileIcons\profile6.svg" />
+    <Content Include="Migrations\201905080816445_InitialCreate.resx" />
+    <Content Include="Migrations\201905170839258_initMigration.resx" />
+    <Content Include="Migrations\201905191355579_AspNetIdentity_RenameTables.resx" />
+    <Content Include="Migrations\201905201248035_AddReviewModelDB.resx" />
+    <Content Include="Migrations\201905201411507_changeUserIDname.resx" />
+    <Content Include="Migrations\201905211446235_createMovieAndReviewTables.resx" />
+    <Content Include="Migrations\201905211523104_mergeDBcontexts.resx" />
+    <Content Include="Migrations\201905231522403_addPosterURLMovieURL.resx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -271,6 +269,7 @@
     <Content Include="Scripts\esm\popper.js.map" />
     <Content Include="Scripts\esm\popper-utils.min.js.map" />
     <Content Include="Scripts\esm\popper-utils.js.map" />
+    <None Include="App.config" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -353,29 +352,6 @@
     <Content Include="Views\Reviews\Details.cshtml" />
     <Content Include="Views\Reviews\Edit.cshtml" />
     <Content Include="Views\Reviews\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201905080816445_InitialCreate.resx">
-      <DependentUpon>201905080816445_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905170839258_initMigration.resx">
-      <DependentUpon>201905170839258_initMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905191355579_AspNetIdentity_RenameTables.resx">
-      <DependentUpon>201905191355579_AspNetIdentity_RenameTables.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905201411507_changeUserIDname.resx">
-      <DependentUpon>201905201411507_changeUserIDname.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905211446235_createMovieAndReviewTables.resx">
-      <DependentUpon>201905211446235_createMovieAndReviewTables.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905211523104_mergeDBcontexts.resx">
-      <DependentUpon>201905211523104_mergeDBcontexts.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905231522403_addPosterURLMovieURL.resx">
-      <DependentUpon>201905231522403_addPosterURLMovieURL.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

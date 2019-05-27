@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "yarn", "yarn\yarn.csproj", "{16BF16FE-B716-4BC9-87B7-AD4102AE512A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "yarn-rider", "yarn-rider\yarn-rider.csproj", "{87A41BBE-7F23-4B57-8BC7-284CCDC2CAAA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{16BF16FE-B716-4BC9-87B7-AD4102AE512A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16BF16FE-B716-4BC9-87B7-AD4102AE512A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16BF16FE-B716-4BC9-87B7-AD4102AE512A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87A41BBE-7F23-4B57-8BC7-284CCDC2CAAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87A41BBE-7F23-4B57-8BC7-284CCDC2CAAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87A41BBE-7F23-4B57-8BC7-284CCDC2CAAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87A41BBE-7F23-4B57-8BC7-284CCDC2CAAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
