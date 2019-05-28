@@ -7,14 +7,24 @@ namespace yarn_rider.Models
     public class Movie
     {
         public int MovieID { get; set; }
+        
         [Display(Name = "Movie Name")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Movie name is required")]
         public string MovieName { get; set; }
+        
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Date is required")]
         public string Date { get; set; }
+        
         public int Rate { get; set; }
+        
         [Display(Name = "Poster URL")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Poster url is required")]
         public string PosterURL { get; set; }
+        
         [Display(Name = "Video URL")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Stream url is required")]
         public string MovieURL { get; set; }
+        
         public Genre Genre { get; set; }
 
         // navigation properties
