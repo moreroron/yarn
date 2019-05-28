@@ -17,10 +17,24 @@
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+/*input,*/
+/*  select,*/
+/*  textarea {*/
+/*    max-width: 280px;*/
+/*  }*/
+
+html, body {
+    height: 100%;
+}
+body {
+    display: flex;
+    flex-direction: column;
+}
+.content {
+    margin-top: auto
+}
+.footer {
+    flex-shrink: 0;
 }
 
 /*  --------------------------------------------  */
@@ -87,4 +101,15 @@ textarea {
 
 .text-link:hover {
     color: #fff;
+}
+
+.btn-grey {
+    color: #8e8f9e;
+    box-shadow: inset 0 0 0 2px #373842;
+}
+
+.btn-grey:hover {
+    color: #6d7cf3;
+    box-shadow: inset 0 0 0 2px #3f499f;
+    background: none;
 }
