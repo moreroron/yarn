@@ -147,6 +147,10 @@
     <Compile Include="Migrations\201905260946296_addAvatar.Designer.cs">
       <DependentUpon>201905260946296_addAvatar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905281953334_MovieDataAnnotations.cs" />
+    <Compile Include="Migrations\201905281953334_MovieDataAnnotations.Designer.cs">
+      <DependentUpon>201905281953334_MovieDataAnnotations.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Extended\User.cs" />
     <Compile Include="Models\Movie.cs" />
@@ -205,8 +209,10 @@
     <Content Include="Views\Movie\Create.cshtml" />
     <Content Include="Views\Movie\Index.cshtml" />
     <Content Include="Views\Shared\profile.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Shared\_LayoutAccount.cshtml" />
     <Content Include="Views\Shared\_LayoutMap.cshtml" />
+    <Content Include="Views\Shared\_Nav.cshtml" />
     <Content Include="Views\User\Details.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Web.config" />
@@ -260,6 +266,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905260946296_addAvatar.resx">
       <DependentUpon>201905260946296_addAvatar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905281953334_MovieDataAnnotations.resx">
+      <DependentUpon>201905281953334_MovieDataAnnotations.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

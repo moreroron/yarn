@@ -8,17 +8,18 @@
     <div class="col">
         <h3>Stream Movies</h3>
     </div>
-    <div class="col text-right">
-        <div class="btn btn-primary text-right">@Html.ActionLink("Create New Movie", "Create")</div>
-    </div>
-</div>
 
-<div class="row justify-content-lg-between">
-    <div class="col">
-    </div>
+    <a href="@Url.Action("Create", "Movie")">
+        <div class="btn btn-grey col text-right">
+            Create New Movie
+        </div>
+    </a>
+
 </div>
 
 <hr/>
+
+<!-- loop through all movies (each iteration adds row and 5 cols with movies  -->
 
 @for (var i = 0; i < Model.Count;)
 {
@@ -28,7 +29,6 @@
     {
         break;
     }
-
     
     <div class="col-2 bg-secondary rounded p-1 m-0">
         <img class="img-fluid d-block rounded-top" alt="yarn"
@@ -92,54 +92,3 @@
 
     @:</div>
 }
-
-@* 
-@* <div class="col-2 bg-secondary rounded p-1 m-0"> *@
-@*     <img class="img-fluid d-block rounded-top" alt="yarn" *@
-@*          src="https://image.tmdb.org/t/p/w1280/wElOvH7H6sLElsTOLu1MY6oWRUx.jpg"> *@
-@*     <h6 style="color: #fff; font-weight: bold" class="px-2 pt-2 m-0">Game Of Thrones</h6> *@
-@*     <p style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0">Action, Thriller, Fantasy</p> *@
-@* </div> *@
-
-
-@* <table class="table border-primary"> *@
-@*     <tr> *@
-@*         <th> *@
-@*             @Html.DisplayNameFor(model => model.PosterURL) *@
-@*         </th> *@
-@*         <th> *@
-@*             @Html.DisplayNameFor(model => model.MovieName) *@
-@*         </th> *@
-@*         <th> *@
-@*             @Html.DisplayNameFor(model => model.Date) *@
-@*         </th> *@
-@*         <th> *@
-@*             @Html.DisplayNameFor(model => model.Rate) *@
-@*         </th> *@
-@*         <th> *@
-@*             @Html.DisplayNameFor(model => model.Genre) *@
-@*         </th> *@
-@*         <th></th> *@
-@*     </tr> *@
-@*     @foreach (var item in Model) *@
-@*     { *@
-@*         <tr> *@
-@*             <td> *@
-@*                 <img src="@Html.DisplayFor(modelItem => item.PosterURL)" style="width: 10rem;" /> *@
-@*             </td> *@
-@*             <td> *@
-@*                 @Html.DisplayFor(modelItem => item.MovieName) *@
-@*             </td> *@
-@*             <td> *@
-@*                 @Html.DisplayFor(modelItem => item.Date) *@
-@*             </td> *@
-@*             <td> *@
-@*                 @Html.DisplayFor(modelItem => item.Rate) *@
-@*             </td> *@
-@*             <td> *@
-@*                 @Html.DisplayFor(modelItem => item.Genre) *@
-@*             </td> *@
-@*             <td></td> *@
-@*         </tr> *@
-@*     } *@
-@* </table> *@

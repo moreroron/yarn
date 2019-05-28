@@ -1,0 +1,137 @@
+
+<div class="container-fluid bg-secondary fixed-top">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg bg-secondary navbar-dark pt-3 pb-3">
+
+
+            <!-- LOGO -->
+            <a class="navbar-brand mr-5" href="@Url.Action("Index", "Home")">
+                <img class="img-fluid" alt="yarn" src="~/Images/logo0.5.svg">
+                @{
+                    string currentUser = HttpContext.Current.User.Identity.Name;
+                }
+            </a>
+
+
+            <!-- MENU COLLAPSE (for small devices) -->
+            <button class="navbar-toggler" data-toggle="collapse" data-target="#menuShrink">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="menuShrink">
+                <ul class="navbar-nav">
+
+
+                    <!-- BROWSE -->
+                    <li class="nav-item mr-2">
+                        <a href="@Url.Action("Index", "Movie")">
+                            <div class="btn btn-grey">
+                                Browse
+                            </div>
+                        </a>
+                    </li>
+
+                    <!-- SEARCH -->
+                    <li class="nav-item">
+
+                        @using (Html.BeginForm("Index", "Movie", FormMethod.Get))
+                        {
+                            <div class="input-group">
+                                @Html.TextBox("searchString", null, new {@class = "form-control"})
+                                @* <input type="submit" value="search"/> *@
+
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="basic-addon1" style="color:#52525b">
+                                        <i class="fas fa-search">
+                                        </i>
+                                    </span>
+                                </div>
+                            </div>
+                        }
+
+                    </li>
+
+                </ul>
+
+                <!-- PROFILE -->
+
+                @if (Request.IsAuthenticated)
+                {
+                    using (Html.BeginForm("Logout", "Account", FormMethod.Post, new
+                    {
+                        id = "logoutForm",
+                        @class =
+                            "dropdown ml-auto"
+                    }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="dropdown ml-auto">
+
+                            <button type="button" class="btn btn-secondary pl-0 py-0" style="color: #8e8f9e;"
+                                    id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                    data-offset="10,20">
+
+                                <img style="width: 2.5rem;" src="~/Images/profileIcons/0.svg"
+                                     alt="Generic placeholder image">
+
+                                <i class="fas fa-caret-down pl-1"></i>
+
+                            </button>
+
+                            <div class="dropdown-menu bg-grey mt-2" aria-labelledby="dropdownMenuOffset">
+                                @Html.ActionLink("Profile", "Details", "User", routeValues: null, htmlAttributes: new
+                                {
+                                    title = "Manage", @class = "dropdown-item text-grey"
+                                })
+
+                                <a class="dropdown-item text-grey" href="#">My Favorites</a>
+
+                                <!-- Admins Extra Tools -->
+                                @{
+                                    if (User.IsInRole("Admin"))
+                                    {
+                                        <div class="dropdown-divider"></div>
+                                        <h6 class="dropdown-header" style="color: #6c719c;">Management</h6>
+
+                                        <span class="dropdown-item text-grey">
+                                            <i class="fas fa-wrench mr-2"></i>
+                                            @Html.ActionLink("Manage Users", "Index", "User", routeValues: null, htmlAttributes: new {title = "Manage Users", style = "color:inherit", @class = ""})
+                                        </span>
+
+                                        <span class="dropdown-item text-grey">
+                                            <i class="fas fa-wrench mr-2"></i>
+                                            @Html.ActionLink("Manage Movies", "Index", "Movie", routeValues: null, htmlAttributes: new {title = "Manage Movies", style = "color:inherit", @class = ""})
+                                        </span>
+                                    }
+                                }
+
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-grey"
+                                   href="javascript:document.getElementById('logoutForm').submit()">
+                                    Log off
+                                </a>
+
+                            </div>
+                        </div>
+                    }
+                }
+
+                else
+                {
+                    <ul class="nav navbar-nav ml-auto">
+                        <li>
+                            @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new
+                            {
+                                id =
+                                    "loginLink"
+                            })
+                        </li>
+                    </ul>
+                }
+
+
+            </div>
+        </nav>
+    </div>
+</div>
+
