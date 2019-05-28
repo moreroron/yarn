@@ -1,15 +1,19 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace yarn_rider.Models
 {
     public class Movie
     {
         public int MovieID { get; set; }
+        [Display(Name = "Movie Name")]
         public string MovieName { get; set; }
         public string Date { get; set; }
         public int Rate { get; set; }
+        [Display(Name = "Poster URL")]
         public string PosterURL { get; set; }
+        [Display(Name = "Video URL")]
         public string MovieURL { get; set; }
         public Genre Genre { get; set; }
 

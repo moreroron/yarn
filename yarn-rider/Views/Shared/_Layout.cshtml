@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -40,35 +40,32 @@
                     <!-- BROWSE -->
                     <li class="nav-item mr-2">
                         <a href="@Url.Action("Index", "Movie")">
-                            <div class="btn btn-primary">
+                            <div class="btn btn-grey">
                                 Browse
                             </div>
                         </a>
                     </li>
 
-
-                    <!-- SEARCH -->
                     <!-- SEARCH -->
                     <li class="nav-item">
-                        <div class="input-group">
-
-                            @using (Html.BeginForm("Search", "Movie", FormMethod.Get))
-                            {
-                                @Html.TextBox("searchString")
-                                <input type="submit" value="search"/>
-                            }
-
-                            @*<input type="search" class="form-control" style="padding-right: 5rem;"
-            placeholder="Search films or series" aria-label="search"
-            aria-describedby="basic-addon1">*@
-                            <div class="input-group-append">
-                                <span class="input-group-text" id="basic-addon1" style="color:#52525b">
-                                    <i class="fas fa-search">
-                                    </i>
-                                </span>
+                        
+                        @using (Html.BeginForm("Index", "Movie", FormMethod.Get))
+                        {
+                            <div class="input-group">
+                                @Html.TextBox("searchString", null, new { @class = "form-control" })
+                                @* <input type="submit" value="search"/> *@
+                                
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="basic-addon1" style="color:#52525b">
+                                        <i class="fas fa-search">
+                                        </i>
+                                    </span>
+                                </div>
                             </div>
-                        </div>
+                        }
+                        
                     </li>
+                    
                 </ul>
 
                 <!-- PROFILE -->
@@ -169,7 +166,7 @@
 <!-- ------------------------------------ -->
 
 <div class="bg-secondary">
-    <div class="container py-4">
+    <footer class="container py-4 ">
         <div class="row">
             <div class="col-1 pt-2">
                 <img class="img-fluid" alt="yarn" src="~/Images/logo0.5.svg"
@@ -179,13 +176,15 @@
                 <p class="align-middle">
                     yarn is a platform for streaming content
                     <b>
-                        <i style="text-shadow: 1px 1px 0px #000000;color: #ffc107;">lighting-fast</i>
+                        <i style="text-shadow: 1px 1px 0px #000000;color: #6d6d79;">lighting-fast</i>
                     </b>
                     <br>&copy; yarn @DateTime.Now.Year
+                    <br/><br/>
+                    @Html.ActionLink("Locations", "Locations", "Home", null, new {color = "#6d6d79"})
                 </p>
             </div>
         </div>
-    </div>
+    </footer>
 </div>
 
 @Scripts.Render("~/bundles/jquery")

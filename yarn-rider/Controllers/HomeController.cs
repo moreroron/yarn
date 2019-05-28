@@ -13,7 +13,7 @@ namespace yarn_rider.Controllers
         private SiteDbContext db = new SiteDbContext();
         public ActionResult Index()
         {
-            return View();
+            return View(db.Movies.ToList());
         }
 
         public ActionResult About()
@@ -28,5 +28,9 @@ namespace yarn_rider.Controllers
             return View();
         }
         
+        public ActionResult Locations()
+        {
+            return View();
+        }
     }
 }

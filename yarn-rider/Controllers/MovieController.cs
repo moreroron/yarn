@@ -16,7 +16,7 @@ namespace yarn_rider.Controllers
         }
 
         [HttpGet]
-        public ActionResult Search(string searchString)
+        public ActionResult Index(string searchString)
         {
             var movies = from m in db.Movies 
                          select m;
@@ -30,7 +30,7 @@ namespace yarn_rider.Controllers
                 return View(db.Movies.ToList());
             }
 
-            return View(movies);
+            return View(movies.ToList());
         }
         
         public ActionResult Create()
@@ -52,5 +52,10 @@ namespace yarn_rider.Controllers
 
             return View(movie);
         }
+
+//        public ActionResult Details(Movie movie)
+//        {
+//            return View(movie);
+//        }
     }
 }

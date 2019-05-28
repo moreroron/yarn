@@ -21,4 +21,12 @@ namespace yarn_rider.Models
         public virtual List<Review> Reviews { get; set; }
         public virtual List<Movie> Movies { get; set; }
     }
+    public enum Countries
+    {
+        Comedy,
+        Horror,
+        Action,
+        Thriller, 
+        Animation
+    }
 }
