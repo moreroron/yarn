@@ -1,5 +1,3 @@
-![Image description](https://i.imgur.com/RUjd0Qj.png)
-
 # yarn
 
 A platform for streaming content lighting-fast.
