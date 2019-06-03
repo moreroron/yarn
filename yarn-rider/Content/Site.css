@@ -29,6 +29,7 @@ html, body {
 body {
     display: flex;
     flex-direction: column;
+    
 }
 .content {
     margin-top: auto
@@ -44,8 +45,8 @@ body {
 .landingPage-image {
     position: relative;
     background: #23242c;
-    overflow: hidden;
-    height: 100vh;
+    /*overflow: hidden;*/
+    /*height: 100vh;*/
     z-index: 0;
 }
 
@@ -109,6 +110,17 @@ body {
 }
 
 .btn-grey:hover {
+    color: #6d7cf3;
+    box-shadow: inset 0 0 0 2px #3f499f;
+    background: none;
+}
+
+.btn-admin {
+    color: #907f62;
+    box-shadow: inset 0 0 0 2px #423e37;
+}
+
+.btn-admin:hover {
     color: #6d7cf3;
     box-shadow: inset 0 0 0 2px #3f499f;
     background: none;

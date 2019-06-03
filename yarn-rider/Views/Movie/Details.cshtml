@@ -1,0 +1,65 @@
+@model yarn_rider.Models.Movie
+
+@{
+    ViewBag.Title = ViewBag.Message + "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-between">
+    <div class="col">
+        <h3>@ViewBag.Message</h3>
+    </div>
+
+    <!-- Admin Only! -->
+    <a href="@Url.Action("Edit", "Movie", new {id = Model.MovieID})" class="mr-2">
+        <div class="btn btn-admin col text-right">
+            <i class="fas fa-pen pr-2"></i>Edit
+        </div>
+    </a>
+
+    <a href="@Url.Action("Index", "Movie")">
+        <div class="btn btn-grey col text-right">
+            <i class="fas fa-arrow-left pr-2"></i>Back
+        </div>
+    </a>
+
+</div>
+
+<hr/>
+
+<div class="row justify-content-between">
+
+    <div class="col-2 bg-secondary rounded py-1 pl-1 pr-0 m-0">
+        <img class="img-fluid d-block rounded-top" alt="yarn"
+             src="@Model.PosterURL">
+        <h6 style="color: #fff; font-weight: bold" class="px-2 pt-2 m-0">@Model.MovieName</h6>
+        <p style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0"> @Model.Genre | @Model.Date</p>
+    </div>
+
+    <div class="col-10 bg-secondary rounded p-1 m-0 text-center">
+        <iframe width="100%" height="100%" src="@Html.DisplayFor(model => model.MovieURL)" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+</div>
+
+<div class="row justify-content-between mt-5">
+    
+    <div class="col">
+        <h3>yarner Reviews</h3>
+    </div>
+
+    <a href="@Url.Action("Create", "Review", new { userKey = Model.UserID, movieKey = Model.MovieID })">
+        <div class="btn btn-grey col text-right">
+            <i class="fas fa-user-edit pr-2"></i>Write Review
+        </div>
+    </a>
+    
+</div>
+
+<hr/>
+
+@* @Html.RenderPartial("~/Views/Review/Index.cshtml", modeldata); *@
+@* @Html.Action("Index", "Review") *@
+@* @{ *@
+@*     Html.RenderPartial("~/Views/Review/Index.cshtml"); *@
+@* } *@

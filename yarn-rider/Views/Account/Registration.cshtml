@@ -3,11 +3,7 @@
 @{
     ViewBag.Title = "Registration";
 }
-
-<div class="landingPage-image">
-    <div class="container position-relative">
-
-        <div class="row">
+<div class="row">
 
             <div class="col">
 
@@ -24,7 +20,7 @@
 
             <div class="col-4">
 
-                <div class="p-3" style="background-color:rgba(28, 29, 35, 0.9); border-radius: 1rem;">
+                <div class="p-3 mb-5" style="background-color:rgba(28, 29, 35, 0.9); border-radius: 1rem;">
 
                     @if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
                     {
@@ -32,7 +28,7 @@
                         {
                             <div class="">
                                 <strong>Success! </strong>
-                                <hr />
+                                <hr/>
                                 @ViewBag.Message
                             </div>
                         }
@@ -45,9 +41,9 @@
                             {
                                 @Html.AntiForgeryToken()
                                 <h2 class="pt-3 pb-2" style="padding-left: 15px;">@ViewBag.Title</h2>
-                                                                                                
+
                                 <hr/>
-                                
+
                                 @Html.ValidationSummary(true, "", new {@class = "text-danger"})
 
                                 <div class="form-group">
@@ -83,6 +79,17 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Country, htmlAttributes: new {@class = "col"})
+                                    @using yarn_rider.Models
+                                    <div class="col">
+                                        @Html.DropDownListFor(m => m.Country,
+                                            new SelectList(Enum.GetValues(typeof(Country))),
+                                            "select country", new {@class = "form-control"})
+                                        @Html.ValidationMessageFor(model => model.Country, "", new {@class = "text-danger"})
+                                    </div>
+                                </div>
+
                                 <div class="px-3" style="font-size: 0.8rem;">
                                     <p>
                                         By clicking "Create an account" below, you agree to out Trems of Services and Privacy Statement
@@ -107,8 +114,8 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
+        
+  
 
 
 @section Scripts {

@@ -1,7 +1,7 @@
 @model yarn_rider.Models.Movie
 
 @{
-    ViewBag.Title = "Add a Movie";
+    ViewBag.Title = ViewBag.Message + " (edit mode)";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -25,6 +25,8 @@
     @Html.AntiForgeryToken()
 
     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+    
+    @Html.HiddenFor(model => model.MovieID)
 
     <div class="row">
 
@@ -74,9 +76,9 @@
     <hr/>
 
     <div class="row justify-content-end">
-        
+
         <div class="col">
-            <input type="submit" value="Create Movie" class="btn btn-admin"/>
+            <input type="submit" value="Submit Changes" class="btn btn-admin"/>
         </div>
 
     </div>

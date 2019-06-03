@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using yarn_rider.Models;
 
 namespace yarn_rider.Controllers
@@ -53,9 +56,36 @@ namespace yarn_rider.Controllers
             return View(movie);
         }
 
-//        public ActionResult Details(Movie movie)
-//        {
-//            return View(movie);
-//        }
+        public ActionResult Details(int? id)
+        {
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            Movie movie = db.Movies.Find(id);
+            if (movie == null) return HttpNotFound();
+            
+            ViewBag.Message = movie.MovieName;
+
+            return View(movie);
+        }
+
+        public ActionResult Edit(int? id)
+        {
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            Movie movie = db.Movies.Find(id);
+            if (movie == null) return HttpNotFound();
+
+            ViewBag.Message = movie.MovieName;
+
+            return View(movie);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Movie movie)
+        {
+            db.Entry(movie).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }

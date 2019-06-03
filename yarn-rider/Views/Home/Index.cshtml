@@ -1,7 +1,7 @@
 ﻿@model IList<yarn_rider.Models.Movie>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Homepage";
 }
 
 @* @if (Request.IsAuthenticated) *@
@@ -27,8 +27,9 @@
 <h3 class="mt-5 mb-4">Films Recently Added</h3>
 
 <div class="row justify-content-between mb-4 p-0 ">
-
-    @for (var i = Model.Count-1; i > Model.Count - 6; i--)
+    
+    @* getting the 5 last movies added to the db by looping through the movie list *@
+    @for (var i = Model.Count - 1; i > Model.Count - 6; i--)
     {
         if (Model.Count < 5)
         {
@@ -39,24 +40,8 @@
                  src="@Model[i].PosterURL">
             <h6 style="color: #fff; font-weight: bold" class="px-2 pt-2 m-0">@Model[i].MovieName</h6>
             <p style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0"> @Model[i].Genre | @Model[i].Date </p>
+            <a style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0" href="@Url.Action("Details", "Movie", new {id = @Model[i].MovieID})">Details</a>
         </div>
     }
-    
-    
-                @* <img class="img-fluid d-block rounded-top" alt="yarn" *@
-                @*      src="@Model[i].PosterURL"> *@
-                @* <h6 style="color: #fff; font-weight: bold" class="px-2 pt-2 m-0">@Model[i].MovieName</h6> *@
-                @* <p style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0"> @Model[i].Genre | @Model[i].Date </p> *@
-    
-    
-
-    @*                     <img src="@Html.DisplayFor(m => m[i].PosterURL)" style="width: 10rem;"/> *@
-@* *@
-@*                     @Html.DisplayFor(modelItem => item.UserName) *@
-@* *@
-@*                     @Html.DisplayFor(modelItem => item.EmailID) *@
-@* *@
-@*                     @Html.DisplayFor(modelItem => item.Reviews.Count) *@
-    
 
 </div>
