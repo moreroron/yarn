@@ -34,10 +34,22 @@ namespace yarn_rider.Models
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Confirm password and password do not match")]
         public string ConfirmPassword { get; set; }
+        
+        [Display(Name = "Country")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "selecting a country is required")]
+        public Country Country { get; set; }
 
-//        [Display(Name = "Country")]
-//        [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
-//        [Required(AllowEmptyStrings = false, ErrorMessage = " Country is required")]
-//        public string Country { get; set; }
+    }
+    
+    public enum Country
+    {
+        Israel,
+        UnitedStates,
+        Australia,
+        Brazil, 
+        Italy,
+        Thailand,
+        Japan,
+        SouthAfrica
     }
 }

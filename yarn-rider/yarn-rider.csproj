@@ -126,6 +126,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MovieController.cs" />
+    <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Crypto.cs" />
     <Compile Include="Global.asax.cs">
@@ -150,6 +151,14 @@
     <Compile Include="Migrations\201905281953334_MovieDataAnnotations.cs" />
     <Compile Include="Migrations\201905281953334_MovieDataAnnotations.Designer.cs">
       <DependentUpon>201905281953334_MovieDataAnnotations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905290928331_addCountryDataMember.cs" />
+    <Compile Include="Migrations\201905290928331_addCountryDataMember.Designer.cs">
+      <DependentUpon>201905290928331_addCountryDataMember.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906021225506_addDataAnnoForReview.cs" />
+    <Compile Include="Migrations\201906021225506_addDataAnnoForReview.Designer.cs">
+      <DependentUpon>201906021225506_addDataAnnoForReview.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Extended\User.cs" />
@@ -207,7 +216,11 @@
     <Content Include="Views\Account\VerifyAccount.cshtml" />
     <Content Include="Views\Home\Locations.cshtml" />
     <Content Include="Views\Movie\Create.cshtml" />
+    <Content Include="Views\Movie\Details.cshtml" />
+    <Content Include="Views\Movie\Edit.cshtml" />
     <Content Include="Views\Movie\Index.cshtml" />
+    <Content Include="Views\Review\Create.cshtml" />
+    <Content Include="Views\Review\Index.cshtml" />
     <Content Include="Views\Shared\profile.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Shared\_LayoutAccount.cshtml" />
@@ -269,6 +282,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905281953334_MovieDataAnnotations.resx">
       <DependentUpon>201905281953334_MovieDataAnnotations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905290928331_addCountryDataMember.resx">
+      <DependentUpon>201905290928331_addCountryDataMember.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906021225506_addDataAnnoForReview.resx">
+      <DependentUpon>201906021225506_addDataAnnoForReview.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
