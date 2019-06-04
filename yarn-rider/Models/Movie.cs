@@ -43,4 +43,13 @@ namespace yarn_rider.Models
         Thriller, 
         Animation
     }
+    
+    public enum Modifier
+    {
+        RatingAscending,
+        RatingDescending,
+        TitleAscending,
+        TitleDescending
+    }
+
 }

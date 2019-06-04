@@ -1,5 +1,5 @@
-@model IList<yarn_rider.Models.Movie>
-
+@using System.Globalization
+@using yarn_rider.Models
 @{
     ViewBag.Title = "Browse & Search";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -19,81 +19,65 @@
 
 <hr/>
 
+<!-- search by filters -->
+
+@using (Html.BeginForm("Index", "Movie", FormMethod.Get))
+{
+    <div class="row">
+        <div class="form-group col-xs-12 col-md-2 mb-0">
+            @Html.DropDownList("searchByGenre", new SelectList(Enum.GetValues(typeof(Genre))), "By Genre", new {@class = "form-control"})
+        </div>
+
+        <div class="form-group col-xs-12 col-md-2 mb-0">
+            @Html.DropDownList("searchByModifier", new SelectList(Enum.GetValues(typeof(Modifier))), "By Modifier", new {@class = "form-control"})
+        </div>
+        
+        @* building a dropdown for years *@
+        @{
+            var years = Enumerable
+                .Range(DateTime.Now.Year-29, 30)
+                .Select(year => new SelectListItem
+                {
+                    Value = year.ToString(CultureInfo.InvariantCulture),
+                    Text = year.ToString(CultureInfo.InvariantCulture)
+                });
+        }
+        
+        <div class="form-group col-xs-12 col-md-2 mb-0">
+        @Html.DropDownList("searchByYear", years, "By Year", new {@class="form-control"})
+        </div>
+
+        <div class="col-2">
+            <input type="submit" value="Search" class="btn btn-grey"/>
+        </div>
+    </div>
+}
+
+<hr/>
+
 <!-- loop through all movies (each iteration adds row and 5 cols with movies  -->
 
 @for (var i = 0; i < Model.Count;)
 {
-    @:<div class="row justify-content-between mb-4 p-0 ">
+    @:<div class="row justify-content-between mb-4 p-0">
 
-    if (i >= Model.Count)
+    for (var j = 0; j < 5; j++)
     {
-        break;
+        if (i >= Model.Count)
+        {
+            break;
+        }
+
+        <div class="col-2 bg-secondary rounded p-1 m-0">
+            <img class="img-fluid d-block rounded-top" alt="yarn"
+                 src="@Model[i].PosterURL">
+            <h6 style="color: #fff; font-weight: bold" class="px-2 pt-2 m-0">@Model[i].MovieName</h6>
+            <p style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0"> @Model[i].Genre | @Model[i].Date</p>
+            <a style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0" href="@Url.Action("Details", "Movie", new {id = @Model[i].MovieID})">Details</a>
+        </div>
+
+        i++;
     }
-    
-    <div class="col-2 bg-secondary rounded p-1 m-0">
-        <img class="img-fluid d-block rounded-top" alt="yarn"
-             src="@Model[i].PosterURL">
-        <h6 style="color: #fff; font-weight: bold" class="px-2 pt-2 m-0">@Model[i].MovieName</h6>
-        <p style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0"> @Model[i].Genre | @Model[i].Date</p>
-        <a style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0" href="@Url.Action("Details", "Movie", new {id = @Model[i].MovieID})">Details</a>
-    </div>
-    i++;
-
-    if (i >= Model.Count)
-    {
-        break;
-    }
-
-    <div class="col-2 bg-secondary rounded p-1 m-0">
-        <img class="img-fluid d-block rounded-top" alt="yarn"
-             src="@Model[i].PosterURL">
-        <h6 style="color: #fff; font-weight: bold" class="px-2 pt-2 m-0">@Model[i].MovieName</h6>
-        <p style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0"> @Model[i].Genre | @Model[i].Date </p>
-        <a style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0" href="@Url.Action("Details", "Movie", new {id = @Model[i].MovieID})">Details</a>
-    </div>
-    i++;
-
-    if (i >= Model.Count)
-    {
-        break;
-    }
-
-    <div class="col-2 bg-secondary rounded p-1 m-0">
-        <img class="img-fluid d-block rounded-top" alt="yarn"
-             src="@Model[i].PosterURL">
-        <h6 style="color: #fff; font-weight: bold" class="px-2 pt-2 m-0">@Model[i].MovieName</h6>
-        <p style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0"> @Model[i].Genre | @Model[i].Date </p>
-        <a style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0" href="@Url.Action("Details", "Movie", new {id = @Model[i].MovieID})">Details</a>
-    </div>
-    i++;
-
-    if (i >= Model.Count)
-    {
-        break;
-    }
-
-    <div class="col-2 bg-secondary rounded p-1 m-0">
-        <img class="img-fluid d-block rounded-top" alt="yarn"
-             src="@Model[i].PosterURL">
-        <h6 style="color: #fff; font-weight: bold" class="px-2 pt-2 m-0">@Model[i].MovieName</h6>
-        <p style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0"> @Model[i].Genre | @Model[i].Date </p>
-        <a style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0" href="@Url.Action("Details", "Movie", new {id = @Model[i].MovieID})">Details</a>
-    </div>
-    i++;
-
-    if (i >= Model.Count)
-    {
-        break;
-    }
-
-    <div class="col-2 bg-secondary rounded p-1 m-0">
-        <img class="img-fluid d-block rounded-top" alt="yarn"
-             src="@Model[i].PosterURL">
-        <h6 style="color: #fff; font-weight: bold" class="px-2 pt-2 m-0">@Model[i].MovieName</h6>
-        <p style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0"> @Model[i].Genre | @Model[i].Date </p>
-        <a style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0" href="@Url.Action("Details", "Movie", new {id = @Model[i].MovieID})">Details</a>
-    </div>
-    i++;
 
     @:</div>
 }

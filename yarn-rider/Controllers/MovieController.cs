@@ -1,10 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
 using yarn_rider.Models;
 
 namespace yarn_rider.Controllers
@@ -19,23 +18,45 @@ namespace yarn_rider.Controllers
         }
 
         [HttpGet]
-        public ActionResult Index(string searchString)
+        public ActionResult Index(string searchString, string searchByGenre, string searchByModifier,
+            string searchByYear)
         {
-            var movies = from m in db.Movies 
-                         select m;
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                movies = movies.Where(s => s.MovieName.Contains(searchString));
-            }
-            else
+            // no value to search after (display all movies)
+            if (String.IsNullOrEmpty(searchString) && String.IsNullOrEmpty(searchByGenre) &&
+                String.IsNullOrEmpty(searchByYear) && String.IsNullOrEmpty(searchByModifier))
             {
                 return View(db.Movies.ToList());
             }
 
+            // search for only specified value combinations (Keyword, Genre, Name, Year) 
+            var movies = db.Movies.Where(m =>
+                (m.Genre.ToString().Equals(searchByGenre) || String.IsNullOrEmpty(searchByGenre)) &&
+                (m.MovieName.Contains(searchString) || String.IsNullOrEmpty(searchString)) &&
+                (m.Date.Equals(searchByYear) || String.IsNullOrEmpty(searchByYear)));
+
+            // search with a specified modifier (with or without combination with other values)
+            switch (searchByModifier)
+            {
+                case "RatingAscending":
+                    movies = movies.OrderBy(s => s.Rate.ToString());
+                    break;
+
+                case "RatingDescending":
+                    movies = movies.OrderByDescending(s => s.Rate.ToString());
+                    break;
+
+                case "TitleAscending":
+                    movies = movies.OrderBy(s => s.MovieName.ToString());
+                    break;
+
+                case "TitleDescending":
+                    movies = movies.OrderByDescending(s => s.MovieName.ToString());
+                    break;
+            }
+
             return View(movies.ToList());
         }
-        
+
         public ActionResult Create()
         {
             return View();
@@ -43,11 +64,11 @@ namespace yarn_rider.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MovieID, MovieName, Date, Rate, PosterURL, MovieURL, Genre")] Movie movie)
+        public ActionResult Create([Bind(Include = "MovieID, MovieName, Date, Rate, PosterURL, MovieURL, Genre")]
+            Movie movie)
         {
             if (ModelState.IsValid)
             {
-                
                 db.Movies.Add(movie);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -62,7 +83,7 @@ namespace yarn_rider.Controllers
 
             Movie movie = db.Movies.Find(id);
             if (movie == null) return HttpNotFound();
-            
+
             ViewBag.Message = movie.MovieName;
 
             return View(movie);

@@ -10,18 +10,23 @@ namespace yarn_rider.Controllers
     {
         SiteDbContext db = new SiteDbContext();
 
-        // GET
-        public ActionResult Index(int? id)
+        public ActionResult Index()
         {
-            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
-            Movie movie = db.Movies.Find(id);
-            if (movie == null) return HttpNotFound();
-
-            ViewBag.Message = movie.MovieName;
-
-            return View(movie.Reviews.ToList());
+            return View(db.Reviews.ToList());
         }
+
+        // GET
+//        public ActionResult Index(int? id)
+//        {
+//            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+//
+//            Movie movie = db.Movies.Find(id);
+//            if (movie == null) return HttpNotFound();
+//
+//            ViewBag.Message = movie.MovieName;
+//
+//            return View(movie.Reviews.ToList());
+//        }
 
 //        public ActionResult Create(int movieKey, int userKey)
 //        {
@@ -38,12 +43,33 @@ namespace yarn_rider.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Review review)
+        public ActionResult Create(int userId, int movieId, Review review)
         {
-            db.Reviews.Add(review);
-            db.SaveChanges();
-            return RedirectToAction("Index", "Movie");
+//            if (ModelState.IsValid)
+//            {
+//                Movie movie = db.Movies.Find(MovieID);
+//                User user = db.Users.Find(UserID);
+//
+//                movie.Reviews.Add(review);
+//                db.Reviews.Add(review);
+//
+//                db.Reviews.Find(review).User = user;
+//                db.Reviews.Find(review).Movie = movie;
+//
+//                db.SaveChanges();
+//                return RedirectToAction("Index");
+//            }
+
+            return View(db.Reviews.ToList());
+
+//            User user=db.Users.Find(userId);
+//            Movie movie = db.Movies.Find(movieId);
+//            db.Reviews.Add(review);
+//            db.Reviews.Find(review).User = user;
+//            db.Reviews.Find(review).Movie = movie;
+//            
+//            db.SaveChanges();
+//            return RedirectToAction("Index", "Movie");
         }
-        
     }
 }

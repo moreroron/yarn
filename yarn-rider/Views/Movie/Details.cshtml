@@ -48,7 +48,15 @@
         <h3>yarner Reviews</h3>
     </div>
 
-    <a href="@Url.Action("Create", "Review", new { userKey = Model.UserID, movieKey = Model.MovieID })">
+    @{
+
+//        string userId = User.Identity.GetUserId();
+//        string userEmail = HttpContext.Current.User.Identity.Name;
+//        var userId = Model.Users.Where(a => a.EmailID == userEmail).Select(a => a.UserID);
+
+
+    }
+    <a href="@Url.Action("Create", "Review", new { userId = Model.UserID, movieId = Model.MovieID })">
         <div class="btn btn-grey col text-right">
             <i class="fas fa-user-edit pr-2"></i>Write Review
         </div>

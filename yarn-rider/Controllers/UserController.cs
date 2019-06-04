@@ -18,21 +18,33 @@ namespace yarn_rider.Controllers
         {
             return View(db.Users.ToList());
         }
-
-        public ActionResult Details(string id)
+        
+        public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
             User user = db.Users.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            if (user == null) return HttpNotFound();
+
+            ViewBag.Message = user.UserName;
+
             return View(user);
         }
+
+//        public ActionResult Details(int? id)
+//        {
+//            if (id == null)
+//            {
+//                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+//            }
+//            
+//            User user = db.Users.Find(id);
+//            if (user == null)
+//            {
+//                return HttpNotFound();
+//            }
+//            return View(user);
+//        }
         
     }
 }
