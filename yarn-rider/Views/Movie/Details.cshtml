@@ -5,7 +5,27 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row justify-content-between">
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="http://d3js.org/d3.v3.min.js" language="JavaScript"></script>
+    <script src="liquidFillGauge.js" language="JavaScript"></script>
+    <style>
+        .liquidFillGaugeText {
+
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="row justify-content-between align-items-center">
+
+    <div calss="col">
+        <svg class="fillgauge1" viewBox="0 0 50 50" width="50" height="50"></svg>
+    </div>
+
     <div class="col">
         <h3>@ViewBag.Message</h3>
     </div>
@@ -43,45 +63,99 @@
 </div>
 
 <div class="row justify-content-between mt-5">
-    
+
     <div class="col">
         <h3>yarner Reviews</h3>
     </div>
+    
+        <!-- Admin Only! -->
+        <a href="@Url.Action("Index", "Review", new {id = Model.MovieID})" class="mr-2">
+            <div class="btn btn-admin col text-right">
+                <i class="fas fa-globe-americas pr-2"></i>All Reviews
+            </div>
+        </a>
 
-    @{
-
-//        string userId = User.Identity.GetUserId();
-//        string userEmail = HttpContext.Current.User.Identity.Name;
-//        var userId = Model.Users.Where(a => a.EmailID == userEmail).Select(a => a.UserID);
-
-
-    }
-    <a href="@Url.Action("Create", "Review", new { userId = Model.UserID, movieId = Model.MovieID })">
+    <a href="@Url.Action("Create", "Review", new {userId = Model.UserID, movieId = Model.MovieID})">
         <div class="btn btn-grey col text-right">
             <i class="fas fa-user-edit pr-2"></i>Write Review
         </div>
     </a>
-    
+
 </div>
 
 <hr/>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-    <script src="http://d3js.org/d3.v3.min.js" language="JavaScript"></script>
-    <script src="liquidFillGauge.js" language="JavaScript"></script>
-    <style>
-        .liquidFillGaugeText {
-            font-family: Helvetica;
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
-    <svg id="fillgauge1" width="97%" height="250" @*onclick="gauge1.update(NewValue())*@ ;"></svg>
 
-    <script language="JavaScript">
+@for (var i = 0; i < Model.Reviews.Count; i++)
+{
+    @:<div class="row justify-content-between align-items-center mb-4 p-0">
+
+    for (var j = 0; j < 2; j++)
+    {
+        if (i >= Model.Reviews.Count)
+        {
+            break;
+        }
+
+        <div class="col-5 bg-secondary rounded p-1 m-0 no-gutters">
+
+            <div class="row align-items-center">
+
+                <div class="col-2 pl-4">
+                    <div class="ratingCircle m-0">
+                        @Model.Reviews[i].Rating
+                    </div>
+                </div>
+
+                <div class="col-2">
+                    <img class="img-fluid d-block" alt="yarn" style="width: 5rem; height: auto"
+                         src="@Model.Reviews[i].Movie.PosterURL">
+                </div>
+
+                <div class="col-8 text-left">
+                    <p class="p-0 m-0" style="color: #fff; font-weight: bold"> @Model.Reviews[i].Title</p>
+                    <p class="p-0 m-0" style="color: rgba(142, 143, 157, 0.6);">@Html.DisplayFor(model => model.Reviews[i].User.UserName) @Model.Reviews[i].Date</p>
+                    <p class="p-0 m-0 text-primary"> @Model.Reviews[i].Content</p>
+                </div>
+
+
+            </div>
+
+            <div class="row">
+                <div class="col" style="color: #907f62;">
+                    <hr/>
+                    <a href="@Url.Action("Edit", "Review", new {id = Model.Reviews[i].ReviewID})" class="mr-2">
+                        <div class="btn btn-admin col-auto text-right mb-3 ml-2">
+                            <i class="fas fa-pen pr-2"></i>Edit
+                        </div>
+                    </a>
+                    
+                    <a href="@Url.Action("Delete", "Review", new {id = Model.Reviews[i].ReviewID})" class="mr-2">
+                        <div class="btn btn-admin col-auto text-right mb-3 ml-2">
+                            <i class="fas fa-trash pr-2"></i>Delete
+                        </div>
+                    </a>
+                </div>
+            </div>
+            @* <img class="img-fluid d-block rounded-top" alt="yarn" *@
+            @*      src="@Model[i].User.Avatar"> *@
+
+            @* <a style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0" href="@Url.Action("Details", "Movie", new {id = @Model[i].Movie.MovieID})">Details</a> *@
+
+        </div>
+
+        i++;
+    }
+
+    @:</div>
+    
+}
+</body>
+</html>
+
+<!-- rate script -->
+
+
+<script language="JavaScript">
     var gauge1 = loadLiquidFillGauge("fillgauge1", @Model.Rate);
     var config1 = liquidFillGaugeDefaultSettings();
     config1.circleColor = "#FF7777";
@@ -103,10 +177,10 @@
         function liquidFillGaugeDefaultSettings() {
             return {
                 minValue: 0, // The gauge minimum value.
-                maxValue: 100, // The gauge maximum value.
-                circleThickness: 0.05, // The outer circle thickness as a percentage of it's radius.
-                circleFillGap: 0.05, // The size of the gap between the outer circle and wave circle as a percentage of the outer circles radius.
-                circleColor: "#178BCA", // The color of the outer circle.
+                maxValue: 100/10, // The gauge maximum value.
+                circleThickness: 0.08, // The outer circle thickness as a percentage of it's radius.
+                circleFillGap: 0.1, // The size of the gap between the outer circle and wave circle as a percentage of the outer circles radius.
+                circleColor: "#3f499f", // The color of the outer circle.
                 waveHeight: 0.05, // The wave height as a percentage of the radius of the wave circle.
                 waveCount: 1, // The number of full waves per width of the wave circle.
                 waveRiseTime: 1000, // The amount of time in milliseconds for the wave to rise from 0 to it's final height.
@@ -114,21 +188,21 @@
                 waveRise: true, // Control if the wave should rise from 0 to it's full height, or start at it's full height.
                 waveHeightScaling: true, // Controls wave size scaling at low and high fill percentages. When true, wave height reaches it's maximum at 50% fill, and minimum at 0% and 100% fill. This helps to prevent the wave from making the wave circle from appear totally full or empty when near it's minimum or maximum fill.
                 waveAnimate: true, // Controls if the wave scrolls or is static.
-                waveColor: "#178BCA", // The color of the fill wave.
+                waveColor: "#3f499f", // The color of the fill wave.
                 waveOffset: 0, // The amount to initially offset the wave. 0 = no offset. 1 = offset of one full wave.
                 textVertPosition: .5, // The height at which to display the percentage text withing the wave circle. 0 = bottom, 1 = top.
-                textSize: 1, // The relative height of the text to display in the wave circle. 1 = 50%
+                textSize: 1.5, // The relative height of the text to display in the wave circle. 1 = 50%
                 valueCountUp: true, // If true, the displayed value counts up from 0 to it's final value upon loading. If false, the final value is displayed.
-                displayPercent: true, // If true, a % symbol is displayed after the value.
-                textColor: "#045681", // The color of the value text when the wave does not overlap it.
-                waveTextColor: "#A4DBf8" // The color of the value text when the wave overlaps it.
+                displayPercent: false, // If true, a % symbol is displayed after the value.
+                textColor: "#ffffff", // The color of the value text when the wave does not overlap it.
+                waveTextColor: "#ffffff" // The color of the value text when the wave overlaps it.
             };
         }
 
         function loadLiquidFillGauge(elementId, value, config) {
             if (config == null) config = liquidFillGaugeDefaultSettings();
 
-            var gauge = d3.select("#" + elementId);
+            var gauge = d3.select("." + elementId);
             var radius = Math.min(parseInt(gauge.style("width")), parseInt(gauge.style("height"))) / 2;
             var locationX = parseInt(gauge.style("width")) / 2 - radius;
             var locationY = parseInt(gauge.style("height")) / 2 - radius;
@@ -362,40 +436,9 @@
             return new GaugeUpdater();
         }
     </script>
-</body>
-</html>
 
-<h3>yarner Comments</h3>
-<div @*class="row justify-content-between mb-4 p-0 "*@>
-
-    @* getting the 5 last movies added to the db by looping through the movie list *@
-    @for(var i=0;i<Model.Reviews.Count;i++)
-    {
-
-    <div class="col-10 bg-secondary rounded p-10 m-10">
-        @*<img class="img-fluid d-block rounded-top" alt="@Model.UserID"
-        src="@Model.Reviews[i]">*@
-        <dd>
-            <img src="@Html.DisplayFor(model => model.Reviews[i].User.Avatar)" style="width: 10rem;" />
-        </dd>
-        <dt>
-            @Html.DisplayFor(model => model.Reviews[i].User.UserName)
-        </dt>
-       
-        <h6 style="color: #fff; font-weight: bold" class="px-2 pt-2 m-0">  @Model.Reviews[i].Title</h6>
-        <p style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0">
-            Rating: @Model.Reviews[i].Rating
-            <br>
-            Content: @Model.Reviews[i].Content
-
-        </p>
-        @*<a style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0" href="@Url.Action("Details", "Movie", new {id = @Model.Reviews[i].Movie.MovieName})">Details</a>*@
-    </div>
-    }
-</div>
-
-    @* @Html.RenderPartial("~/Views/Review/Index.cshtml", modeldata); *@
-    @* @Html.Action("Index", "Review") *@
-    @* @{ *@
-    @*     Html.RenderPartial("~/Views/Review/Index.cshtml"); *@
-    @* } *@
+@* @Html.RenderPartial("~/Views/Review/Index.cshtml", modeldata); *@
+       @* @Html.Action("Index", "Review") *@
+       @* @{ *@
+       @*     Html.RenderPartial("~/Views/Review/Index.cshtml"); *@
+       @* } *@

@@ -1,0 +1,40 @@
+@model yarn_rider.Models.Review
+
+@* @{ *@
+@*     ViewBag.Title = ViewBag.Message + " (edit mode)"; *@
+@*     Layout = "~/Views/Shared/_Layout.cshtml"; *@
+@* } *@
+@* *@
+@* <div class="row justify-content-between"> *@
+@*     <div class="col"> *@
+@*         <h3>@ViewBag.Title</h3> *@
+@*     </div> *@
+@* *@
+@*     <a href="@Url.Action("Index", "Movie")"> *@
+@*         <div class="btn btn-grey col text-right"> *@
+@*             <i class="fas fa-arrow-left pr-2"></i>Back *@
+@*         </div> *@
+@*     </a> *@
+@* *@
+@* </div> *@
+@* *@
+@* <hr/> *@
+
+@Ajax.ActionLink("Open popup", "Delete", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "result", InsertionMode = InsertionMode.Replace, OnSuccess="openPopup" })<br />
+
+<div id="result" style="display:none;"></div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $("#result").dialog({
+        autoOpen: false,
+        title: 'Title',
+        width: 500,
+        height: 'auto',
+        modal: true
+    });
+});
+function openPopup() {
+    $("#result")._dialog("open");
+}
+</script>
