@@ -96,16 +96,35 @@ namespace yarn_rider.Controllers
         [NonAction]
         public void SendVerificationLinkEmail(string emailID, string activationCode)
         {
+
+            //MailMessage msg = new MailMessage();
+            //System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient();
+
+            //    msg.Subject = "Add Subject";
+            //    msg.Body = "Add Email Body Part";
+            //    msg.From = new MailAddress("yarnEmailator@gmail.com");
+            //    msg.To.Add("rnmo90@gmail.com");
+            //    msg.IsBodyHtml = true;
+            //    client.Host = "smtp.gmail.com";
+            //    System.Net.NetworkCredential basicauthenticationinfo = new System.Net.NetworkCredential("yarnemailator@gmail.com", "yarnEmailator1111");
+            //    client.Port = int.Parse("587");
+            //    client.EnableSsl = true;
+            //    client.UseDefaultCredentials = false;
+            //    client.Credentials = basicauthenticationinfo;
+            //    client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            //    client.Send(msg);
+            //}
+            
             var verifyUrl = "/Account/VerifyAccount/" + activationCode;
             var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
- 
+
             var fromEmail = new MailAddress("yarnemailator@gmail.com", null);
-            var toEmail = new MailAddress(emailID);
+            var toEmail = new MailAddress(emailID, null);
             var fromEmailPassword = "yarnEmailator1111";
             string subject = "Your account is successfully created!";
-            string body = "<br/><br/>We are excited to tell you that your yarn account is" + 
-                          " successfully created. Please click on the below link to verify your account" + 
-                          " <br/><br/><a href='"+link+"'>"+link+"</a> ";
+            string body = "<br/><br/>We are excited to tell you that your yarn account is" +
+                          " successfully created. Please click on the below link to verify your account" +
+                          " <br/><br/><a href='" + link + "'>" + link + "</a> ";
 
             var smtp = new SmtpClient
             {
@@ -116,7 +135,7 @@ namespace yarn_rider.Controllers
                 UseDefaultCredentials = false,
                 Credentials = new NetworkCredential(fromEmail.Address, fromEmailPassword)
             };
- 
+
             using (var message = new MailMessage(fromEmail, toEmail)
             {
                 Subject = subject,

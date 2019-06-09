@@ -1,9 +1,7 @@
 ﻿@model IList<yarn_rider.Models.Movie>
-
 @{
     ViewBag.Title = "Homepage";
 }
-
 @* @if (Request.IsAuthenticated) *@
 @* { *@
 @*     using (Html.BeginForm("Logout","Account", FormMethod.Post, new { id="logoutForm"})) *@
@@ -12,22 +10,18 @@
 @*     } *@
 @* } *@
 
-
-<h3 class="mb-4">Your Latest Streams</h3>
+<h3 class="mb-4">Welcome To yarn</h3>
 <div class="row justify-content-between m-0 p-0 ">
     <div class="alert alert-costume bg-secondary">
         <i class="fas fa-scroll pr-1"></i>
-        You have yet to stream any content.
+        yarn is a lignting-fast platform for streaming movie content.
         <a class="pl-2" style="font-weight:bold;" href="@Url.Action("Index", "Movie")">Start Browsing</a>
     </div>
 </div>
-
-<hr/>
-
+<hr />
 <h3 class="mt-5 mb-4">Films Recently Added</h3>
-
 <div class="row justify-content-between mb-4 p-0 ">
-    
+
     @* getting the 5 last movies added to the db by looping through the movie list *@
     @for (var i = Model.Count - 1; i > Model.Count - 6; i--)
     {
@@ -45,3 +39,6 @@
     }
 
 </div>
+
+      
+
