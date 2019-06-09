@@ -45,20 +45,27 @@ namespace yarn_rider.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(int userId, int movieId, Review review)
         {
-//            if (ModelState.IsValid)
-//            {
-//                Movie movie = db.Movies.Find(MovieID);
-//                User user = db.Users.Find(UserID);
-//
-//                movie.Reviews.Add(review);
-//                db.Reviews.Add(review);
-//
-//                db.Reviews.Find(review).User = user;
-//                db.Reviews.Find(review).Movie = movie;
-//
-//                db.SaveChanges();
-//                return RedirectToAction("Index");
-//            }
+            if (ModelState.IsValid)
+            {
+                Movie movie = db.Movies.Find(movieId);
+                User user = db.Users.Find(userId);
+
+                movie.Reviews.Add(review);
+                db.Reviews.Add(review);
+
+                db.SaveChanges();
+
+                db.Reviews.Find(review.ReviewID).User = user;
+                db.Reviews.Find(review.ReviewID).Movie = movie;
+                var Count = 0;
+                for(var i=0;i< movie.Reviews.Count; i++)
+                {
+                    Count += movie.Reviews[i].Rating;
+                }
+                movie.Rate = Count/movie.Reviews.Count;
+                db.SaveChanges();
+                return RedirectToAction("Details/"+movieId.ToString(),"Movie");
+            }
 
             return View(db.Reviews.ToList());
 
