@@ -13,8 +13,11 @@ namespace yarn_rider.Models
         public string MovieName { get; set; }
         
         [Required(AllowEmptyStrings = false, ErrorMessage = "Date is required")]
+        [Range(1990, 2019, ErrorMessage = "Date must be between 1990 and 2019")]
         public string Date { get; set; }
         
+        [Range(0, 10, ErrorMessage = "Rating must be between 0 and 10")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Rate is required")]
         public int Rate { get; set; }
         
         [Display(Name = "Poster URL")]
