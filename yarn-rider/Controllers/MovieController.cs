@@ -8,6 +8,7 @@ using yarn_rider.Models;
 
 namespace yarn_rider.Controllers
 {
+    [Authorize]
     public class MovieController : Controller
     {
         SiteDbContext db = new SiteDbContext();

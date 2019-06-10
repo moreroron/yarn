@@ -15,6 +15,25 @@ namespace yarn_rider.Controllers
         {
             return View(db.Reviews.ToList());
         }
+        
+        [HttpGet]
+        public ActionResult Index(string searchMovieString, string searchByRate, string searchReviewString)
+        {
+            // no value to search after (display all reviews)
+            if (String.IsNullOrEmpty(searchMovieString) && String.IsNullOrEmpty(searchByRate) &&
+                String.IsNullOrEmpty(searchReviewString))
+            {
+                return View(db.Reviews.ToList());
+            }
+
+            // search for only specified value combinations (Keyword, Genre, Name, Year) 
+            var reviews = db.Reviews.Where(m =>
+                (m.Rating.ToString().Equals(searchByRate) || String.IsNullOrEmpty(searchByRate)) &&
+                (m.Movie.MovieName.Contains(searchMovieString) || String.IsNullOrEmpty(searchMovieString) || m.Movie.MovieName.Equals("By Movie Title")) &&
+                (m.Title.Contains(searchReviewString) || String.IsNullOrEmpty(searchReviewString) || m.Title.Equals("By Review Title")));
+
+            return View(reviews.ToList());
+        }
 
         public ActionResult Edit(int? id)
         {

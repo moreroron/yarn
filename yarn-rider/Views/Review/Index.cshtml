@@ -1,3 +1,5 @@
+@using System.Globalization
+@using yarn_rider.Models
 @model IList<yarn_rider.Models.Review>
 
 @{
@@ -6,6 +8,47 @@
 
 <h3>Reviews</h3>
 <hr/>
+
+
+<!-- search by filters -->
+
+@using (Html.BeginForm("Index", "Review", FormMethod.Get))
+{
+    <div class="row">
+
+        <div class="input-group col-4">
+            By Movie Name:
+            @Html.TextBox("searchMovieString", null, new {@class = "form-control"})
+        </div>
+
+        <div class="input-group col-4">
+            By Review Title:
+            @Html.TextBox("searchReviewString", null, new {@class = "form-control"})
+            
+        </div>
+        
+        @{
+            var rates = Enumerable
+                .Range(0, 11)
+                .Select(rate => new SelectListItem
+                {
+                    Value = rate.ToString(CultureInfo.InvariantCulture),
+                    Text = rate.ToString(CultureInfo.InvariantCulture)
+                });
+        }
+
+        <div class="form-group col-xs-12 col-md-2 mb-0">
+            @Html.DropDownList("searchByRate", rates, "By Rate", new {@class = "form-control"})
+        </div>
+
+        <div class="col-2">
+            <input type="submit" value="Search" class="btn btn-grey"/>
+        </div>
+    </div>
+}
+
+<hr/>
+
 
 @for (var i = 0; i < Model.Count; i++)
 {

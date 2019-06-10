@@ -168,6 +168,10 @@
     <Compile Include="Migrations\201906101104161_AnnoInReview.Designer.cs">
       <DependentUpon>201906101104161_AnnoInReview.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906101114464_DateAnnoFullDate.cs" />
+    <Compile Include="Migrations\201906101114464_DateAnnoFullDate.Designer.cs">
+      <DependentUpon>201906101114464_DateAnnoFullDate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Extended\User.cs" />
     <Compile Include="Models\Movie.cs" />
@@ -306,6 +310,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906101104161_AnnoInReview.resx">
       <DependentUpon>201906101104161_AnnoInReview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906101114464_DateAnnoFullDate.resx">
+      <DependentUpon>201906101114464_DateAnnoFullDate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
