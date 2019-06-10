@@ -2,15 +2,23 @@
 @{
     ViewBag.Title = "Homepage";
 }
-@* @if (Request.IsAuthenticated) *@
-@* { *@
-@*     using (Html.BeginForm("Logout","Account", FormMethod.Post, new { id="logoutForm"})) *@
-@*     { *@
-@*         <a href="javascript:document.getElementById('logoutForm').submit()">Logout</a> *@
-@*     } *@
-@* } *@
 
-<h3 class="mb-4">Welcome To yarn</h3>
+@* <h3 class="mb-4">Welcome To yarn</h3> *@
+@* <canvas id="myCanvas" width="500px" height="40px" style="color: #f0ad4e; font-weight: bold"></canvas> *@
+
+
+<canvas id="myCanvas" width="500" height="40"></canvas>
+    <script>
+
+    var canvas = document.getElementById('myCanvas'); 
+    var ctx = canvas.getContext('2d'); 
+    
+	ctx.font = '2rem Rubik';
+        ctx.fillStyle = '#8e8f9e';
+        ctx.fillText('Hello yarners', 0, 20);
+
+   </script>
+
 <div class="row justify-content-between m-0 p-0 ">
     <div class="alert alert-costume bg-secondary">
         <i class="fas fa-scroll pr-1"></i>
@@ -18,7 +26,7 @@
         <a class="pl-2" style="font-weight:bold;" href="@Url.Action("Index", "Movie")">Start Browsing</a>
     </div>
 </div>
-<hr />
+<hr/>
 <h3 class="mt-5 mb-4">Films Recently Added</h3>
 <div class="row justify-content-between mb-4 p-0 ">
 
@@ -40,5 +48,12 @@
 
 </div>
 
-      
 
+    @* <script> *@
+    @* var c = document.getElementById("myCanvas"); *@
+    @* var ctx = c.getContext("2d"); *@
+    @* // ctx.font = "30px Arial"; *@
+    @* ctx.font = "2rem Rubik"; *@
+    @* ctx.fillText("Welcome To yarn",30,30); *@
+    @* ctx.fillStyle = "#ffffff"; *@
+    @* </script> *@
