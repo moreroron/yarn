@@ -1,0 +1,105 @@
+﻿@model yarn_rider.Models.User
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>User</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ConfirmPassword)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ConfirmPassword)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmailID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Avatar)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Avatar)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Country)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Country)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsEmailVerified)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsEmailVerified)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ActivationCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ActivationCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReviewID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReviewID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MovieID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MovieID)
+        </dd>
+
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

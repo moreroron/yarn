@@ -8,7 +8,7 @@ using yarn_rider.Models;
 
 namespace yarn_rider.Controllers
 {
-    [Authorize]
+   
     public class MovieController : Controller
     {
         SiteDbContext db = new SiteDbContext();
@@ -106,6 +106,29 @@ namespace yarn_rider.Controllers
         public ActionResult Edit(Movie movie)
         {
             db.Entry(movie).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Movie movie = db.Movies.Find(id);
+            if (movie == null)
+            {
+                return HttpNotFound();
+            }
+            return View(movie);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Movie movie = db.Movies.Find(id);
+            db.Movies.Remove(movie);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

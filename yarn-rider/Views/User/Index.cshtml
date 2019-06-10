@@ -44,6 +44,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Reviews.Count)
             </td>
+            <td>
+                <a style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0" href="@Url.Action("Delete", "User", new {id = item.UserID})">Delete</a>
+                <a style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0" href="@Url.Action("Edit", "User", new {id = item.UserID})">Edit</a>
+
+            </td>
+
         </tr>
     }
 
