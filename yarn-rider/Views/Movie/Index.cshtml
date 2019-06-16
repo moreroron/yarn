@@ -3,17 +3,24 @@
 @{
     ViewBag.Title = "Browse & Search";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    User currentUser = (User) Session["currentUser"];
 }
 <div class="row justify-content-between">
     <div class="col">
         <h3>Stream Movies</h3>
     </div>
 
-    <a href="@Url.Action("Create", "Movie")">
-        <div class="btn btn-admin col text-right">
-            <i class="fas fa-plus pr-2"></i>Create New Movie
-        </div>
-    </a>
+    <!-- Admin Only! -->
+    @{
+        if (currentUser != null && currentUser.Admin)
+        {
+            <a href="@Url.Action("Create", "Movie")">
+                <div class="btn btn-admin col text-right">
+                    <i class="fas fa-plus pr-2"></i>Create New Movie
+                </div>
+            </a>
+        }
+    }
 
 </div>
 
@@ -73,8 +80,13 @@
                    src="@Model[i].PosterURL">
               <h6 style="color: #fff; font-weight: bold" class="px-2 pt-2 m-0">@Model[i].MovieName</h6>
               <p style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0"> @Model[i].Genre | @Model[i].Date</p>
-              <a style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0" href="@Url.Action("Details", "Movie", new {id = @Model[i].MovieID})">Details</a>
-              <a style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0" href="@Url.Action("Delete", "Movie", new {id = @Model[i].MovieID})">Delete</a>
+              <a style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0" href="@Url.Action("Details", "Movie", new {id = Model[i].MovieID})">Details</a>
+              
+              <!-- Admin Only! -->
+              @if (currentUser != null && currentUser.Admin)
+              {
+                  <a style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0" href="@Url.Action("Delete", "Movie", new {id = Model[i].MovieID})">Delete</a>
+              }
           </div>
 
         i++;

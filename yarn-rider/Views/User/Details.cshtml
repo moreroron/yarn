@@ -1,20 +1,17 @@
+
+@using yarn_rider.Models
 @model yarn_rider.Models.User
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    User currentUser = (User) Session["currentUser"];
 }
 
-<h2>Details</h2>
-
 <div>
-    <h4>ApplicationUser</h4>
+    <h3>Profile</h3>
     <hr/>
     <dl class="dl-horizontal">
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Avatar)
-        </dt>
 
         <dd>
             <img src="@Html.DisplayFor(model => model.Avatar)" style="width: 10rem;"/>
@@ -35,9 +32,17 @@
         <dd>
             @Html.DisplayFor(model => model.EmailID)
         </dd>
+        
+        <dt>
+            number of reviews:
+        </dt>
+        
+        <dd>
+            @{
+                SiteDbContext db = new SiteDbContext();
+                @db.Users.Find(currentUser.UserID).Reviews.Count
+            }
+        </dd>
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Back to List", "Index")
-</p>

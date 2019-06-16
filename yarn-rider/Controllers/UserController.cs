@@ -20,6 +20,14 @@ namespace yarn_rider.Controllers
             return View(db.Users.ToList());
         }
         
+        [HttpGet]
+        public ActionResult Index(string usernameKeyword)
+        {
+            if (String.IsNullOrEmpty(usernameKeyword)) return View(db.Users.ToList());
+            var users = db.Users.Where(user => user.UserName.Contains(usernameKeyword));
+            return View(users.ToList());
+        }
+        
         public ActionResult Details(int? id)
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -73,6 +81,7 @@ namespace yarn_rider.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        
 
     }
 }

@@ -4,6 +4,7 @@
 
 @{
     ViewBag.Title = "Reviews";
+    User currentUser = (User) Session["currentUser"];
 }
 
 <h3>Reviews</h3>
@@ -52,75 +53,76 @@
 
 @for (var i = 0; i < Model.Count; i++)
 {
-    @:<div class="row justify-content-between align-items-center m-0 mb-4 p-0">
+    @:<div class="row justify-content-between align-items-center mb-4 p-0">
 
-    for (var j = 0; j < 3; j++)
+    for (var j = 0; j < 2; j++)
     {
         if (i >= Model.Count)
         {
             break;
         }
 
-        <div class="col-3 bg-secondary rounded m-0 p-0 no-gutters">
+        <div class="col-5 bg-secondary rounded p-1 m-0 no-gutters">
 
             <div class="row align-items-center">
 
-                <div class="col-3">
-                    <img class="img-fluid d-inline-block " alt="yarn" style="width: 8rem; height: auto;"
+                <div class="col-2 pl-4">
+                    <div class="ratingCircle m-0">
+                        @Model[i].Rating
+                    </div>
+                </div>
+
+                <div class="col-2">
+                    <img class="img-fluid d-block" alt="yarn" style="width: 5rem; height: auto"
                          src="@Model[i].Movie.PosterURL">
                 </div>
 
-                <div class="col-9">
-                    <div class="row">
+                <div class="col-8 text-left">
 
-                        <div class="col-2 pl-4 d-inline-block">
-                            <div class="ratingCircle m-0">
-                                @Model[i].Rating
-                            </div>
-                        </div>
-
-
-                        <div class="col-10 ">
-                            <p class="p-0 m-0 d-inline-block ml-3" style="color: #fff; font-weight: bold"> @Model[i].Title</p>
-                            @* <p class="p-0 m-0" style="color: rgba(142, 143, 157, 0.6);">@Html.DisplayFor(model => model[i].User.UserName)</p> *@
-                            <p class="p-0 m-0 ml-3" style="color: rgba(142, 143, 157, 0.6);">@Model[i].Date | by Marshmelo</p>
-                            <p class="p-0 m-0 ml-3" style="color: rgba(142, 143, 157, 0.6);">@Model[i].Movie.MovieName</p>
-                        </div>
-
+                    <div class="d-inline-block">
+                        <img class="img-fluid d-inline" alt="yarn" style="width: 3rem; height: auto"
+                             src="@Model[i].User.Avatar">
+                        
+                        <p class="p-0 m-0" style="color: rgba(142, 143, 157, 0.6);">by: @Html.DisplayFor(model => model[i].User.UserName)</p>
                     </div>
-
-                </div>
-            </div>
-
-
-            <div class="row">
-
-                <div class="col-12 text-left">
+                    <p class="p-0 m-0" style="color: rgba(142, 143, 157, 0.6);">@Model[i].Date</p>
+                    <p class="p-0 m-0" style="color: #fff; font-weight: bold"> @Model[i].Title</p>
+                    
                     <p class="p-0 m-0 text-primary"> @Model[i].Content</p>
                 </div>
 
+
             </div>
 
+            @* Admin Only! *@
+            @{
+                if (currentUser != null && currentUser.Admin)
+                {
+                    <div class="row">
+                        <div class="col" style="color: #907f62;">
+                            <hr/>
+                            <a href="@Url.Action("Edit", "Review", new {id = Model[i].ReviewID})" class="mr-2">
+                                <div class="btn btn-admin col-auto text-right mb-3 ml-2">
+                                    <i class="fas fa-pen pr-2"></i>Edit
+                                </div>
+                            </a>
 
-            <div class="row">
-                <div class="col" style="color: #907f62;">
-                    <hr/>
-                    <a href="@Url.Action("Edit", "Review", new {id = Model[i].ReviewID})" class="mr-2">
-                        <div class="btn btn-admin col-auto text-right mb-3 ml-2">
-                            <i class="fas fa-pen pr-2"></i>Edit
+                            <a href="@Url.Action("Delete", "Review", new {id = Model[i].ReviewID})" class="mr-2">
+                                <div class="btn btn-admin col-auto text-right mb-3 ml-2">
+                                    <i class="fas fa-trash pr-2"></i>Delete
+                                </div>
+                            </a>
                         </div>
-                    </a>
-                </div>
-            </div>
-            @* <img class="img-fluid d-block rounded-top" alt="yarn" *@
-            @*      src="@Model[i].User.Avatar"> *@
-
-            @* <a style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0" href="@Url.Action("Details", "Movie", new {id = @Model[i].Movie.MovieID})">Details</a> *@
-
+                    </div>
+                }
+            }
+            
         </div>
 
         i++;
     }
+
+    i--;
 
     @:</div>
 }

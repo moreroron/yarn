@@ -5,12 +5,30 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row justify-content-between">
-    <div class="col">
-        <h4>Stream Movies</h4>
-    </div>
 
-</div>
+<h3>yarners</h3>
+
+<hr/>
+
+<!-- search by username -->
+
+@using (Html.BeginForm("Index", "User", FormMethod.Get))
+{
+    <div class="row">
+
+        <div class="input-group col-4">
+            By Username:
+            @Html.TextBox("usernameKeyword", null, new {@class = "form-control"})
+        </div>
+
+        <div class="col-2">
+            <input type="submit" value="Search" class="btn btn-grey"/>
+        </div>
+    </div>
+}
+
+<hr/>
+
 
 <table class="table border-primary">
     <tr>

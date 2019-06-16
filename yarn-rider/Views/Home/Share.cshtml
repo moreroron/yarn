@@ -1,0 +1,33 @@
+@using yarn_rider.Models
+
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId            : '2150847571659794',
+      autoLogAppEvents : true,
+      xfbml            : true,
+      version          : 'v3.3'
+    });
+  };
+</script>
+<script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
+
+
+<h3>Share new post</h3>
+<hr/>
+<p>
+    Sharing new post in yarn's page on facebook
+</p>
+
+<h2>Getting your Page Access Token</h2>
+
+<p>First, we'll need the <code>manage_pages</code> permission to see the pages you admin, so we'll insert a Login button which requests the correct permissions (click on this if you haven't already granted the permission):</p>
+
+<div class="fb-login-button" data-scope="manage_pages" data-max-rows="1" data-size="medium"></div>
+

@@ -1,3 +1,4 @@
+@using yarn_rider.Models
 @model yarn_rider.Models.User
 
 @{
@@ -23,6 +24,7 @@
 
                 <div class="p-3 mb-5" style="background-color:rgba(28, 29, 35, 0.9); border-radius: 1rem;">
 
+                    <!-- register success window -->
                     @if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
                     {
                         if (ViewBag.Message != null)
@@ -46,6 +48,18 @@
                                 <hr/>
 
                                 @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+
+                                // if we register the 1st user he will be an Admin
+                                
+                                bool userType = false;
+                                SiteDbContext db = new SiteDbContext();
+                                
+                                if (db.Users.Count() == 0)
+                                {
+                                    userType = true;
+                                }
+                                
+                                @Html.HiddenFor(model => model.Admin, new {Value = userType })
 
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.EmailID, new {@class = "col"})

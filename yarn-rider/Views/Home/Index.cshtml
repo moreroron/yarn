@@ -1,14 +1,15 @@
-﻿@model IList<yarn_rider.Models.Movie>
+﻿@using yarn_rider.Models
 @{
     ViewBag.Title = "Homepage";
+    User currentUser = (User) Session["currentUser"];
 }
 
-@* <h3 class="mb-4">Welcome To yarn</h3> *@
-@* <canvas id="myCanvas" width="500px" height="40px" style="color: #f0ad4e; font-weight: bold"></canvas> *@
+
+<h3>@ViewBag.Message</h3>
 
 
 <canvas id="myCanvas" width="500" height="40"></canvas>
-    <script>
+<script>
 
     var canvas = document.getElementById('myCanvas'); 
     var ctx = canvas.getContext('2d'); 
@@ -37,24 +38,29 @@
         {
             <p>You have less than 5 movies in the database. Add more to make this section display content.</p>
         }
-            <div class="col-2 bg-secondary rounded p-1 m-0">
-                <img class="img-fluid d-block rounded-top" alt="yarn"
-                     src="@Model[i].PosterURL">
-                <h6 style="color: #fff; font-weight: bold" class="px-2 pt-2 m-0">@Model[i].MovieName</h6>
-                <p style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0"> @Model[i].Genre | @Model[i].Date </p>
-                <a style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0" href="@Url.Action("Details", "Movie", new {id = @Model[i].MovieID})">Details</a>
-                <a style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0" href="@Url.Action("Delete", "Movie", new {id = @Model[i].MovieID})">Delete</a>
-            </div>
+        <div class="col-2 bg-secondary rounded p-1 m-0">
+            <img class="img-fluid d-block rounded-top" alt="yarn"
+                 src="@Model[i].PosterURL">
+            <h6 style="color: #fff; font-weight: bold" class="px-2 pt-2 m-0">@Model[i].MovieName</h6>
+            <p style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0"> @Model[i].Genre | @Model[i].Date </p>
+            <a style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0" href="@Url.Action("Details", "Movie", new {id = @Model[i].MovieID})">Details</a>
+
+            <!-- Admin Only! -->
+            @if (currentUser != null && currentUser.Admin)
+            {
+                <a style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0" href="@Url.Action("Delete", "Movie", new {id = Model[i].MovieID})">Delete</a>
+            }
+        </div>
     }
 
 </div>
 
 
-    @* <script> *@
-    @* var c = document.getElementById("myCanvas"); *@
-    @* var ctx = c.getContext("2d"); *@
-    @* // ctx.font = "30px Arial"; *@
-    @* ctx.font = "2rem Rubik"; *@
-    @* ctx.fillText("Welcome To yarn",30,30); *@
-    @* ctx.fillStyle = "#ffffff"; *@
-    @* </script> *@
+@* <script> *@
+@* var c = document.getElementById("myCanvas"); *@
+@* var ctx = c.getContext("2d"); *@
+@* // ctx.font = "30px Arial"; *@
+@* ctx.font = "2rem Rubik"; *@
+@* ctx.fillText("Welcome To yarn",30,30); *@
+@* ctx.fillStyle = "#ffffff"; *@
+@* </script> *@

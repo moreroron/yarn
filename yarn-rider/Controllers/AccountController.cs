@@ -11,77 +11,86 @@ namespace yarn_rider.Controllers
 {
     public class AccountController : Controller
     {
-
         // GET Registration
         [HttpGet]
         public ActionResult Registration()
         {
             return View();
         }
-        
+
         // POST Registration
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Registration([Bind(Exclude = "IsEmailVerified,ActivationCode")] User user)
+        public ActionResult Registration([Bind(Exclude = "IsEmailVerified,ActivationCode")]
+            User user)
         {
             bool Status = false;
             string message = "";
-            
+
             // Model Validation 
             if (ModelState.IsValid)
             {
-                
                 // Generate Random Avatar
                 var builder = new UriBuilder(Request.Url.Scheme, Request.Url.Host, Request.Url.Port);
                 Random rnd = new Random();
                 int rndNum = rnd.Next(0, 14);
-                user.Avatar = builder.Host + ":" + builder.Port + "/Images/profileIcons/" + rndNum + ".svg";
+                user.Avatar = "/Images/profileIcons/" + rndNum + ".svg";
+//                user.Avatar = builder.Host + ":" + builder.Port + "/Images/profileIcons/" + rndNum + ".svg";
 
 
                 #region //Email is already Exist 
+
                 var isExist = IsEmailExist(user.EmailID);
                 if (isExist)
                 {
                     ModelState.AddModelError("EmailExist", "Email already exist");
                     return View(user);
                 }
+
                 #endregion
- 
+
                 #region Generate Activation Code 
+
                 user.ActivationCode = Guid.NewGuid();
+
                 #endregion
- 
+
                 #region  Password Hashing 
+
                 user.Password = Crypto.Hash(user.Password);
                 user.ConfirmPassword = Crypto.Hash(user.ConfirmPassword); //
+
                 #endregion
+
                 user.IsEmailVerified = false;
- 
+
                 #region Save to Database
+
                 using (SiteDbContext dc = new SiteDbContext())
                 {
                     dc.Users.Add(user);
                     dc.SaveChanges();
- 
+
                     //Send Email to User
                     SendVerificationLinkEmail(user.EmailID, user.ActivationCode.ToString());
-                    message = "Registration successfully done. Account activation link" + 
-                              " has been sent to your email: " +user.EmailID;
+                    message = "Registration successfully done. Account activation link" +
+                              " has been sent to your email: " + user.EmailID;
                     Status = true;
                 }
+
                 #endregion
             }
             else
             {
                 message = "Invalid Request";
             }
- 
+
             ViewBag.Message = message;
             ViewBag.Status = Status;
             return View(user);
         }
-        
-        
+
+
         [NonAction]
         public bool IsEmailExist(string emailID)
         {
@@ -91,12 +100,11 @@ namespace yarn_rider.Controllers
                 return v != null;
             }
         }
-        
-        
+
+
         [NonAction]
         public void SendVerificationLinkEmail(string emailID, string activationCode)
         {
-
             //MailMessage msg = new MailMessage();
             //System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient();
 
@@ -114,7 +122,7 @@ namespace yarn_rider.Controllers
             //    client.DeliveryMethod = SmtpDeliveryMethod.Network;
             //    client.Send(msg);
             //}
-            
+
             var verifyUrl = "/Account/VerifyAccount/" + activationCode;
             var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
 
@@ -144,8 +152,8 @@ namespace yarn_rider.Controllers
             })
                 smtp.Send(message);
         }
-        
-        
+
+
         // GET VerifyAccount
         [HttpGet]
         public ActionResult VerifyAccount(string id)
@@ -167,73 +175,128 @@ namespace yarn_rider.Controllers
                     ViewBag.Message = "Invalid Request";
                 }
             }
+
             ViewBag.Status = Status;
             return View();
         }
+
         
-        
-        [HttpGet]
         public ActionResult Login()
         {
+//            if (Session["currentUserEmailID"] != null)
+//            {
+//                return RedirectToAction("About", "Home");
+//            }
+
             return View();
+            
         }
-        
-        
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Login(UserLogin login, string ReturnUrl="")
+        public ActionResult Login(UserLogin login)
         {
             string message = "";
-            using (SiteDbContext dc = new SiteDbContext())
+            SiteDbContext db = new SiteDbContext();
+
+            var currentUser = db.Users.FirstOrDefault(u => u.EmailID.Equals(login.EmailID));
+
+            if (currentUser != null)
             {
-                var v = dc.Users.Where(a => a.EmailID == login.EmailID).FirstOrDefault();
-                if (v != null)
+                if (!currentUser.IsEmailVerified)
                 {
-                    if (!v.IsEmailVerified)
-                    {
-                        ViewBag.Message = "Please verify your email first";
-                        return View();
-                    }
-                    if (string.Compare(Crypto.Hash(login.Password),v.Password) == 0)
-                    {
-                        int timeout = login.RememberMe ? 525600 : 20; // 525600 min = 1 year
-                        var ticket = new FormsAuthenticationTicket(login.EmailID, login.RememberMe, timeout);
-                        string encrypted = FormsAuthentication.Encrypt(ticket);
-                        var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encrypted);
-                        cookie.Expires = DateTime.Now.AddMinutes(timeout);
-                        cookie.HttpOnly = true;
-                        Response.Cookies.Add(cookie);
- 
- 
-                        if (Url.IsLocalUrl(ReturnUrl))
-                        {
-                            return Redirect(ReturnUrl);
-                        }
-                        else
-                        {
-                            return RedirectToAction("Index", "Home");
-                        }
-                    }
-                    else
-                    {
-                        message = "Invalid credential provided";
-                    }
+                    message = "Please verify your email first";
+                    ViewBag.Message = message;
+                    return View();
                 }
+
+                if (String.CompareOrdinal(Crypto.Hash(login.Password), currentUser.Password) == 0)
+                {
+                    
+                    
+                    
+                    Session["currentUser"] = currentUser;
+                    message = "Welcome, " + login.EmailID + ".";
+                }
+                
                 else
                 {
                     message = "Invalid credential provided";
+                    ViewBag.Message = message;
+                    return View();
                 }
             }
+
+            else
+            {
+                ViewBag.message = "No such user found";
+                return View();
+            }
+
+
             ViewBag.Message = message;
-            return View();
+            return RedirectToAction("Index", "Home");
         }
+
+
+//        [HttpPost]
+//        [ValidateAntiForgeryToken]
+//        public ActionResult Login(UserLogin login, string ReturnUrl = "")
+//        {
+//            string message = "";
+//            using (SiteDbContext dc = new SiteDbContext())
+//            {
+//                var v = dc.Users.Where(a => a.EmailID == login.EmailID).FirstOrDefault();
+//                if (v != null)
+//                {
+//                    if (!v.IsEmailVerified)
+//                    {
+//                        ViewBag.Message = "Please verify your email first";
+//                        return View();
+//                    }
+//
+//                    if (string.Compare(Crypto.Hash(login.Password), v.Password) == 0)
+//                    {
+//                        int timeout = login.RememberMe ? 525600 : 20; // 525600 min = 1 year
+//                        var ticket = new FormsAuthenticationTicket(login.EmailID, login.RememberMe, timeout);
+//                        string encrypted = FormsAuthentication.Encrypt(ticket);
+//                        var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encrypted);
+//                        cookie.Expires = DateTime.Now.AddMinutes(timeout);
+//                        cookie.HttpOnly = true;
+//                        Response.Cookies.Add(cookie);
+//
+//
+//                        if (Url.IsLocalUrl(ReturnUrl))
+//                        {
+//                            return Redirect(ReturnUrl);
+//                        }
+//                        else
+//                        {
+//                            return RedirectToAction("Index", "Home");
+//                        }
+//                    }
+//                    else
+//                    {
+//                        message = "Invalid credential provided";
+//                    }
+//                }
+//                else
+//                {
+//                    message = "Invalid credential provided";
+//                }
+//            }
+//
+////            ViewBag.CurrentUserEmailID = login.EmailID;
+//            Session["currentUserEmailID"] = login.EmailID;
+//            ViewBag.Message = message;
+//            return View();
+//        }
+
+
         
-        
-        [Authorize]
-        [HttpPost]
         public ActionResult Logout()
         {
-            FormsAuthentication.SignOut();
+//            FormsAuthentication.SignOut();
+            Session["currentUser"] = null;
             return RedirectToAction("Login", "Account");
         }
     }

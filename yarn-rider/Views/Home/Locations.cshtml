@@ -7,8 +7,6 @@
     Layout = "~/Views/Shared/_LayoutMap.cshtml";
 }
 
-<!DOCTYPE html>
-<html>
 <head>
     <title>yarn - HQ</title>
     <meta name="viewport" content="initial-scale=1.0">
@@ -59,59 +57,59 @@
 
 
 @{
-    
-    int counter = 0;
-     
 
-    int[] CountryCounterArray = new int[8];
-    CountryCounterArray[0] = 0;
-    CountryCounterArray[1] = 0;
-    CountryCounterArray[2] = 0;
-    CountryCounterArray[3] = 0;
-    CountryCounterArray[4] = 0;
-    CountryCounterArray[5] = 0;
-    CountryCounterArray[6] = 0;
-    CountryCounterArray[7] = 0;
-
-    Model.ForEach(user =>
-    {
-        switch (user.Country)
-        {
-            case Country.Israel:
-                CountryCounterArray[0]++;
-                break;
-
-            case Country.UnitedStates:
-                CountryCounterArray[1]++;
-                break;
-
-            case Country.Australia:
-                CountryCounterArray[2]++;
-                break;
-
-            case Country.Brazil:
-                CountryCounterArray[3]++;
-                break;
-
-            case Country.Italy:
-                CountryCounterArray[4]++;
-                break;
-                
-            case Country.Thailand:
-                CountryCounterArray[5]++;
-                break;
-
-            case Country.Japan:
-                CountryCounterArray[6]++;
-                break;
-
-            case Country.SouthAfrica:
-                CountryCounterArray[7]++;
-                break;
-        }
-        {
-        }
-    });
+    //    int counter = 0;
+//     
+//
+//    int[] CountryCounterArray = new int[8];
+//    CountryCounterArray[0] = 0;
+//    CountryCounterArray[1] = 0;
+//    CountryCounterArray[2] = 0;
+//    CountryCounterArray[3] = 0;
+//    CountryCounterArray[4] = 0;
+//    CountryCounterArray[5] = 0;
+//    CountryCounterArray[6] = 0;
+//    CountryCounterArray[7] = 0;
+//
+//    Model.ForEach(user =>
+//    {
+//        switch (user.Country)
+//        {
+//            case Country.Israel:
+//                CountryCounterArray[0]++;
+//                break;
+//
+//            case Country.UnitedStates:
+//                CountryCounterArray[1]++;
+//                break;
+//
+//            case Country.Australia:
+//                CountryCounterArray[2]++;
+//                break;
+//
+//            case Country.Brazil:
+//                CountryCounterArray[3]++;
+//                break;
+//
+//            case Country.Italy:
+//                CountryCounterArray[4]++;
+//                break;
+//                
+//            case Country.Thailand:
+//                CountryCounterArray[5]++;
+//                break;
+//
+//            case Country.Japan:
+//                CountryCounterArray[6]++;
+//                break;
+//
+//            case Country.SouthAfrica:
+//                CountryCounterArray[7]++;
+//                break;
+//        }
+//        {
+//        }
+//    });
 }
 
                 var map;
@@ -185,13 +183,36 @@
                     initMap();
                 };
                 
+                
+                @{
+                    SiteDbContext db = new SiteDbContext();
+                    int[] countriesArr =
+                    {
+                        db.Users.Count(u => u.Country == Country.Israel),
+                        db.Users.Count(u => u.Country == Country.UnitedStates),
+                        db.Users.Count(u => u.Country == Country.Australia),
+                        db.Users.Count(u => u.Country == Country.Brazil),
+                        db.Users.Count(u => u.Country == Country.Italy),
+                        db.Users.Count(u => u.Country == Country.Thailand),
+                        db.Users.Count(u => u.Country == Country.Japan),
+                        db.Users.Count(u => u.Country == Country.SouthAfrica)
+                    };
+                }
 
         
+                @{ int countriesCounter = 0; }
+                
                 function addMarker() {
                     for (var i = 0; i < markersOnMap.length; i++) {
                         
-                        var contentString = '<div id="content"><h5>' + markersOnMap[i].placeName + '</h5>' + "users: " + @CountryCounterArray[counter] + '</div>';
+                      
+                        
+                        var contentString = '<div id="content"><h5>' + markersOnMap[i].placeName + '</h5>' + "users: " + @countriesArr[countriesCounter] + '</div>';
    
+                          @{
+                              countriesCounter++;
+                          }
+                                                  
                         const marker = new google.maps.Marker({
                             position: markersOnMap[i].LatLng[0],
                             map: map
@@ -204,7 +225,6 @@
                         
                             infowindow.open(marker.get('map'), marker);
                             InforObj[0] = infowindow;
-                            
                            
 
                     }
@@ -520,7 +540,16 @@
       //  
       // }
     </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoe6Jk2K-NiId2g1IxAqOxf4SewjLCXeYcallback=initMap"
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoe6Jk2K-NiId2g1IxAqOxf4SewjLCXeY&callback=initMap"
         async defer></script>
-</body>
-</html>
+
+<h3>
+    @countriesArr[0]
+    @countriesArr[1]
+    @countriesArr[2]
+    @countriesArr[3]
+    @countriesArr[4]
+    @countriesArr[5]
+    @countriesArr[6]
+    @countriesArr[7]
+</h3>

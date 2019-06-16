@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
@@ -128,6 +129,12 @@ namespace yarn_rider.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Movie movie = db.Movies.Find(id);
+            List<Review> reviews = new List<Review>(movie.Reviews.ToList());
+            foreach (Review review in reviews)
+            {
+                db.Reviews.Remove(review);
+            }
+            
             db.Movies.Remove(movie);
             db.SaveChanges();
             return RedirectToAction("Index");

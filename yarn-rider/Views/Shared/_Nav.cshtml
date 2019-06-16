@@ -1,3 +1,4 @@
+@using yarn_rider.Models
 
 <div class="container-fluid bg-secondary fixed-top">
     <div class="container">
@@ -7,9 +8,6 @@
             <!-- LOGO -->
             <a class="navbar-brand mr-5" href="@Url.Action("Index", "Home")">
                 <img class="img-fluid" alt="yarn" src="~/Images/logo0.5.svg">
-                @{
-                    string currentUser = HttpContext.Current.User.Identity.Name;
-                }
             </a>
 
 
@@ -54,24 +52,23 @@
 
                 <!-- PROFILE -->
 
-                @if (Request.IsAuthenticated)
+                @if (Session["currentUser"] != null)
                 {
-                    using (Html.BeginForm("Logout", "Account", FormMethod.Post, new
-                    {
-                        id = "logoutForm",
-                        @class =
-                            "dropdown ml-auto"
-                    }))
+
                     {
                         @Html.AntiForgeryToken()
 
                         <div class="dropdown ml-auto">
 
+                            @{
+                                User currentUser = (User) Session["currentUser"];
+                            }
+                            
                             <button type="button" class="btn btn-secondary pl-0 py-0" style="color: #8e8f9e;"
                                     id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                     data-offset="10,20">
 
-                                <img style="width: 2.5rem;" src="~/Images/profileIcons/0.svg"
+                                <img style="width: 2.5rem;" src="@currentUser.Avatar"
                                      alt="Generic placeholder image">
 
                                 <i class="fas fa-caret-down pl-1"></i>
@@ -79,37 +76,51 @@
                             </button>
 
                             <div class="dropdown-menu bg-grey mt-2" aria-labelledby="dropdownMenuOffset">
-                                @Html.ActionLink("Profile", "Details", "User", routeValues: null, htmlAttributes: new
+                                @Html.ActionLink("Profile", "Details", "User", routeValues: new {id=currentUser.UserID}, htmlAttributes: new
                                 {
                                     title = "Manage", @class = "dropdown-item text-grey"
                                 })
 
                                 <a class="dropdown-item text-grey" href="#">My Favorites</a>
 
+
                                 <!-- Admins Extra Tools -->
                                 @{
-                                    if (User.IsInRole("Admin"))
+                                    if (currentUser.Admin) 
                                     {
                                         <div class="dropdown-divider"></div>
-                                        <h6 class="dropdown-header" style="color: #6c719c;">Management</h6>
+                                        <h6 class="dropdown-header" style="color: #5d61a7;">Manage Database</h6>
 
-                                        <span class="dropdown-item text-grey">
+                                        <span class="dropdown-item text-link">
                                             <i class="fas fa-wrench mr-2"></i>
                                             @Html.ActionLink("Manage Users", "Index", "User", routeValues: null, htmlAttributes: new {title = "Manage Users", style = "color:inherit", @class = ""})
                                         </span>
 
-                                        <span class="dropdown-item text-grey">
-                                            <i class="fas fa-wrench mr-2"></i>
+                                        <span class="dropdown-item text-link">
+                                            <i class="fas fa-wrench mr-2 "></i>
                                             @Html.ActionLink("Manage Movies", "Index", "Movie", routeValues: null, htmlAttributes: new {title = "Manage Movies", style = "color:inherit", @class = ""})
+                                        </span>
+                                        
+                                        <span class="dropdown-item text-link">
+                                            <i class="fas fa-wrench mr-2 "></i>
+                                            @Html.ActionLink("Manage Reviews", "Index", "Review", routeValues: null, htmlAttributes: new {title = "Manage Reviews", style = "color:inherit", @class = ""})
+                                        </span>
+                                        
+                                        <div class="dropdown-divider"></div>
+                                        <h6 class="dropdown-header" style="color: #5d61a7;">Other</h6>
+                                                                                           
+                                        <span class="dropdown-item text-link">
+                                            <i class="fab fa-facebook-square mr-2"></i>
+                                            @Html.ActionLink("Share Post", "Share", "Home", routeValues: null, htmlAttributes: new {title = "Share new post", style = "color:inherit", @class = ""})
                                         </span>
                                     }
                                 }
 
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item text-grey"
-                                   href="javascript:document.getElementById('logoutForm').submit()">
-                                    Log off
-                                </a>
+
+                                @* href="javascript:document.getElementById('logoutForm').submit()"> *@
+                                @Html.ActionLink("Sign Out", "Logout", "Account", routeValues: null, htmlAttributes: new {title = "Sign Out", style = "", @class = "dropdown-item text-grey"})
+
 
                             </div>
                         </div>
@@ -134,4 +145,3 @@
         </nav>
     </div>
 </div>
-

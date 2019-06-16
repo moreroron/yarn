@@ -10,22 +10,24 @@ namespace yarn_rider.Controllers
         
         public ActionResult Index()
         {
+            if (Session["currentUser"] == null) return RedirectToAction("Login", "Account");
             return View(db.Movies.ToList());
         }
 
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
+            if (Session["currentUser"] == null) return RedirectToAction("Login", "Account");
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult Locations()
         {
-            ViewBag.Message = "Your contact page.";
+            if (Session["currentUser"] == null) return RedirectToAction("Login", "Account");
             return View();
         }
-        
-        public ActionResult Locations()
+
+        public ActionResult Share()
         {
             return View();
         }

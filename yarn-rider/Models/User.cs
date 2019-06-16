@@ -14,6 +14,7 @@ namespace yarn_rider.Models
         public Country Country { get; set; }
         public bool IsEmailVerified { get; set; }
         public System.Guid ActivationCode { get; set; }
+        public bool Admin { get; set; }
         
         // navigation properties
         public int ReviewID { get; set; }

@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -15,7 +17,7 @@ namespace yarn_rider.Controllers
         {
             return View(db.Reviews.ToList());
         }
-        
+
         [HttpGet]
         public ActionResult Index(string searchMovieString, string searchByRate, string searchReviewString)
         {
@@ -29,8 +31,10 @@ namespace yarn_rider.Controllers
             // search for only specified value combinations (Keyword, Genre, Name, Year) 
             var reviews = db.Reviews.Where(m =>
                 (m.Rating.ToString().Equals(searchByRate) || String.IsNullOrEmpty(searchByRate)) &&
-                (m.Movie.MovieName.Contains(searchMovieString) || String.IsNullOrEmpty(searchMovieString) || m.Movie.MovieName.Equals("By Movie Title")) &&
-                (m.Title.Contains(searchReviewString) || String.IsNullOrEmpty(searchReviewString) || m.Title.Equals("By Review Title")));
+                (m.Movie.MovieName.Contains(searchMovieString) || String.IsNullOrEmpty(searchMovieString) ||
+                 m.Movie.MovieName.Equals("By Movie Title")) &&
+                (m.Title.Contains(searchReviewString) || String.IsNullOrEmpty(searchReviewString) ||
+                 m.Title.Equals("By Review Title")));
 
             return View(reviews.ToList());
         }
@@ -62,35 +66,40 @@ namespace yarn_rider.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(int userId, int movieId, Review review)
+        public ActionResult Create(int movieId, Review sendedReview)
         {
             if (ModelState.IsValid)
             {
+                User currentUser = (User) Session["currentUser"];
+                User user = db.Users.Find(currentUser.UserID);
                 Movie movie = db.Movies.Find(movieId);
-                User user = db.Users.Find(userId);
 
-                movie.Reviews.Add(review);
-                db.Reviews.Add(review);
+                db.Reviews.Add(sendedReview);
 
                 db.SaveChanges();
 
-                db.Reviews.Find(review.ReviewID).User = user;
-                db.Reviews.Find(review.ReviewID).Movie = movie;
+                db.Reviews.Find(sendedReview.ReviewID).User = user;
+                db.Reviews.Find(sendedReview.ReviewID).Movie = movie;
+
+                db.Users.Find(user.UserID).Reviews.Add(sendedReview);
+                db.Movies.Find(movieId).Reviews.Add(sendedReview);
                 
+                db.SaveChanges();
+
                 // calculating the avg of all review scores 
                 var Count = 0;
-                for(var i=0;i< movie.Reviews.Count; i++)
+                for (var i = 0; i < movie.Reviews.Count; i++)
                 {
                     Count += movie.Reviews[i].Rating;
                 }
-                
-                movie.Rate = Count/movie.Reviews.Count;
+
+                movie.Rate = Count / movie.Reviews.Count;
                 db.SaveChanges();
-                
-                return RedirectToAction("Details/"+movieId.ToString(),"Movie");
+
+                return RedirectToAction("Details/" + movieId, "Movie");
             }
 
-            return View(review);
+            return View(sendedReview);
 
 //            User user=db.Users.Find(userId);
 //            Movie movie = db.Movies.Find(movieId);
@@ -101,34 +110,37 @@ namespace yarn_rider.Controllers
 //            db.SaveChanges();
 //            return RedirectToAction("Index", "Movie");
         }
-        
+
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Review review = db.Reviews.Find(id);
             if (review == null)
             {
                 return HttpNotFound();
             }
+
             return View(review);
         }
-
-//        public PartialViewResult Delete(int? id)
-//        {
-//            Review review = db.Reviews.Find(id);
-//            return PartialView(review);
-//        }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             Review review = db.Reviews.Find(id);
+//            User user = (User)Session["currentUser"];
+//            Movie movie = review.Movie;
+
+//            db.Users.Find(user).Reviews.Remove(review);
+//            db.Movies.Find(movie).Reviews.Remove(review);
             db.Reviews.Remove(review);
+
             db.SaveChanges();
+            
             return RedirectToAction("Index");
         }
     }

@@ -172,6 +172,10 @@
     <Compile Include="Migrations\201906101114464_DateAnnoFullDate.Designer.cs">
       <DependentUpon>201906101114464_DateAnnoFullDate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906141619504_addAdminToUserClass.cs" />
+    <Compile Include="Migrations\201906141619504_addAdminToUserClass.Designer.cs">
+      <DependentUpon>201906141619504_addAdminToUserClass.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Extended\User.cs" />
     <Compile Include="Models\Movie.cs" />
@@ -229,6 +233,7 @@
     <Content Include="Views\Account\Registration.cshtml" />
     <Content Include="Views\Account\VerifyAccount.cshtml" />
     <Content Include="Views\Home\Locations.cshtml" />
+    <Content Include="Views\Home\Share.cshtml" />
     <Content Include="Views\Movie\Create.cshtml" />
     <Content Include="Views\Movie\Details.cshtml" />
     <Content Include="Views\Movie\Edit.cshtml" />
@@ -256,7 +261,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <None Include="Scripts\popper-utils.js.map" />
     <None Include="Scripts\popper-utils.min.js.map" />
@@ -316,6 +320,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906101114464_DateAnnoFullDate.resx">
       <DependentUpon>201906101114464_DateAnnoFullDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906141619504_addAdminToUserClass.resx">
+      <DependentUpon>201906141619504_addAdminToUserClass.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
