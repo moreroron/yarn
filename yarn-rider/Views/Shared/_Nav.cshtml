@@ -110,15 +110,14 @@
                                         <h6 class="dropdown-header" style="color: #5d61a7;">Other</h6>
                                                                                            
                                         <span class="dropdown-item text-link">
-                                            <i class="fab fa-facebook-square mr-2"></i>
-                                            @Html.ActionLink("Share Post", "Share", "Home", routeValues: null, htmlAttributes: new {title = "Share new post", style = "color:inherit", @class = ""})
+                                            <i class="fab fa-twitter mr-2"></i>
+                                            @Html.ActionLink("Tweet to @yarn", "Share", "Home", routeValues: null, htmlAttributes: new {title = "Share new post", style = "color:inherit", @class = ""})
                                         </span>
                                     }
                                 }
 
                                 <div class="dropdown-divider"></div>
-
-                                @* href="javascript:document.getElementById('logoutForm').submit()"> *@
+                                
                                 @Html.ActionLink("Sign Out", "Logout", "Account", routeValues: null, htmlAttributes: new {title = "Sign Out", style = "", @class = "dropdown-item text-grey"})
 
 
