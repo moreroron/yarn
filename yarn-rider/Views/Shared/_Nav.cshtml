@@ -12,11 +12,11 @@
 
 
             <!-- MENU COLLAPSE (for small devices) -->
-            <button class="navbar-toggler" data-toggle="collapse" data-target="#menuShrink">
+            <button id="profileMenuButton" class="navbar-toggler" data-toggle="collapse" data-target="#menuShrink">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="menuShrink">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav" id="ttt">
 
 
                     <!-- BROWSE -->
@@ -75,7 +75,7 @@
 
                             </button>
 
-                            <div class="dropdown-menu bg-grey mt-2" aria-labelledby="dropdownMenuOffset">
+                            <div id="profileMenuDropDown" class="dropdown-menu bg-grey mt-2" aria-labelledby="dropdownMenuOffset">
                                 @Html.ActionLink("Profile", "Details", "User", routeValues: new {id=currentUser.UserID}, htmlAttributes: new
                                 {
                                     title = "Manage", @class = "dropdown-item text-grey"
@@ -145,3 +145,13 @@
         </nav>
     </div>
 </div>
+
+@Scripts.Render("~/bundles/jquery")
+
+<script>
+    $(function() {
+        $("#dropdownMenuOffset").on('click', function() {
+            $("#profileMenuDropDown").slideToggle(300);
+        });
+    });
+</script>
