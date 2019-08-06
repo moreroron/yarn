@@ -2129,27 +2129,27 @@ pre code {
 }
 
 .form-control::-webkit-input-placeholder {
-  color: #8e8f9e;
+  color: #60616e;
   opacity: 1;
 }
 
 .form-control::-moz-placeholder {
-  color: #8e8f9e;
+  color: #60616e;
   opacity: 1;
 }
 
 .form-control:-ms-input-placeholder {
-  color: #8e8f9e;
+  color: #60616e;
   opacity: 1;
 }
 
 .form-control::-ms-input-placeholder {
-  color: #8e8f9e;
+  color: #60616e;
   opacity: 1;
 }
 
 .form-control::placeholder {
-  color: #8e8f9e;
+  color: #60616e;
   opacity: 1;
 }
 
@@ -2638,7 +2638,8 @@ textarea.form-control {
   font-size: 1rem;
   line-height: 1.5;
   border-radius: 2rem;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out!important;
+  /*transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;*/
 }
 
 @media (prefers-reduced-motion: reduce) {

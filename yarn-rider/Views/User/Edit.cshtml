@@ -4,64 +4,66 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
-
+<h3>Edit User</h3>
+<hr/>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
+    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+
+    @Html.HiddenFor(model => model.UserID)
+    @Html.HiddenFor(model => model.Password)
+    @Html.HiddenFor(model => model.ActivationCode)
+    @Html.HiddenFor(model => model.IsEmailVerified)
+    @Html.HiddenFor(model => model.EmailID)
+
     <div class="form-horizontal">
-        <h4>User</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.UserID)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.EmailID, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.UserName, htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.EditorFor(model => model.EmailID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EmailID, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.UserName, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.UserName, "", new {@class = "text-danger"})
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Avatar, htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Avatar, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Avatar, "", new {@class = "text-danger"})
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Avatar, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Country, htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Avatar, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Avatar, "", new { @class = "text-danger" })
+                @Html.EnumDropDownListFor(model => model.Country, htmlAttributes: new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.Country, "", new {@class = "text-danger"})
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Country, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Admin, htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.Country, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Admin, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Admin, "", new {@class = "text-danger"})
             </div>
         </div>
 
-
+        <hr/>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Submit Changes" class="btn btn-admin"/>
             </div>
         </div>
+
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

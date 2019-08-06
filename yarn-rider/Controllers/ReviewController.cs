@@ -39,6 +39,7 @@ namespace yarn_rider.Controllers
             return View(reviews.ToList());
         }
 
+        [HttpGet]
         public ActionResult Edit(int? id)
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -52,11 +53,13 @@ namespace yarn_rider.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(Review review)
+        public ActionResult Edit(Review review, string MovieID)
         {
             db.Entry(review).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Index");
+//            return RedirectToAction("Details/" + review.Movie.MovieID, "Movie");
+            return RedirectToAction("Details/" + MovieID, "Movie");
+            return View();
         }
 
         public ActionResult Create()
@@ -68,6 +71,7 @@ namespace yarn_rider.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(int movieId, Review sendedReview)
         {
+            db.Configuration.ValidateOnSaveEnabled = false;
             if (ModelState.IsValid)
             {
                 User currentUser = (User) Session["currentUser"];
@@ -86,29 +90,22 @@ namespace yarn_rider.Controllers
                 
                 db.SaveChanges();
 
-                // calculating the avg of all review scores 
+//                 calculating the avg of all review scores 
                 var Count = 0;
-                for (var i = 0; i < movie.Reviews.Count; i++)
+
+                foreach (var m in movie.Reviews)
                 {
-                    Count += movie.Reviews[i].Rating;
+                    Count += m.Rating;
                 }
 
-                movie.Rate = Count / movie.Reviews.Count;
+                movie.Rate = Count / movie.Reviews.Count + 1;
                 db.SaveChanges();
 
                 return RedirectToAction("Details/" + movieId, "Movie");
             }
 
             return View(sendedReview);
-
-//            User user=db.Users.Find(userId);
-//            Movie movie = db.Movies.Find(movieId);
-//            db.Reviews.Add(review);
-//            db.Reviews.Find(review).User = user;
-//            db.Reviews.Find(review).Movie = movie;
-//            
-//            db.SaveChanges();
-//            return RedirectToAction("Index", "Movie");
+            
         }
 
         public ActionResult Delete(int? id)
@@ -131,17 +128,35 @@ namespace yarn_rider.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            db.Configuration.ValidateOnSaveEnabled = false;
             Review review = db.Reviews.Find(id);
-//            User user = (User)Session["currentUser"];
-//            Movie movie = review.Movie;
-
-//            db.Users.Find(user).Reviews.Remove(review);
-//            db.Movies.Find(movie).Reviews.Remove(review);
+            
+            Movie movie = review.Movie;
             db.Reviews.Remove(review);
 
             db.SaveChanges();
             
-            return RedirectToAction("Index");
+            int avgScore = 0;
+            foreach (var m in movie.Reviews)
+            {
+                avgScore += m.Rating;
+            }
+
+            if (movie.Reviews.Count == 0)
+            {
+                avgScore = 1;
+            }
+
+            else
+            {
+                avgScore /= movie.Reviews.Count;
+            }
+            
+            movie.Rate = avgScore;
+
+            db.SaveChanges();
+            
+            return RedirectToAction("Details/" + movie.MovieID, "Movie");
         }
     }
 }

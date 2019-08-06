@@ -1,0 +1,132 @@
+@using yarn_rider.Models
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3 class="">Database Records</h3>
+
+<hr/>
+
+<p>yarn database is built upon 3 major models: &nbsp; <b class="text-primary">Users, Movies and Reviews</b>.</p>
+<div class="mt-5">
+
+@{
+    SiteDbContext db = new SiteDbContext();
+
+    @*  Movie x Review Table  *@
+
+    var movieReviewInnerJoin = from movies in db.Movies
+        join reviews in db.Reviews
+            on movies.MovieID equals reviews.Movie.MovieID
+        select new
+        {
+            movieName = movies.MovieName,
+            reviewTitle = reviews.Title,
+            reviewsContent = reviews.Content,
+            reviewsRate = reviews.Rating
+        };
+
+    <br/>
+    <h5>List of Movies with their reviews</h5>
+    <hr/>
+    
+    <div class="card bg-secondary">
+
+        <table class="table table-borderless">
+
+            <thead style="background-color: #17181d">
+            <tr>
+                <th scope="col">#</th>
+                <th>Movie Title</th>
+                <th>Review Title</th>
+                <th>Content</th>
+                <th>Review Rate</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            @{
+                int counter = 1;
+            }
+
+            @foreach (var record in movieReviewInnerJoin.ToList())
+            {
+                <tr class="text-regular bg-secondary">
+                    <th scope="row">@counter</th>
+                    <td>@record.movieName</td>
+                    <td>@record.reviewTitle</td>
+                    <td>@record.reviewsContent</td>
+                    <td>@record.reviewsRate</td>
+                </tr>
+
+                counter++;
+            }
+
+            </tbody>
+        </table>
+        
+        </div>
+
+        @*  User x Review Table  *@
+
+    var userReviewInnerJoin = from users in db.Users
+        join reviews in db.Reviews
+            on users.UserID equals reviews.User.UserID
+        select new
+        {
+            userName = users.UserName,
+            userEmail = users.EmailID,
+            userAdmin = users.Admin,
+            reviewMovieTitle = reviews.Movie.MovieName,
+            reviewTitle = reviews.Title,
+            reviewRate = reviews.Rating
+        };
+
+    
+    <br/>
+    <h5 class="mt-5">List of Users with their reviews</h5>
+    <hr/>
+    
+    <div class="card bg-secondary">
+        <table class="table table-borderless">
+
+            <thead style="background-color: #17181d">
+            <tr>
+                <th scope="col">#</th>
+                <th >UserName</th>
+                <th>EmailID</th>
+                <th>isAdmin</th>
+                <th>Movie</th>
+                <th>Review Title</th>
+                <th>Review Rate</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            @{
+                int counter2 = 1;
+            }
+
+            @foreach (var record in userReviewInnerJoin.ToList())
+            {
+                <tr class="text-regular bg-secondary">
+                    <th scope="row">@counter2</th>
+                    <td>@record.userName</td>
+                    <td>@record.userEmail</td>
+                    <td>@record.userAdmin</td>
+                    <td>@record.reviewMovieTitle</td>
+                    <td>@record.reviewTitle</td>
+                    <td>@record.reviewRate</td>
+                </tr>
+
+                counter2++;
+            }
+
+            </tbody>
+        </table>
+        </div>
+}
+</div>

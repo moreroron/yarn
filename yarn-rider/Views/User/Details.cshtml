@@ -1,4 +1,4 @@
-
+@using System.Web.UI.HtmlControls
 @using yarn_rider.Models
 @model yarn_rider.Models.User
 
@@ -6,43 +6,124 @@
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
     User currentUser = (User) Session["currentUser"];
+
+    SiteDbContext db = new SiteDbContext();
 }
 
-<div>
-    <h3>Profile</h3>
-    <hr/>
-    <dl class="dl-horizontal">
 
-        <dd>
-            <img src="@Html.DisplayFor(model => model.Avatar)" style="width: 10rem;"/>
-        </dd>
+<h3>Profile</h3>
+<hr/>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
+@using (Html.BeginForm("Edit", "User", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
 
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
+    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
 
-        <dt>
-            @Html.DisplayNameFor(model => model.EmailID)
-        </dt>
+    @Html.HiddenFor(model => model.UserID)
+    @Html.HiddenFor(model => model.Password)
+    @Html.HiddenFor(model => model.ActivationCode)
+    @Html.HiddenFor(model => model.IsEmailVerified)
 
-        <dd>
-            @Html.DisplayFor(model => model.EmailID)
-        </dd>
-        
-        <dt>
-            number of reviews:
-        </dt>
-        
-        <dd>
-            @{
-                SiteDbContext db = new SiteDbContext();
-                @db.Users.Find(currentUser.UserID).Reviews.Count
-            }
-        </dd>
 
-    </dl>
-</div>
+    <div class="row">
+        <div class="col-1">
+            <img src="@Html.DisplayFor(model => model.Avatar)" style="width: 5rem;"/>
+        </div>
+
+        <div class="col">
+            <div class="form-horizontal">
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.UserName, htmlAttributes: new {@class = "control-label col-md-2"})
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.UserName, new {htmlAttributes = new {placeholder = currentUser.UserName, @class = "form-control"}})
+                        @Html.ValidationMessageFor(model => model.UserName, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.EmailID, htmlAttributes: new {@class = "control-label col-md-2"})
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.EmailID, new {htmlAttributes = new {placeholder = currentUser.EmailID, @class = "form-control"}})
+                        @Html.ValidationMessageFor(model => model.EmailID, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Avatar, htmlAttributes: new {@class = "control-label col-md-2"})
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Avatar, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(model => model.Avatar, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Country, htmlAttributes: new {@class = "control-label col-md-2"})
+                    <div class="col-md-10">
+                        @Html.EnumDropDownListFor(model => model.Country, htmlAttributes: new {@class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.Country, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+
+                @if (currentUser.Admin)
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Admin, htmlAttributes: new {@class = "control-label col-md-2"})
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Admin, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.ValidationMessageFor(model => model.Admin, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    @Html.HiddenFor(model => model.Admin, new {Value = false})
+                }
+
+
+                <hr/>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save Changes" class="btn btn-grey"/>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+}
+
+@* *@
+@* <div class="container"> *@
+@*     <div class="row"> *@
+@*         <div class="col-1"> *@
+@*             <img src="@Html.DisplayFor(model => model.Avatar)" style="width: 5rem;"/> *@
+@*         </div> *@
+@* *@
+@* *@
+@*         <div class="col"> *@
+@* *@
+@*             <div class="row"> *@
+@* *@
+@*                 <div class="col"> *@
+@*                     Username <br/> *@
+@*                     EmailID <br/> *@
+@*                     Reviews Posted <br/> *@
+@*                 </div> *@
+@* *@
+@*                 <div class="col"> *@
+@*                     <span class="ml-4">@Html.DisplayFor(model => model.UserName)</span><br/> *@
+@*                     <span class="ml-4">@Html.DisplayFor(model => model.EmailID)</span><br/> *@
+@*                     <span class="ml-4">Posted @db.Users.Find(currentUser.UserID).Reviews.Count Reviews</span><br/> *@
+@*                 </div> *@
+@* *@
+@*             </div> *@
+@* *@
+@*         </div> *@
+@* *@
+@* *@
+@*     </div> *@
+@* </div> *@

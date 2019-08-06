@@ -2,23 +2,11 @@
 @{
     ViewBag.Title = "Homepage";
     User currentUser = (User) Session["currentUser"];
+    SiteDbContext db = new SiteDbContext();
 }
 
-
-<h3>@ViewBag.Message</h3>
-
-
-<canvas id="myCanvas" width="500" height="40"></canvas>
-<script>
-
-    var canvas = document.getElementById('myCanvas'); 
-    var ctx = canvas.getContext('2d'); 
-    
-	ctx.font = '2rem Rubik';
-        ctx.fillStyle = '#8e8f9e';
-        ctx.fillText('Hello yarners', 0, 20);
-
-   </script>
+<h3>Welcome yarner!</h3>
+<hr/>
 
 <div class="row justify-content-between m-0 p-0 ">
     <div class="alert alert-costume bg-secondary">
@@ -27,42 +15,118 @@
         <a class="pl-2" style="font-weight:bold;" href="@Url.Action("Index", "Movie")">Start Browsing</a>
     </div>
 </div>
-<hr/>
-<h3 class="mt-5 mb-4">Films Recently Added</h3>
-<div class="row justify-content-between mb-4 p-0 ">
 
-    @* getting the 5 last movies added to the db by looping through the movie list *@
-    @if (Model.Count < 5)
-    {
-        if (currentUser != null && currentUser.Admin)
+
+<!-- Latest Films -->
+
+<div class="mb-5">
+
+    <h3 class="mt-5">Films Recently Added</h3>
+    <hr/>
+
+    <div class="row justify-content-between p-0 no-gutters ">
+
+        @* getting the 5 last movies added to the db by looping through the movie list *@
+        @if (Model.Count < 5)
         {
-            <p>You have less than 5 movies in the database. Add more to make this section display content.</p>
+            if (currentUser != null && currentUser.Admin)
+            {
+                <p>You have less than 5 movies in the database. Add more to make this section display content.</p>
+            }
+
+            else
+            {
+                <p>We have yet to upload enough content for display.</p>
+            }
         }
 
         else
         {
-            <p>We have yet to upload enough content for display.</p>
+            for (var i = Model.Count - 1; i > Model.Count - 6; i--)
+            {
+                <div class="col-2 bg-secondary rounded p-1 m-0">
+                    <img class="img-fluid d-block rounded-top" alt="yarn"
+                         src="@Model[i].PosterURL">
+                    <h6 style="color: #fff; font-weight: bold" class="px-2 pt-2 m-0">@Model[i].MovieName</h6>
+                    <p style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0"> @Model[i].Genre | @Model[i].Date </p>
+                    <a style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0" href="@Url.Action("Details", "Movie", new {id = @Model[i].MovieID})">Details</a>
+                    <!-- Admin Only! -->
+                    @if (currentUser != null && currentUser.Admin)
+                    {
+                        <a style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0" href="@Url.Action("Delete", "Movie", new {id = Model[i].MovieID})">Delete</a>
+                    }
+                </div>
+            }
         }
-        
-    }
 
-    else
-    {
-        for (var i = Model.Count - 1; i > Model.Count - 6; i--)
-        {
-            <div class="col-2 bg-secondary rounded p-1 m-0">
-                <img class="img-fluid d-block rounded-top" alt="yarn"
-                     src="@Model[i].PosterURL">
-                <h6 style="color: #fff; font-weight: bold" class="px-2 pt-2 m-0">@Model[i].MovieName</h6>
-                <p style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0"> @Model[i].Genre | @Model[i].Date </p>
-                <a style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0" href="@Url.Action("Details", "Movie", new {id = @Model[i].MovieID})">Details</a>
-                <!-- Admin Only! -->
-                @if (currentUser != null && currentUser.Admin)
+    </div>
+</div>
+
+<!-- Recommendations (Learning through statistics) -->
+
+<div class="pt-4">
+    <h3 class="">Recommended For you</h3>
+    <span class="text-regular">The movie yarners from your country wrote reviews for the most is:</span>
+    <hr/>
+
+    <div class="row justify-content-between p-0 no-gutters">
+
+        @{
+
+            var movies = db.Movies.ToList();
+            var yourCountry = currentUser.Country;
+            int counter = 0;
+
+            int mostReviewsFromYourCountry = 0;
+            Movie m = null;
+
+            for (int i = 0; i < movies.Count; i++)
+            {
+                Movie movie = movies[i];
+
+                for (int j = 0; j < movie.Reviews.Count; j++)
                 {
-                    <a style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0" href="@Url.Action("Delete", "Movie", new {id = Model[i].MovieID})">Delete</a>
+                @* counting the reviews wrote by users from your country *@
+                    if (movie.Reviews[j].User.Country.Equals(yourCountry))
+                    {
+                        counter++;
+                    }
                 }
-            </div>
-        }
-    }
 
+            @* if the looped movie has more reviews from your country, update *@
+                if (counter > mostReviewsFromYourCountry)
+                {
+                    mostReviewsFromYourCountry = counter;
+                    counter = 0;
+                    m = movie;
+                }
+            }
+
+        @* found a match *@
+            if (m != null)
+            {
+                <div class="row justify-content-between p-0 no-gutters ">
+                    <div class="col-2 bg-secondary rounded p-1 m-0">
+                        <img class="img-fluid d-block rounded-top" alt="yarn"
+                             src="@m.PosterURL">
+                        <h6 style="color: #fff; font-weight: bold" class="px-2 pt-2 m-0">@m.MovieName</h6>
+                        <p style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0"> @m.Genre | @m.Date </p>
+                        <a style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0" href="@Url.Action("Details", "Movie", new {id = m.MovieID})">Details</a>
+                        <!-- Admin Only! -->
+                        @if (currentUser != null && currentUser.Admin)
+                        {
+                            <a style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0" href="@Url.Action("Delete", "Movie", new {id = m.MovieID})">Delete</a>
+                        }
+                    </div>
+                </div>
+            }
+
+        @* No match *@
+            else
+            {
+                <p>Not enough users from you country or didn't write enough reviews.</p>
+            }
+        }
+
+    </div>
 </div>

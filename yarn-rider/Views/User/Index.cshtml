@@ -1,3 +1,5 @@
+@using System.Globalization
+@using yarn_rider.Models
 @model IEnumerable<yarn_rider.Models.User>
 
 @{
@@ -5,8 +7,18 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<!-- Canvas -->
 
-<h3>yarners</h3>
+<canvas id="myCanvas" width="500" height="25"></canvas>
+<script>
+    var canvas = document.getElementById('myCanvas'); 
+    var ctx = canvas.getContext('2d'); 
+    
+	ctx.font = '1.8rem Rubik';
+        ctx.fillStyle = '#8e8f9e';
+        ctx.fillText('yarners', 0, 20);
+</script>
+
 
 <hr/>
 
@@ -14,61 +26,141 @@
 
 @using (Html.BeginForm("Index", "User", FormMethod.Get))
 {
-    <div class="row">
+    <div class="form-group row justify-content-between">
 
-        <div class="input-group col-4">
-            By Username:
-            @Html.TextBox("usernameKeyword", null, new {@class = "form-control"})
+        <div class="input-group col-3">
+            @Html.TextBox("usernameKeyword", null, new {placeholder = "Enter Username", @class = "form-control"})
+
+            <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon1" style="color:#52525b">
+                    <i class="fas fa-search">
+                    </i>
+                </span>
+            </div>
         </div>
 
-        <div class="col-2">
-            <input type="submit" value="Search" class="btn btn-grey"/>
-        </div>
+
+        @* <div class="col"> *@
+        @*     <input type="submit" value="Search" class="btn btn-grey"/> *@
+        @* </div> *@
     </div>
 }
 
 <hr/>
 
+@* <head> *@
+@*     <style> *@
+@*         table th, table td{ *@
+@*                 padding: 10px!important; /* Apply cell padding */ *@
+@*             } *@
+@*     </style> *@
+@* </head> *@
 
-<table class="table border-primary">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Avatar)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EmailID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Reviews)
-        </th>
-        <th></th>
-    </tr>
+<div class="card bg-secondary" style="border:none;">
+    <table class="table table-borderless bg-primary">
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                <img src="@Html.DisplayFor(modelItem => item.Avatar)" style="width: 10rem;"/>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmailID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Reviews.Count)
-            </td>
-            <td>
-                <a style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0" href="@Url.Action("Delete", "User", new {id = item.UserID})">Delete</a>
-                <a style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0" href="@Url.Action("Edit", "User", new {id = item.UserID})">Edit</a>
-
-            </td>
-
+        <thead >
+        <tr style="font-size: 0.8rem ;">
+            <th scope="col">#</th>
+            <th >Avatar</th>
+            <th>Username</th>
+            <th>EmailID</th>
+            <th>Country</th>
+            <th>Reviews</th>
+            <th>Manage</th>
         </tr>
-    }
+        </thead>
 
-</table>
+        <tbody>
+
+        @{
+            int counter2 = 1;
+        }
+
+        @foreach (var user in Model)
+        {
+            <tr class="text-regular bg-secondary">
+                <th class="align-middle" scope="row">@counter2</th>
+                <td class="align-middle">
+                    <img src="@user.Avatar" style="width: 2.5rem;"/>
+                </td>
+                <td class="align-middle">
+                    @user.UserName
+                </td>
+                <td class="align-middle">
+                    @user.EmailID
+                </td>
+                <td class="align-middle">
+                    @user.Country
+                </td>
+                <td class="align-middle">
+                    <b>@user.Reviews.Count</b>
+                </td>
+                <td class="align-middle">
+
+                    <a href="@Url.Action("Details", "User", new {id = user.UserID})" class="mr-2">
+                        <div class="btn btn-admin text-right">
+                            <i class="fas fa-pen"></i>
+                        </div>
+                    </a>
+
+                    <a href="@Url.Action("Delete", "User", new {id = user.UserID})" class="mr-2">
+                        <div class="btn btn-admin text-right">
+                            <i class="fas fa-trash"></i>
+                        </div>
+                    </a>
+
+                    @* <a class="btn btn-admin mr-2" style="color: #907f62!important;" href="@Url.Action("Delete", "User", new {id = user.UserID})">Delete</a> *@
+                    @* <a class="btn btn-admin" style="color: #907f62!important;" href="@Url.Action("Details", "User", new {id = user.UserID})">Details</a> *@
+
+                </td>
+            </tr>
+
+            counter2++;
+        }
+
+        </tbody>
+    </table>
+</div>
+
+
+<hr/>
+<div class="container no-gutters">
+    <div class="row no-gutters">
+        <div class="col">
+            <div class="row">
+
+                <span class="mr-2"><b>yarners Grouped By Countries:</b> </span>
+
+                @{
+                    SiteDbContext db = new SiteDbContext();
+                    var users = db.Users.GroupBy(u => u.Country);
+                    foreach (var u in users)
+                    {
+                        <span class="mr-3">
+                            
+                                @u.Key
+                            
+                            <span class="pr-1"></span>
+
+                            @u.Count(),
+                        </span>
+                    }
+                }
+
+            </div>
+
+            <div class="row">
+                <span><b>Total:</b> &nbsp; @db.Users.Count()</span>
+            </div>
+
+        </div>
+
+        <a href="@Url.Action("Locations", "Home")" class="mr-2">
+            <div class="btn btn-grey col text-right">
+                <i class="fas fa-map-marker-alt pr-2"></i>Map Visualization
+            </div>
+        </a>
+
+    </div>
+</div>
