@@ -31,11 +31,9 @@ namespace yarn_rider.Controllers
             if (ModelState.IsValid)
             {
                 // Generate Random Avatar
-                var builder = new UriBuilder(Request.Url.Scheme, Request.Url.Host, Request.Url.Port);
                 Random rnd = new Random();
-                int rndNum = rnd.Next(0, 14);
+                int rndNum = rnd.Next(0, 5);
                 user.Avatar = "/Images/profileIcons/" + rndNum + ".svg";
-//                user.Avatar = builder.Host + ":" + builder.Port + "/Images/profileIcons/" + rndNum + ".svg";
 
 
                 #region //Email is already Exist 

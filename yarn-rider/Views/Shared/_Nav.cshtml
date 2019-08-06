@@ -1,6 +1,6 @@
 @using yarn_rider.Models
 
-<div class="container-fluid bg-secondary fixed-top">
+<div class="container-fluid bg-secondary">
     <div class="container">
         <nav class="navbar navbar-expand-lg bg-secondary navbar-dark pt-3 pb-3">
 
@@ -34,7 +34,7 @@
                         @using (Html.BeginForm("Index", "Movie", FormMethod.Get))
                         {
                             <div class="input-group">
-                                @Html.TextBox("searchString", null, new {@class = "form-control"})
+                                @Html.TextBox("searchString", null, new {placeholder = "Search Movie", @class = "form-control"})
                                 @* <input type="submit" value="search"/> *@
 
                                 <div class="input-group-append">
@@ -63,7 +63,7 @@
                             @{
                                 User currentUser = (User) Session["currentUser"];
                             }
-                            
+
                             <button type="button" class="btn btn-secondary pl-0 py-0" style="color: #8e8f9e;"
                                     id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                     data-offset="10,20">
@@ -76,17 +76,21 @@
                             </button>
 
                             <div id="profileMenuDropDown" class="dropdown-menu bg-grey mt-2" aria-labelledby="dropdownMenuOffset">
-                                @Html.ActionLink("Profile", "Details", "User", routeValues: new {id=currentUser.UserID}, htmlAttributes: new
-                                {
-                                    title = "Manage", @class = "dropdown-item text-grey"
-                                })
 
-                                <a class="dropdown-item text-grey" href="#">My Favorites</a>
+                                <span class="dropdown-item text-link">
+                                    <i class="fas fa-address-card mr-2"></i>
+                                    @Html.ActionLink("Profile", "Details", "User", routeValues: new {id = currentUser.UserID}, htmlAttributes: new
+                                    {
+                                        title = "Manage", @class = ""
+                                    })
+                                </span>
+
+                                @* <a class="dropdown-item text-grey" href="#">My Favorites</a> *@
 
 
                                 <!-- Admins Extra Tools -->
                                 @{
-                                    if (currentUser.Admin) 
+                                    if (currentUser.Admin)
                                     {
                                         <div class="dropdown-divider"></div>
                                         <h6 class="dropdown-header" style="color: #5d61a7;">Manage Database</h6>
@@ -100,25 +104,37 @@
                                             <i class="fas fa-wrench mr-2 "></i>
                                             @Html.ActionLink("Manage Movies", "Index", "Movie", routeValues: null, htmlAttributes: new {title = "Manage Movies", style = "color:inherit", @class = ""})
                                         </span>
-                                        
+
                                         <span class="dropdown-item text-link">
                                             <i class="fas fa-wrench mr-2 "></i>
                                             @Html.ActionLink("Manage Reviews", "Index", "Review", routeValues: null, htmlAttributes: new {title = "Manage Reviews", style = "color:inherit", @class = ""})
                                         </span>
-                                        
+
+                                        <div class="dropdown-divider"></div>
+                                        <h6 class="dropdown-header" style="color: #5d61a7;">Read Data</h6>
+
+                                        <span class="dropdown-item text-link">
+                                            <i class="fas fa-chart-bar mr-2 "></i>
+                                            @Html.ActionLink("DB Statistics", "Statistics", "Home", routeValues: null, htmlAttributes: new {title = "Statistics", style = "color:inherit", @class = ""})
+                                        </span>
+
+                                        <span class="dropdown-item text-link">
+                                            <i class="fas fa-table mr-2"></i>
+                                            @Html.ActionLink("DB Records", "Records", "Home", routeValues: null, htmlAttributes: new {title = "Records", style = "color:inherit", @class = ""})
+                                        </span>
+
                                         <div class="dropdown-divider"></div>
                                         <h6 class="dropdown-header" style="color: #5d61a7;">Other</h6>
-                                                                                           
+
                                         <span class="dropdown-item text-link">
-                                            <i class="fab fa-facebook-square mr-2"></i>
-                                            @Html.ActionLink("Share Post", "Share", "Home", routeValues: null, htmlAttributes: new {title = "Share new post", style = "color:inherit", @class = ""})
+                                            <i class="fab fa-twitter mr-2"></i>
+                                            @Html.ActionLink("Tweet to @yarn", "Share", "Home", routeValues: null, htmlAttributes: new {title = "Share new post", style = "color:inherit", @class = ""})
                                         </span>
                                     }
                                 }
 
                                 <div class="dropdown-divider"></div>
 
-                                @* href="javascript:document.getElementById('logoutForm').submit()"> *@
                                 @Html.ActionLink("Sign Out", "Logout", "Account", routeValues: null, htmlAttributes: new {title = "Sign Out", style = "", @class = "dropdown-item text-grey"})
 
 

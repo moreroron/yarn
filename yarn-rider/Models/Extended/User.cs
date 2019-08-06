@@ -6,6 +6,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace yarn_rider.Models
 {
+    
+    // This class is for Registration form only!
+    
     [MetadataType(typeof(UserMetadata))]
     public partial class User
     {

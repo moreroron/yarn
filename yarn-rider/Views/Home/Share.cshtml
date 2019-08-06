@@ -1,3 +1,5 @@
+@using System.Web.UI.HtmlControls
+@using Tweetinvi
 @using yarn_rider.Models
 
 @{
@@ -5,53 +7,31 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@* @Scripts.Render("~/bundles/jquery") *@
-@* *@
-@* <script> *@
-@* $(function() { *@
-@*    $.get('About.cshtml', function(data) { *@
-@*       $('#aaa').html(data);  *@
-@*    }); *@
-@* }); *@
-@* </script> *@
-@* *@
-@* *@
-@* <script> *@
-@*   window.fbAsyncInit = function() { *@
-@*     FB.init({ *@
-@*       appId            : '2150847571659794', *@
-@*       autoLogAppEvents : true, *@
-@*       xfbml            : true, *@
-@*       version          : 'v3.3' *@
-@*     }); *@
-@*      *@
-@*       FB.api( *@
-@*         '/me', *@
-@*         'GET', *@
-@*         {}, *@
-@*         function(response) { *@
-@*             $("#aaa").append(response.name); *@
-@*         } *@
-@*       ); *@
-@*   }; *@
-@*   *@
-@*    *@
-@*   $.ajax( { *@
-@*   type: "POST" *@
-@*    *@
-@*   }); *@
-@*    *@
-@*    *@
-@* </script> *@
-@* <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script> *@
-
-
-
-<h3>Share new post</h3>
+<h3>Tweeting to yarn</h3>
 <hr/>
-<p>
-    Sharing new post in yarn's page on facebook
-</p>
 
+<p>Write new tweet:</p>
+
+@using (Html.BeginForm())
+{
+
+    @Html.TextArea("content", null, new { @class = "form-control" })  
+    
+    <hr/>
+
+    <div class="row justify-content-end">
+        
+        <div class="col">
+            <input type="submit" value="Tweet" class="btn btn-twitter"/>
+        </div>
+
+    </div>
+    
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
 
 

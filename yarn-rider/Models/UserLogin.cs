@@ -2,6 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace yarn_rider.Models
 {
+    
+    // This class is for Login form only!
+    
     public class UserLogin
     {
         [Display(Name="Email ID")]

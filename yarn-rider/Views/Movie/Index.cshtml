@@ -5,6 +5,17 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     User currentUser = (User) Session["currentUser"];
 }
+
+@if (Session["error"] != null)
+{
+    <script>
+    var a = '@Session["error"]';
+    alert(a);
+    </script>
+
+    Session["error"] = null;
+}
+
 <div class="row justify-content-between">
     <div class="col">
         <h3>Stream Movies</h3>
@@ -66,7 +77,7 @@
 
 @for (var i = 0; i < Model.Count;)
 {
-    @:<div class="row justify-content-between mb-4 p-0">
+    @:<div class="row justify-content-between mb-4 p-0 no-gutters">
 
     for (var j = 0; j < 5; j++)
     {

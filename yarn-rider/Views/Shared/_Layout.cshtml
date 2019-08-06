@@ -11,30 +11,42 @@
 
 <body class="" style="font-family:Rubik; color:#8e8f9e">
 
-<!-- ------------------------------------ -->
-<!-- NAV -->
-<!-- ------------------------------------ -->
+<div style="min-height:100%; position:relative;"> <!-- container -->
 
-@Html.Partial("_Nav")
+    <div class="nav-fixed-top mt-0 mb-5" style=""> <!-- header -->
+        <!-- ------------------------------------ -->
+        <!-- NAV -->
+        <!-- ------------------------------------ -->
 
-<!-- ------------------------------------ -->
-<!-- BODY -->
-<!-- ------------------------------------ -->
-
-<div class="container-fluid bg-primary" style="margin-top: 5rem; margin-bottom: 4rem;">
-    <div class="container text-primary">
-        @RenderBody()
+        @Html.Partial("_Nav")
     </div>
+    
+    <div style="   padding:10px;
+                   padding-bottom:60px;  "> <!-- body -->
+        <!-- ------------------------------------ -->
+        <!-- BODY -->
+        <!-- ------------------------------------ -->
+
+        <div class="bg-primary" style="padding:10px; padding-bottom:160px;">
+            <div class="container text-primary">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    
+    <div style="   "> <!-- footer -->
+        <!-- ------------------------------------ -->
+        <!-- FOOTER -->
+        <!-- ------------------------------------ -->
+        
+        @Html.Partial("_Footer")
+        
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+    </div>
+    
 </div>
 
-<!-- ------------------------------------ -->
-<!-- FOOTER -->
-<!-- ------------------------------------ -->
-
-@Html.Partial("_Footer")
-
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/bootstrap")
-@RenderSection("scripts", required: false)
 </body>
 </html>

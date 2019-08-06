@@ -15,7 +15,7 @@ namespace yarn_rider.Models
         public string Content { get; set; }
         
         [Display(Name = "Rating")]
-        [Range(0, 10, ErrorMessage = "Rating must be between 0 and 10")]
+        [Range(1, 10, ErrorMessage = "Rating must be between 1 and 10")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "A rate is required")]
         public int Rating { get; set; }
         

@@ -17,17 +17,15 @@
 {
     <div class="row">
 
-        <div class="input-group col-4">
-            By Movie Name:
-            @Html.TextBox("searchMovieString", null, new {@class = "form-control"})
+        <div class="input-group col-3">
+            @Html.TextBox("searchMovieString", null, new {placeholder = "filter by Movie", @class = "form-control"})
         </div>
 
-        <div class="input-group col-4">
-            By Review Title:
-            @Html.TextBox("searchReviewString", null, new {@class = "form-control"})
-            
+        <div class="input-group col-3">
+            @Html.TextBox("searchReviewString", null, new {placeholder = "filter by Review Title", @class = "form-control"})
+
         </div>
-        
+
         @{
             var rates = Enumerable
                 .Range(0, 11)
@@ -50,6 +48,44 @@
 
 <hr/>
 
+<!-- using cards -->
+
+@*
+<div class="card-columns">
+
+    <div class="card bg-secondary">
+
+        <div class="container">
+            <div class="row no-gutters">
+                <div class="col-5 m-0">
+
+                    <div class="ratingCircle m-0">@Model[0].Rating</div>
+                    <div class="ml-3"><img class="img-fluid d-inline" alt="yarn" style="width: 2.9rem; height: auto" src="@Model[0].User.Avatar"/></div>
+                    <div class="ml-3">
+                        <a href=@Url.Action("Details", "User", new {id = Model[0].User.UserID})><b>@Model[0].User.UserName</b></a>
+                        <span class="text-regular">for</span>
+                        <a href="@Url.Action("Details", "Movie", new {id = Model[0].Movie.MovieID})">@Model[0].Movie.MovieName</a><br/>
+                        <p class="p-0 m-0">@Model[0].Date</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        
+        <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        </div>
+        
+    </div>
+
+</div>
+*@
+
+
+<!-- using grid -->
+
+<div class="container">
 
 @for (var i = 0; i < Model.Count; i++)
 {
@@ -62,39 +98,47 @@
             break;
         }
 
-        <div class="col-5 bg-secondary rounded p-1 m-0 no-gutters">
+        <div class="col-5 bg-secondary rounded m-0">
 
-            <div class="row align-items-center">
+            <div class="px-1 pt-3">
 
-                <div class="col-2 pl-4">
+                <div class="row no-gutters">
                     <div class="ratingCircle m-0">
                         @Model[i].Rating
                     </div>
-                </div>
 
-                <div class="col-2">
-                    <img class="img-fluid d-block" alt="yarn" style="width: 5rem; height: auto"
-                         src="@Model[i].Movie.PosterURL">
-                </div>
-
-                <div class="col-8 text-left">
-
-                    <div class="d-inline-block">
-                        <img class="img-fluid d-inline" alt="yarn" style="width: 3rem; height: auto"
-                             src="@Model[i].User.Avatar">
-                        
-                        <p class="p-0 m-0" style="color: rgba(142, 143, 157, 0.6);">by: @Html.DisplayFor(model => model[i].User.UserName)</p>
+                    <div class="ml-3">
+                        <img class="img-fluid d-inline" alt="yarn" style="width: 2.9rem; height: auto" src="@Model[i].User.Avatar"/>
                     </div>
-                    <p class="p-0 m-0" style="color: rgba(142, 143, 157, 0.6);">@Model[i].Date</p>
-                    <p class="p-0 m-0" style="color: #fff; font-weight: bold"> @Model[i].Title</p>
-                    
-                    <p class="p-0 m-0 text-primary"> @Model[i].Content</p>
+
+                    <div class="ml-3">
+                        <a href=@Url.Action("Details", "User", new {id = Model[i].User.UserID})><b>@Model[i].User.UserName</b></a> 
+                        <span class="text-regular">for</span>
+                        <a href="@Url.Action("Details", "Movie", new {id = Model[i].Movie.MovieID})">@Model[i].Movie.MovieName</a><br/>
+                        <p class="p-0 m-0">@Model[i].Date</p>
+                    </div>
                 </div>
 
+                <hr/>
+
+                <div class="row no-gutters">
+                    <div>
+                        <span style="color: white;">
+                            <b>@Model[i].Title</b>
+                        </span> <br/>
+                        @Model[i].Content
+                    </div>
+                </div>
+
+                @if (!currentUser.Admin)
+                {
+                    <div class="mb-4"></div>
+                }
 
             </div>
+            
 
-            @* Admin Only! *@
+            <!-- Admin Only! -->
             @{
                 if (currentUser != null && currentUser.Admin)
                 {
@@ -102,13 +146,13 @@
                         <div class="col" style="color: #907f62;">
                             <hr/>
                             <a href="@Url.Action("Edit", "Review", new {id = Model[i].ReviewID})" class="mr-2">
-                                <div class="btn btn-admin col-auto text-right mb-3 ml-2">
+                                <div class="btn btn-admin col-auto text-right mb-3">
                                     <i class="fas fa-pen pr-2"></i>Edit
                                 </div>
                             </a>
 
                             <a href="@Url.Action("Delete", "Review", new {id = Model[i].ReviewID})" class="mr-2">
-                                <div class="btn btn-admin col-auto text-right mb-3 ml-2">
+                                <div class="btn btn-admin col-auto text-right mb-3">
                                     <i class="fas fa-trash pr-2"></i>Delete
                                 </div>
                             </a>
@@ -116,7 +160,7 @@
                     </div>
                 }
             }
-            
+
         </div>
 
         i++;
@@ -126,3 +170,6 @@
 
     @:</div>
 }
+
+</div>
+

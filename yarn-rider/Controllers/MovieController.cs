@@ -93,10 +93,21 @@ namespace yarn_rider.Controllers
 
         public ActionResult Edit(int? id)
         {
-            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (id == null)
+            {
+                ViewBag.Error = "Error ):";
+                return RedirectToAction("Index");
+            }
 
             Movie movie = db.Movies.Find(id);
-            if (movie == null) return HttpNotFound();
+            if (movie == null)
+            {
+//                return HttpNotFound();
+                ViewBag.Error = "No such page found, sorry ):";
+                ViewData["error"] = "no such page found - sorry!";
+                Session["error"] = "no such page found - sorry!";
+                return RedirectToAction("Index");
+            }
 
             ViewBag.Message = movie.MovieName;
 

@@ -8,18 +8,15 @@
 }
 
 <html>
+
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
     <script src="http://d3js.org/d3.v3.min.js" language="JavaScript"></script>
     <script src="liquidFillGauge.js" language="JavaScript"></script>
-    <style>
-        .liquidFillGaugeText {
-
-            font-weight: bold;
-        }
-    </style>
+    <style> .liquidFillGaugeText { font-weight: bold; } </style>
 </head>
+
 <body>
 
 <div class="row justify-content-between align-items-center">
@@ -34,7 +31,6 @@
 
     <!-- Admin Only! -->
     @{
-
         if (currentUser != null && currentUser.Admin)
         {
             <a href="@Url.Action("Edit", "Movie", new {id = Model.MovieID})" class="mr-2">
@@ -76,10 +72,12 @@
 
 </div>
 
+<!-- Reviews section -->
+
 <div class="row justify-content-between mt-5">
 
     <div class="col">
-        <h3>yarner Reviews</h3>
+        <h3>Reviews</h3>
     </div>
 
     <!-- Admin Only! -->
@@ -104,6 +102,15 @@
 
 <hr/>
 
+@if (Model.Reviews.Count == 0)
+{
+    <span>
+        No reviews have been added for @Model.MovieName.
+        <br/>
+        <b>Add the first one yourself!</b>
+    </span>
+}
+
 @for (var i = 0; i < Model.Reviews.Count; i++)
 {
     @:<div class="row justify-content-between align-items-center mb-4 p-0">
@@ -115,37 +122,41 @@
             break;
         }
 
-        <div class="col-5 bg-secondary rounded p-1 m-0 no-gutters">
+        <div class="col-5 bg-secondary rounded m-0">
 
-            <div class="row align-items-center">
+            <div class="px-1 pt-3">
 
-                <div class="col-2 pl-4">
+                <div class="row no-gutters">
                     <div class="ratingCircle m-0">
                         @Model.Reviews[i].Rating
                     </div>
-                </div>
 
-                <div class="col-2">
-                    <img class="img-fluid d-block" alt="yarn" style="width: 5rem; height: auto"
-                         src="@Model.Reviews[i].Movie.PosterURL">
-                </div>
-
-                <div class="col-8 text-left">
-
-                    <div class="d-inline-block">
-                        <img class="img-fluid d-inline" alt="yarn" style="width: 3rem; height: auto"
-                             src="@Model.Reviews[i].User.Avatar">
-                        
-                        <p class="p-0 m-0" style="color: rgba(142, 143, 157, 0.6);">by: @Html.DisplayFor(model => model.Reviews[i].User.UserName)</p>
+                    <div class="ml-3">
+                        <img class="img-fluid d-inline" alt="yarn" style="width: 2.9rem; height: auto" src="@Model.Reviews[i].User.Avatar"/>
                     </div>
-                    <p class="p-0 m-0" style="color: rgba(142, 143, 157, 0.6);">@Model.Reviews[i].Date</p>
-                    <p class="p-0 m-0" style="color: #fff; font-weight: bold"> @Model.Reviews[i].Title</p>
                     
-                    <p class="p-0 m-0 text-primary"> @Model.Reviews[i].Content</p>
+                    <div class="ml-3">
+                        <b>@Model.Reviews[i].User.UserName <br/></b>
+                        <p class="p-0 m-0">@Model.Reviews[i].Date</p>
+                    </div>
                 </div>
-
+                
+                <hr/>
+                
+                <div class="row no-gutters">
+                    <div>
+                        <span style="color: white;"><b>@Model.Reviews[i].Title</b></span> <br/>
+                        @Model.Reviews[i].Content
+                    </div>
+                </div>
+                
+                          @if (!currentUser.Admin)
+                            {
+                                <div class="mb-4"></div>
+                            }
 
             </div>
+            
 
             @* Admin Only! *@
             @{
@@ -155,13 +166,13 @@
                         <div class="col" style="color: #907f62;">
                             <hr/>
                             <a href="@Url.Action("Edit", "Review", new {id = Model.Reviews[i].ReviewID})" class="mr-2">
-                                <div class="btn btn-admin col-auto text-right mb-3 ml-2">
+                                <div class="btn btn-admin col-auto text-right mb-3">
                                     <i class="fas fa-pen pr-2"></i>Edit
                                 </div>
                             </a>
 
                             <a href="@Url.Action("Delete", "Review", new {id = Model.Reviews[i].ReviewID})" class="mr-2">
-                                <div class="btn btn-admin col-auto text-right mb-3 ml-2">
+                                <div class="btn btn-admin col-auto text-right mb-3">
                                     <i class="fas fa-trash pr-2"></i>Delete
                                 </div>
                             </a>
@@ -169,11 +180,6 @@
                     </div>
                 }
             }
-
-            @* <img class="img-fluid d-block rounded-top" alt="yarn" *@
-            @*      src="@Model[i].User.Avatar"> *@
-
-            @* <a style="color: rgba(142, 143, 157, 0.6);" class="px-2 pt-0" href="@Url.Action("Details", "Movie", new {id = @Model[i].Movie.MovieID})">Details</a> *@
 
         </div>
 
@@ -184,11 +190,11 @@
 
     @:</div>
 }
+
 </body>
 </html>
 
-<!-- rate script -->
-
+<!-- rating script -->
 
 <script language="JavaScript">
     var gauge1 = loadLiquidFillGauge("fillgauge1", @Model.Rate);
@@ -471,9 +477,3 @@
             return new GaugeUpdater();
         }
     </script>
-
-@* @Html.RenderPartial("~/Views/Review/Index.cshtml", modeldata); *@
-@* @Html.Action("Index", "Review") *@
-@* @{ *@
-@*     Html.RenderPartial("~/Views/Review/Index.cshtml"); *@
-@* } *@

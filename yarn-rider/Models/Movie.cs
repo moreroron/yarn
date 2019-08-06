@@ -16,7 +16,7 @@ namespace yarn_rider.Models
         [Range(1990, 2019, ErrorMessage = "Date must be between 1990 and 2019")]
         public string Date { get; set; }
         
-        [Range(0, 10, ErrorMessage = "Rating must be between 0 and 10")]
+        [Range(1, 1, ErrorMessage = "Rating must be 1. The cal for score are from average of reviews.")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Rate is required")]
         public int Rate { get; set; }
         
@@ -27,7 +27,7 @@ namespace yarn_rider.Models
         [Display(Name = "Video URL")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Stream url is required")]
         public string MovieURL { get; set; }
-        
+
         public Genre Genre { get; set; }
 
         // navigation properties
