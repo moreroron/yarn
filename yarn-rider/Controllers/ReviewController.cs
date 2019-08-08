@@ -19,22 +19,27 @@ namespace yarn_rider.Controllers
         }
 
         [HttpGet]
-        public ActionResult Index(string searchMovieString, string searchByRate, string searchReviewString)
+        public ActionResult Index(string searchMovieString, string searchByRate, string searchReviewString, string searchUserString)
         {
             // no value to search after (display all reviews)
             if (String.IsNullOrEmpty(searchMovieString) && String.IsNullOrEmpty(searchByRate) &&
-                String.IsNullOrEmpty(searchReviewString))
+                String.IsNullOrEmpty(searchReviewString) && String.IsNullOrEmpty(searchUserString))
             {
                 return View(db.Reviews.ToList());
             }
 
             // search for only specified value combinations (Keyword, Genre, Name, Year) 
             var reviews = db.Reviews.Where(m =>
-                (m.Rating.ToString().Equals(searchByRate) || String.IsNullOrEmpty(searchByRate)) &&
+                (m.Rating.ToString().Equals(searchByRate) || String.IsNullOrEmpty(searchByRate))
+                &&
                 (m.Movie.MovieName.Contains(searchMovieString) || String.IsNullOrEmpty(searchMovieString) ||
-                 m.Movie.MovieName.Equals("By Movie Title")) &&
+                 m.Movie.MovieName.Equals("By Movie Title"))
+                &&
                 (m.Title.Contains(searchReviewString) || String.IsNullOrEmpty(searchReviewString) ||
-                 m.Title.Equals("By Review Title")));
+                 m.Title.Equals("By Review Title")) 
+                &&
+                (m.User.UserName.Contains(searchUserString) || String.IsNullOrEmpty(searchUserString) ||
+                 m.User.UserName.Equals("By Username")));
 
             return View(reviews.ToList());
         }
@@ -53,13 +58,20 @@ namespace yarn_rider.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(Review review, string MovieID)
+        public ActionResult Edit(Review review, int MovieID)
         {
+            db.Configuration.ValidateOnSaveEnabled = false;
             db.Entry(review).State = EntityState.Modified;
             db.SaveChanges();
-//            return RedirectToAction("Details/" + review.Movie.MovieID, "Movie");
+
+            Movie movie = db.Movies.Find(MovieID);
+            var avg = movie.Reviews.Average(r => r.Rating);
+            movie.Rate = (int) avg;
+            
+            db.Entry(movie).State = EntityState.Modified;
+            db.SaveChanges();
+
             return RedirectToAction("Details/" + MovieID, "Movie");
-            return View();
         }
 
         public ActionResult Create()
@@ -71,6 +83,7 @@ namespace yarn_rider.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(int movieId, Review sendedReview)
         {
+
             db.Configuration.ValidateOnSaveEnabled = false;
             if (ModelState.IsValid)
             {
@@ -85,20 +98,13 @@ namespace yarn_rider.Controllers
                 db.Reviews.Find(sendedReview.ReviewID).User = user;
                 db.Reviews.Find(sendedReview.ReviewID).Movie = movie;
 
+               
+                sendedReview.Movie.Rate = (int) db.Movies.Find(movieId).Reviews.Average(r => r.Rating);
+                
                 db.Users.Find(user.UserID).Reviews.Add(sendedReview);
                 db.Movies.Find(movieId).Reviews.Add(sendedReview);
                 
-                db.SaveChanges();
-
-//                 calculating the avg of all review scores 
-                var Count = 0;
-
-                foreach (var m in movie.Reviews)
-                {
-                    Count += m.Rating;
-                }
-
-                movie.Rate = Count / movie.Reviews.Count + 1;
+                db.Entry(movie).State = EntityState.Modified;
                 db.SaveChanges();
 
                 return RedirectToAction("Details/" + movieId, "Movie");
@@ -144,7 +150,7 @@ namespace yarn_rider.Controllers
 
             if (movie.Reviews.Count == 0)
             {
-                avgScore = 1;
+                avgScore = 0;
             }
 
             else

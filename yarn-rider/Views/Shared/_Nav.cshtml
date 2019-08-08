@@ -85,6 +85,14 @@
                                     })
                                 </span>
 
+                                <span class="dropdown-item text-link">
+                                    <i class="fas fa-star-half-alt"></i>
+                                    @Html.ActionLink("My Reviews", "Reviews", "User", routeValues: new {id = currentUser.UserID}, htmlAttributes: new
+                                    {
+                                        title = "Manage", @class = ""
+                                    })
+                                </span>
+
                                 @* <a class="dropdown-item text-grey" href="#">My Favorites</a> *@
 
 

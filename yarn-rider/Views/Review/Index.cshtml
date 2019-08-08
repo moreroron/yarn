@@ -21,9 +21,12 @@
             @Html.TextBox("searchMovieString", null, new {placeholder = "filter by Movie", @class = "form-control"})
         </div>
 
+        <div class="input-group col-2">
+            @Html.TextBox("searchUserString", null, new {placeholder = "filter by User", @class = "form-control"})
+        </div>
+
         <div class="input-group col-3">
             @Html.TextBox("searchReviewString", null, new {placeholder = "filter by Review Title", @class = "form-control"})
-
         </div>
 
         @{
@@ -48,128 +51,94 @@
 
 <hr/>
 
-<!-- using cards -->
-
-@*
-<div class="card-columns">
-
-    <div class="card bg-secondary">
-
-        <div class="container">
-            <div class="row no-gutters">
-                <div class="col-5 m-0">
-
-                    <div class="ratingCircle m-0">@Model[0].Rating</div>
-                    <div class="ml-3"><img class="img-fluid d-inline" alt="yarn" style="width: 2.9rem; height: auto" src="@Model[0].User.Avatar"/></div>
-                    <div class="ml-3">
-                        <a href=@Url.Action("Details", "User", new {id = Model[0].User.UserID})><b>@Model[0].User.UserName</b></a>
-                        <span class="text-regular">for</span>
-                        <a href="@Url.Action("Details", "Movie", new {id = Model[0].Movie.MovieID})">@Model[0].Movie.MovieName</a><br/>
-                        <p class="p-0 m-0">@Model[0].Date</p>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        
-        <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-        </div>
-        
-    </div>
-
-</div>
-*@
-
-
 <!-- using grid -->
 
 <div class="container">
 
-@for (var i = 0; i < Model.Count; i++)
-{
-    @:<div class="row justify-content-between align-items-center mb-4 p-0">
-
-    for (var j = 0; j < 2; j++)
+    @for (var i = 0; i < Model.Count; i++)
     {
-        if (i >= Model.Count)
+        @:<div class="row justify-content-between align-items-center mb-4 p-0">
+
+        for (var j = 0; j < 2; j++)
         {
-            break;
-        }
+            if (i >= Model.Count)
+            {
+                break;
+            }
 
-        <div class="col-5 bg-secondary rounded m-0">
+            <div class="col-5 bg-secondary rounded m-0">
 
-            <div class="px-1 pt-3">
+                <div class="px-1 pt-3">
 
-                <div class="row no-gutters">
-                    <div class="ratingCircle m-0">
-                        @Model[i].Rating
+                    <div class="row no-gutters">
+                        <div class="ratingCircle m-0">
+                            @Model[i].Rating
+                        </div>
+
+                        <div class="ml-3">
+                            <img class="img-fluid d-inline" alt="yarn" style="width: 2.9rem; height: auto" src="@Model[i].User.Avatar"/>
+                        </div>
+
+                        <div class="ml-3">
+                            <a href=@Url.Action("Details", "User", new {id = Model[i].User.UserID})>
+                                <b>@Model[i].User.UserName</b>
+                            </a>
+                            <span class="text-regular">for</span>
+                            <a href="@Url.Action("Details", "Movie", new {id = Model[i].Movie.MovieID})">@Model[i].Movie.MovieName</a><br/>
+                            <p class="p-0 m-0">@Model[i].Date</p>
+                        </div>
                     </div>
 
-                    <div class="ml-3">
-                        <img class="img-fluid d-inline" alt="yarn" style="width: 2.9rem; height: auto" src="@Model[i].User.Avatar"/>
+                    <hr/>
+
+                    <div class="row no-gutters">
+                        <div>
+                            <span style="color: white;">
+                                <b>@Model[i].Title</b>
+                            </span> <br/>
+                            @Model[i].Content
+                        </div>
                     </div>
 
-                    <div class="ml-3">
-                        <a href=@Url.Action("Details", "User", new {id = Model[i].User.UserID})><b>@Model[i].User.UserName</b></a> 
-                        <span class="text-regular">for</span>
-                        <a href="@Url.Action("Details", "Movie", new {id = Model[i].Movie.MovieID})">@Model[i].Movie.MovieName</a><br/>
-                        <p class="p-0 m-0">@Model[i].Date</p>
-                    </div>
+                    @if (!currentUser.Admin)
+                    {
+                        <div class="mb-4"></div>
+                    }
+
                 </div>
 
-                <hr/>
 
-                <div class="row no-gutters">
-                    <div>
-                        <span style="color: white;">
-                            <b>@Model[i].Title</b>
-                        </span> <br/>
-                        @Model[i].Content
-                    </div>
-                </div>
+                <!-- Admin Only! -->
+                @{
+                    if (currentUser != null && currentUser.Admin)
+                    {
+                        <div class="row">
+                            <div class="col" style="color: #907f62;">
+                                <hr/>
+                                <a href="@Url.Action("Edit", "Review", new {id = Model[i].ReviewID})" class="mr-2">
+                                    <div class="btn btn-admin col-auto text-right mb-3">
+                                        <i class="fas fa-pen pr-2"></i>Edit
+                                    </div>
+                                </a>
 
-                @if (!currentUser.Admin)
-                {
-                    <div class="mb-4"></div>
+                                <a href="@Url.Action("Delete", "Review", new {id = Model[i].ReviewID})" class="mr-2">
+                                    <div class="btn btn-admin col-auto text-right mb-3">
+                                        <i class="fas fa-trash pr-2"></i>Delete
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    }
                 }
 
             </div>
-            
 
-            <!-- Admin Only! -->
-            @{
-                if (currentUser != null && currentUser.Admin)
-                {
-                    <div class="row">
-                        <div class="col" style="color: #907f62;">
-                            <hr/>
-                            <a href="@Url.Action("Edit", "Review", new {id = Model[i].ReviewID})" class="mr-2">
-                                <div class="btn btn-admin col-auto text-right mb-3">
-                                    <i class="fas fa-pen pr-2"></i>Edit
-                                </div>
-                            </a>
+            i++;
+        }
 
-                            <a href="@Url.Action("Delete", "Review", new {id = Model[i].ReviewID})" class="mr-2">
-                                <div class="btn btn-admin col-auto text-right mb-3">
-                                    <i class="fas fa-trash pr-2"></i>Delete
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                }
-            }
+        i--;
 
-        </div>
-
-        i++;
+        @:</div>
     }
 
-    i--;
-
-    @:</div>
-}
-
 </div>
-
