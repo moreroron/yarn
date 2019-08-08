@@ -83,5 +83,10 @@ namespace yarn_rider.Controllers
             
             return RedirectToAction("Details/" + user.UserID, "User");
         }
+
+        public ActionResult Reviews()
+        {
+            return View();
+        }
     }
 }

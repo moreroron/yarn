@@ -16,7 +16,7 @@ namespace yarn_rider.Models
         [Range(1990, 2019, ErrorMessage = "Date must be between 1990 and 2019")]
         public string Date { get; set; }
         
-        [Range(1, 1, ErrorMessage = "Rating must be 1. The cal for score are from average of reviews.")]
+        [Range(0, 0, ErrorMessage = "Rating must be 0. The cal for score are from average of reviews.")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Rate is required")]
         public int Rate { get; set; }
         

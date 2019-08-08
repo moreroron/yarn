@@ -1,0 +1,184 @@
+@using System.Globalization
+@using yarn_rider.Models
+@model IList<yarn_rider.Models.User>
+
+@{
+    ViewBag.Title = "Reviews";
+    User currentUser = (User) Session["currentUser"];
+}
+
+<h3>My Reviews</h3>
+<hr/>
+
+<!-- using grid -->
+
+<div class="container">
+    @{
+        var myReviews = currentUser.Reviews.ToList();
+
+        @:<div class="row justify-content-between align-items-center mb-4 p-0">
+
+        foreach (var review in myReviews)
+        {
+
+            <div class="col-5 bg-secondary rounded my-3 mx-0">
+
+                <div class="px-1 pt-3">
+
+                    <div class="row no-gutters">
+                        <div class="ratingCircle m-0">
+                            @review.Rating
+                        </div>
+
+                        <div class="ml-3">
+                            <img class="img-fluid d-inline" alt="yarn" style="width: 2.9rem; height: auto" src="@review.User.Avatar"/>
+                        </div>
+
+                        <div class="ml-3">
+                            <a href=@Url.Action("Details", "User", new {id = @review.User.UserID})>
+                                <b>@review.User.UserName</b>
+                            </a>
+                            <span class="text-regular">for</span>
+                            <a href="@Url.Action("Details", "Movie", new {id = @review.Movie.MovieID})">@review.Movie.MovieName</a><br/>
+                            <p class="p-0 m-0">@review.Date</p>
+                        </div>
+                    </div>
+
+                    <hr/>
+
+                    <div class="row no-gutters">
+                        <div>
+                            <span style="color: white;">
+                                <b>@review.Title</b>
+                            </span> <br/>
+                            @review.Content
+                        </div>
+                    </div>
+
+                    @if (!currentUser.Admin)
+                    {
+                        <div class="mb-4"></div>
+                    }
+
+                </div>
+
+
+                <!-- Admin Only! -->
+                @{
+                    if (currentUser != null && currentUser.Admin)
+                    {
+                        <div class="row">
+                            <div class="col" style="color: #907f62;">
+                                <hr/>
+                                <a href="@Url.Action("Edit", "Review", new {id = review.ReviewID})" class="mr-2">
+                                    <div class="btn btn-admin col-auto text-right mb-3">
+                                        <i class="fas fa-pen pr-2"></i>Edit
+                                    </div>
+                                </a>
+
+                                <a href="@Url.Action("Delete", "Review", new {id = review.ReviewID})" class="mr-2">
+                                    <div class="btn btn-admin col-auto text-right mb-3">
+                                        <i class="fas fa-trash pr-2"></i>Delete
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                }
+
+            </div>
+        }
+
+        @:</div>
+        
+    }
+    
+
+@*     @for (var i = 0; i < currentUser.Reviews.Count; i++) *@
+@*     { *@
+@*         @:<div class="row justify-content-between align-items-center mb-4 p-0"> *@
+@* *@
+@*         for (var j = 0; j < 2; j++) *@
+@*         { *@
+@*             if (i >= currentUser.Reviews.Count) *@
+@*             { *@
+@*                 break; *@
+@*             } *@
+@* *@
+@*             <div class="col-5 bg-secondary rounded m-0"> *@
+@* *@
+@*                 <div class="px-1 pt-3"> *@
+@* *@
+@*                     <div class="row no-gutters"> *@
+@*                         <div class="ratingCircle m-0"> *@
+@*                             @Model[i]. *@
+@*                         </div> *@
+@* *@
+@*                         <div class="ml-3"> *@
+@*                             <img class="img-fluid d-inline" alt="yarn" style="width: 2.9rem; height: auto" src="@Model[i].User.Avatar"/> *@
+@*                         </div> *@
+@* *@
+@*                         <div class="ml-3"> *@
+@*                             <a href=@Url.Action("Details", "User", new {id = Model[i].User.UserID})> *@
+@*                                 <b>@Model[i].User.UserName</b> *@
+@*                             </a> *@
+@*                             <span class="text-regular">for</span> *@
+@*                             <a href="@Url.Action("Details", "Movie", new {id = Model[i].Movie.MovieID})">@Model[i].Movie.MovieName</a><br/> *@
+@*                             <p class="p-0 m-0">@Model[i].Date</p> *@
+@*                         </div> *@
+@*                     </div> *@
+@* *@
+@*                     <hr/> *@
+@* *@
+@*                     <div class="row no-gutters"> *@
+@*                         <div> *@
+@*                             <span style="color: white;"> *@
+@*                                 <b>@Model[i].Title</b> *@
+@*                             </span> <br/> *@
+@*                             @Model[i].Content *@
+@*                         </div> *@
+@*                     </div> *@
+@* *@
+@*                     @if (!currentUser.Admin) *@
+@*                     { *@
+@*                         <div class="mb-4"></div> *@
+@*                     } *@
+@* *@
+@*                 </div> *@
+@* *@
+@* *@
+@*                 <!-- Admin Only! --> *@
+@*                 @{ *@
+@*                     if (currentUser != null && currentUser.Admin) *@
+@*                     { *@
+@*                         <div class="row"> *@
+@*                             <div class="col" style="color: #907f62;"> *@
+@*                                 <hr/> *@
+@*                                 <a href="@Url.Action("Edit", "Review", new {id = Model[i].ReviewID})" class="mr-2"> *@
+@*                                     <div class="btn btn-admin col-auto text-right mb-3"> *@
+@*                                         <i class="fas fa-pen pr-2"></i>Edit *@
+@*                                     </div> *@
+@*                                 </a> *@
+@* *@
+@*                                 <a href="@Url.Action("Delete", "Review", new {id = Model[i].ReviewID})" class="mr-2"> *@
+@*                                     <div class="btn btn-admin col-auto text-right mb-3"> *@
+@*                                         <i class="fas fa-trash pr-2"></i>Delete *@
+@*                                     </div> *@
+@*                                 </a> *@
+@*                             </div> *@
+@*                         </div> *@
+@*                     } *@
+@*                 } *@
+@* *@
+@*             </div> *@
+@* *@
+@*             i++; *@
+@*         } *@
+@* *@
+@*         i--; *@
+@* *@
+@*         @:</div> *@
+@*     } *@
+
+</div>
+

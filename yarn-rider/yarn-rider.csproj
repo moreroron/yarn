@@ -363,6 +363,7 @@
     <Content Include="Views\Shared\_Nav.cshtml" />
     <Content Include="Views\User\Details.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\Reviews.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
