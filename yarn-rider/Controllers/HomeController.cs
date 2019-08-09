@@ -36,10 +36,10 @@ namespace yarn_rider.Controllers
         [HttpPost]
         public ActionResult Share(string content)
         {
+   
             // Set up your credentials (https://apps.twitter.com)
-            Auth.SetUserCredentials("96mnJPmylSXUbFjrumCAsCSS0", "vDZ34fIFOvXRwNotTObifVpbXnpRnlUDS6ija3O6QkiS9Fudho",
-                "1140353914900029444-uL7VCwYLwLyMiITcheOarBH9kKiJ2A", "G5DCUz8JlfAH8w4uYr2oOzgSinF78DYz5uD86eR9L5azk");
-
+            Auth.SetUserCredentials("CONSUMER_KEY", "CONSUMER_SECRET", "ACCESS_TOKEN", "ACCESS_TOKEN_SECRET");
+            
             // Publish the Tweet on my Timeline
             Tweet.PublishTweet(content);
 

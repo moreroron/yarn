@@ -12,9 +12,12 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
+    
+    <!-- rating script -->
     <script src="http://d3js.org/d3.v3.min.js" language="JavaScript"></script>
     <script src="liquidFillGauge.js" language="JavaScript"></script>
     <style> .liquidFillGaugeText { font-weight: bold; } </style>
+    
 </head>
 
 <body>
@@ -61,6 +64,9 @@
     </div>
 
     <div class="col-10 bg-secondary rounded p-1 m-0 text-center">
+        
+        <!-- VIDEO -->
+        
         <iframe width="100%" height="100%" src="@Html.DisplayFor(model => model.MovieURL)" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
         @* <video width="100%" height="100%" controls> *@
