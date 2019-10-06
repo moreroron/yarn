@@ -12,6 +12,8 @@ back-end: .Net Framework
 
 Database: Entity Framework (code first)
 
+Design: original, made with Sketch
+
 ## Tools:
 
 * [D3](https://d3js.org/) - JavaScript library for manipulating documents based on data
