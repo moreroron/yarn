@@ -7,8 +7,11 @@ A fullstack project, based on MVC architectural pattern.
 
 ## Built with
 front-end: Razor
+
 back-end: .Net Framework
+
 Database: Entity Framework (code first)
+
 Design: original, made with Sketch
 
 ## Tools:
