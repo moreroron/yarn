@@ -6,9 +6,9 @@ A platform for streaming content lighting-fast.
 A fullstack project, based on MVC architectural pattern. 
 
 ## Built with
-front-end - Razor (html & C# baby)
+Front-end - Razor (html & C# baby)
 
-back-end - .Net Framework under C#
+Back-end - .Net Framework under C#
 
 Database - SQL (using Entity Framework "code first", which enables working with a database using .NET objects)
 
